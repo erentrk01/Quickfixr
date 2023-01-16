@@ -4,6 +4,7 @@ import { SvgMolecule } from '../../molecules/loginBlock/svg'
 
 import { LoginForm } from '../../molecules/loginBlock/loginForm'
 import { LoginHeader } from '../../molecules/loginBlock/loginHeader'
+
 export const LoginView = () => {
   return (
 	<Flex minHeight='100vh' width='full' align='center' justifyContent='center'>
