@@ -15,7 +15,7 @@ export const LoginForm = () => {
 	return (
 	  <Box my={8} textAlign='left'>
 		<form>
-  
+			
 		  <FormControl>
 			<FormLabel>Email address</FormLabel>
 			<Input type='email' placeholder='Enter your email address' />
