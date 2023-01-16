@@ -20,12 +20,14 @@ import { Player}  from '@lottiefiles/react-lottie-player';
 const data = useColorModeValue(landing1Light,landing1Dark)
 
 // animation settings
-
-
+let easing =[0.6, -0.05, 0.01, 0.99]
+const transition = {duration:1.4,ease:[0.6,0.01,-0.05,0.9]};
 
 	return(
 		<>
+		<motion.div initial="initial" animate="animate">
 		<Flex alignItems="center">
+		
 		<Hide below="sm">
 		<Player
 			src={data}
@@ -49,15 +51,16 @@ const data = useColorModeValue(landing1Light,landing1Dark)
 		/>
 		</Show>
 		
+		<motion.div initial={{opacity:0,scale:0}} animate={{opacity:1,scale:1}} transition={{duration:0.3,ease:easing}}>
+			<VStack>
+				<Heading fontSize={{ sm: '22px', md: '24px', lg: '36px' }} >Efficiency in maintenance, excellence in service. </Heading>
+				<HStack>
+					<CustomButton content={"Ücretsiz Deneyin"}/>
+					<CustomButton content={"Daha Fazla Bilgi Edinin"}/>
+				</HStack>
 
-		<VStack>
-		<Heading fontSize={{ sm: '22px', md: '24px', lg: '36px' }} >Efficiency in maintenance, excellence in service. </Heading>
-		<HStack>
-			<CustomButton content={"Ücretsiz Deneyin"}/>
-			<CustomButton content={"Daha Fazla Bilgi Edinin"}/>
-		</HStack>
-
-		</VStack>
+			</VStack>
+		</motion.div>
 
 		</Flex>
 
@@ -66,7 +69,9 @@ const data = useColorModeValue(landing1Light,landing1Dark)
 			width="200px"
 			height="200px"
 		/>
+
 		<ServiceCardsView/>
+		</motion.div>
 		</>
 	)
 

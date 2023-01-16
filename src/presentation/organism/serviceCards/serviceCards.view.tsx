@@ -10,6 +10,7 @@ import ServiceCardFooter from "../../molecules/serviceCardBlock/serviceCardFoote
 const ServiceCardsView=()=>{
 	return (
 		<SimpleGrid px="10%" py="20px" spacing={4} templateColumns='repeat(auto-fill, minmax(180px, 1fr))'>
+			
 			<Card>
 				<CardHeader>
 					<IconContext.Provider value={{color:"#14da8f",size:"22px"}}>
