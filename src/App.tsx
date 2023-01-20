@@ -13,15 +13,14 @@ const App  =()=> {
  
 
   return (
-	
-	
+
 		<>
 			<HeaderView/>
 			<Routes>
 			<Route path="/" element={<Landing/>}></Route>
 			<Route path="/home" element={<Landing/>}></Route>
 			<Route path="/login" element={<Login/>}></Route>
-			<Route path="/signup" element={<RegisterView/>}></Route>
+			<Route path="/register" element={<RegisterView/>}></Route>
 			<Route path="/career" element={<Career/>}></Route>
 
 			 
