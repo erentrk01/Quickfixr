@@ -1,21 +1,14 @@
+import {Box,Link,Checkbox,Stack,FormControl,Input,FormLabel,Button} from '@chakra-ui/react'
+import {motion} from 'framer-motion'
 
-import {
-	Box,
-	Link,
-	FormControl,
-	FormLabel,
-	Input,
-	Stack,
-	Checkbox,
-	Button
-  } from '@chakra-ui/react'
-  import { motion } from 'framer-motion'
 
-export const LoginForm = () => {
-	let easing =[0.6, -0.05, 0.01, 0.99]
+
+const ResidentRegisterForm = () => {
+
 	const VARIANT_COLOR = 'teal'
+	let easing =[0.6, -0.05, 0.01, 0.99]
+
 	return (
-	  <Box my={8} textAlign='left'>
 		<form>
 			
 		  <FormControl>
@@ -32,10 +25,17 @@ export const LoginForm = () => {
 			<Input type='password' placeholder='Enter your password' />
 			
 		  </FormControl>
+		  <FormControl mt={4}>
+		  <motion.div initial={{opacity:0,scale:0}} animate={{opacity:1,scale:1}} transition={{duration:1.3,ease:easing}}>
+			<FormLabel>Building Id</FormLabel>
+			</motion.div>
+			<Input type='password' placeholder='Enter your Building Id' />
+			
+		  </FormControl>
   
 		  <Stack isInline justifyContent='space-between' mt={4}>
 			  <Box>
-			  <motion.div initial={{opacity:0,scale:0}} animate={{opacity:1,scale:1}} transition={{duration:1.2,ease:easing}}>
+			  <motion.div initial={{opacity:0,scale:0}} animate={{opacity:1,scale:1}} transition={{duration:1.4,ease:easing}}>
 				<Checkbox>Remember Me</Checkbox>
 				</motion.div>
 			  </Box>
@@ -45,7 +45,8 @@ export const LoginForm = () => {
 		  </Stack>
 
 		<Button  width='full' mt={4}>Sign In</Button>
-		</form>
-	  </Box>
+	</form>
 	)
-  }
+}
+
+export default ResidentRegisterForm;

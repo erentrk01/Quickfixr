@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { Route,Routes } from 'react-router-dom';
 import './App.css'
 import { HeaderView } from './presentation/organism/header/header.view';
+import RegisterView from './presentation/organism/register/register.view';
+
 import { Career } from './presentation/pages/career';
 import Landing from './presentation/pages/landing';
 import Login from './presentation/pages/login';
@@ -19,7 +21,9 @@ const App  =()=> {
 			<Route path="/" element={<Landing/>}></Route>
 			<Route path="/home" element={<Landing/>}></Route>
 			<Route path="/login" element={<Login/>}></Route>
+			<Route path="/signup" element={<RegisterView/>}></Route>
 			<Route path="/career" element={<Career/>}></Route>
+
 			 
 			</Routes>
 		</>
