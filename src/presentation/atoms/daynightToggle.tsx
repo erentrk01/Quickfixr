@@ -2,7 +2,7 @@ import { useState }from "react";
 import DayNightToggle from 'react-day-and-night-toggle'
 import {useColorMode} from "@chakra-ui/color-mode";
 
-const DaynightToggleImpl = ()=>{
+const DaynightToggleImpl = ({size})=>{
 	const {toggleColorMode} = useColorMode();
 	const [isDarkMode, setIsDarkMode] = useState( true)
 	return(
@@ -11,7 +11,7 @@ const DaynightToggleImpl = ()=>{
 				toggleColorMode(); 
 			 }}
 		checked={isDarkMode}
-	  size={18}
+		size={size}
 		/>
 	)
 
