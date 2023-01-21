@@ -9,9 +9,12 @@ import { Career } from './presentation/pages/career';
 import Dashboard from './presentation/pages/dashboard';
 import Landing from './presentation/pages/landing';
 import Login from './presentation/pages/login';
+import NotFound from './presentation/pages/notFound';
+import { useAppSelector } from './store';
 
 const App  =()=> {
 	const location = useLocation();
+	let isAuthenticated =useAppSelector(state => state.login.isAuthenticated)
 
 
   return (
@@ -23,14 +26,17 @@ const App  =()=> {
 			}
 		
 			<Routes>
-			<Route path="/" element={<Landing/>}></Route>
-			<Route path="/home" element={<Landing/>}></Route>
-			<Route path="/login" element={<Login/>}></Route>
-			<Route path="/register" element={<RegisterView/>}></Route>
-			<Route path="/career" element={<Career/>}></Route>
-			<Route path="/dashboard" element={<Dashboard/>}></Route>
+				<Route path="/" element={<Landing/>}></Route>
+				<Route path="/home" element={<Landing/>}></Route>
+				<Route path="/login" element={<Login/>}></Route>
+				<Route path="/register" element={<RegisterView/>}></Route>
+				<Route path="/career" element={<Career/>}></Route>
+				<Route path="*" element={<NotFound/>}></Route>
+				{
+					isAuthenticated &&
+					<Route path="/dashboard" element={<Dashboard/>}></Route>
+				}
 
-			 
 			</Routes>
 		</>
 		

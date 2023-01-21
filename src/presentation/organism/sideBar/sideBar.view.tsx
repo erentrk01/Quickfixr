@@ -14,7 +14,7 @@ const SideBar = () => {
 			pos='absolute'
 			left='0'
 			h='95vh'
-			marginTop='1.5vh'
+			marginTop='0.5vh'
 			boxShadow='0px 4px 12px 0px rgba(0,0,0,0.95)'
 			w={navSize == "small" ? "60px" : "200px"}
 			flexDirection='column'
