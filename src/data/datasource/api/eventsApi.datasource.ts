@@ -1,25 +1,40 @@
+import axios from "axios";
 import { Event } from "../../../domain/model/event";
 import EventsDataSource from "../events.datasource";
 import { EventsApiEntity } from "./entity/eventsApi.entity";
 
-const BASE_URL = "https://jsonplaceholder.typicode.com";
+const BASE_URL = " http://mobile-backend-s6ep.vercel.app";
 
-interface TypedResponse<T = any> extends Response {
-    json<P = T>(): Promise<P>;
-}
 
-function myFetch<T>(...args: any): Promise<TypedResponse<T>> {
-    return fetch.apply(window, args);
-}
 
 export default class EventAPIDataSourceImpl implements EventsDataSource {
     async getEvents(): Promise<Event[]> {
-        let response = await myFetch<EventsApiEntity[]>(`${BASE_URL}/events`);
-        let data = await response.json();
-        return data.map((item) => ({
-            id: item.id,
-            title: item.title,
-            isComplete: item.completed,
-        }));
+        let response:string = await axios.get(`${BASE_URL}/fetchEvents/844872`);
+		let res =JSON.stringify(response);
+		var jsonData = JSON.parse(res);
+		
+	
+	
+		let events:Event[] = [];
+		
+		for(let i=0; i<jsonData.data.events.length; i++){
+			let item = jsonData.data.events[i][0];
+
+			let event: Event = {
+				title: item.eventTitle,
+				description: item.eventDescription,
+				date: item.date,
+				functionalArea: item.functionalArea,
+				condition: item.condition,
+				serviceContactPhone: item.serviceContactPhone,
+			}
+			events.push(event);
+		}
+
+
+			//gelen data boş ise
+
+			
+			return events;
+		}
     }
-}

@@ -1,5 +1,5 @@
 import { Flex, Link, Menu, MenuButton,Text,Icon,Tooltip} from "@chakra-ui/react";
-
+import { NavLink } from "react-router-dom";
 
 const NavItem =({navSize,title,icon})=>{
 	return(
@@ -12,6 +12,8 @@ const NavItem =({navSize,title,icon})=>{
 			<Menu placement="right">
 			<Tooltip display={navSize =="small" ? "flex":"none"} label={title} placement='auto-start'>
 				<Link
+					as={NavLink}
+					to={"/"+title}
 					p={3}
 					borderRadius={8}
 					_hover={{textDecor:"none" ,background: "gray.100" }}

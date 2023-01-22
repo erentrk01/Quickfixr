@@ -1,5 +1,8 @@
 export interface Event {
-	id: number;
-    title: string;
-    isComplete: boolean;
+	title: string;
+    description: string;
+	functionalArea:string;
+	condition:string;
+	serviceContactPhone:string;
+	date:string;
 }

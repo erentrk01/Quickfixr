@@ -1,5 +1,8 @@
 export interface EventsApiEntity {
-	id: number;
     title: string;
-    completed: boolean;
+    description: string;
+	functionalArea:string;
+	condition:string;
+	serviceContactPhone:string;
+	date:string;
 }

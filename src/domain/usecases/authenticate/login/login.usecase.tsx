@@ -8,6 +8,7 @@ const initialState = {
 	},
 	isLoading: false,
 	isAuthenticated: false,
+	user: localStorage.getItem("user"),
 	error:''
 	
 }
@@ -19,6 +20,7 @@ interface User{
 const login =	async(values:User,{ rejectWithValue })=>{
 	try{
 		const response = await axios.post("https://mobile-backend-2tdf.vercel.app/loginUser",values)
+		localStorage.setItem("user","true")
 		return response.data
 	}catch(err){
 		return rejectWithValue(err.response.data)
@@ -53,6 +55,7 @@ const loginSlice = createSlice({
 			state.data = payload
 			state.isLoading = false
 			state.isAuthenticated = true
+			state.user = localStorage.getItem("user")
 			state.error=""
 			console.log("fulfilled")
 		});
@@ -60,6 +63,7 @@ const loginSlice = createSlice({
 			state.isLoading = false
 			state.error = "error occured"
 			console.log("rejected")
+			localStorage.removeItem("user")
 
 		});
 	}})
