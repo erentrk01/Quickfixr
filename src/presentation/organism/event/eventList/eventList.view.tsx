@@ -4,8 +4,6 @@ import {
 	List,
 	ListItem,
 	ListIcon,
-	OrderedList,
-	UnorderedList,
 	Card,
 	CardHeader,
 	CardBody,
@@ -13,7 +11,7 @@ import {
 	Text,
 	CardFooter,
 	Box,
-	HStack,
+	HStack
   } from '@chakra-ui/react'
 import { IconBaseProps, IconContext, IconType } from "react-icons";
 import { IoMailOutline } from "react-icons/io5";
@@ -23,13 +21,14 @@ import {GrLaunch,GrUpdate} from "react-icons/gr"
 import {AiTwotoneDelete} from "react-icons/ai";
 import {SlLike} from "react-icons/sl";
 
-import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
 import SkeletonEvents from "../../../molecules/skeletonBlock/skeletonEvents";
 
 
+import { ReactComponent as Home} from '../../../../assets/building.svg'
 
 export const EventList = () => {
 	const {getEvents,events} = EventListViewModel();
+	const [isShown, setIsShown] = useState(false);
 
 
 	useEffect(()=>{
@@ -59,44 +58,71 @@ export const EventList = () => {
 			}
 
 			<List>
+			
 			{
 				events.map((event,i) => {
 					return (
 					
-						<Card mt={5} key={i} borderRadius={12}>
-							<CardHeader>
-								<IconContext.Provider value={{color:"#14da8f",size:"22px"}}>
-									{
-										
-									detectConditionIcon(event.condition)
-									}
-								</IconContext.Provider>
-								{event.title}
+						<Card  mt={5} key={i} borderRadius={12}>
+							<CardHeader >
+								<HStack
+								justifyContent={"space-between"}
+								>
+									<IconContext.Provider value={{color:"#14da8f",size:"22px"}}>
+										{
+											detectConditionIcon(event.condition)
+										}
+									</IconContext.Provider>
+									<Home 
+
+										width="100px"
+										height="100px"/>
+								</HStack>
+								<Box width="300px" bg='orange.300' borderRadius={12} padding={2}>
+								
+								<Text>{event.title}</Text>
+								</Box>
+
 							</CardHeader>
 							<ListItem >
 								<ListIcon color='green.500' />
 								{}
+								
+								
 							</ListItem>
 							<CardBody>
-
 								
-								<Box bg='green.500' borderRadius={12} padding={3}>
+								<Box bg="gray.400" borderRadius={12} padding={2}>
+								<Text>{event.functionalArea}</Text>
+								</Box>
+								<Box mt={1} bg='green.600' borderRadius={12} padding={2}>
 								<Text>{event.description}</Text>
 								</Box>
-								<HStack  borderRadius={12} padding={3}>
+								<Box mt={1} bg='green.500' borderRadius={12} padding={2}>
+								<Text>{event.serviceContactPhone}</Text>
+								</Box>
+
+
+								<Text>{event.date}</Text>
+							</CardBody>
+							<CardFooter >
+							<HStack  											
+											borderRadius={12} padding={3}>
 									<IconContext.Provider value={{color:"#14da8f",size:"22px"}}>
 										<AiTwotoneDelete/>
 									</IconContext.Provider>
-									<IconContext.Provider value={{color:"#14da8f",size:"22px"}}>
-										<SlLike/>
+	
+									<IconContext.Provider
+										value={{color:"#14da8f",size:"22px"}}>
+										<SlLike
+										/>
 									</IconContext.Provider>
+
 									<IconContext.Provider value={{color:"#14da8f",size:"22px"}}>
 									 <MdTipsAndUpdates/>
 									</IconContext.Provider>
 								</HStack>
-							</CardBody>
-							<CardFooter >
-								<Text>{event.date}</Text>
+
 							</CardFooter>
 						</Card>
 
