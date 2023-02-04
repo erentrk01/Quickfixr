@@ -18,7 +18,8 @@ import {
 	AlertDialog,
 	SimpleGrid,
 	VStack,
-	useDisclosure
+	useDisclosure,
+	Tooltip
   } from '@chakra-ui/react'
 
 import { IconContext } from "react-icons";
@@ -113,16 +114,19 @@ export const EventList = () => {
 				events.map((event,i) => {
 					return (
 					
-						<Card  mt={5} key={i} borderRadius={12}>
+						<Card  mt={4} key={i} borderRadius={12}>
 							<CardHeader >
 								<HStack
 								justifyContent={"space-between"}
-								>
-									<IconContext.Provider value={{color:"#14da8f",size:"22px"}}>
-										{
-											detectConditionIcon(event.condition)
-										}
-									</IconContext.Provider>
+								><Tooltip label={event.condition} 
+								borderRadius={10}
+								placement='auto-start' fontSize='md'>
+									<Box>
+										<IconContext.Provider value={{color:"#14da8f",size:"22px"}}>
+											{detectConditionIcon(event.condition)}
+										</IconContext.Provider>
+									</Box>
+									</Tooltip>
 									<Home 
 
 										width="100px"
