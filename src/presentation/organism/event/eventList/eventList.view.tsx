@@ -34,7 +34,7 @@ export const EventList = () => {
 	useEffect(()=>{
 		getEvents();
 		
-	},[events])
+	},[])
 
 	const detectConditionIcon  = (condition) => {
 		switch (condition) {
