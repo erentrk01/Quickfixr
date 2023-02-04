@@ -1,10 +1,13 @@
+import { Hide } from "@chakra-ui/react";
 import { EventList } from "../organism/event/eventList/eventList.view";
 import SideBar from "../organism/sideBar/sideBar.view";
 
 const Events = () => {
 	return (
 		<>
-			<SideBar/>
+			<Hide below="md">
+				<SideBar/>
+			</Hide>
 			<EventList/>
 		
 		</>

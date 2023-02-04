@@ -19,7 +19,8 @@ import {
 	AlertDialogHeader,
 	AlertDialogBody,
 	AlertDialog,
-	Collapse
+	Collapse,
+	SimpleGrid
   } from '@chakra-ui/react'
 import { IconBaseProps, IconContext, IconType } from "react-icons";
 import { IoMailOutline } from "react-icons/io5";
@@ -98,7 +99,7 @@ export const EventList = () => {
 			{events.length === 0 &&
 				<SkeletonEvents/>
 			}
-
+			 <SimpleGrid columns={1}>
 			<List>
 			
 			{
@@ -135,7 +136,7 @@ export const EventList = () => {
 							<CardBody>
 								
 								<Box bg="gray.400" borderRadius={12} padding={2}>
-								<Text>{event.functionalArea}</Text>
+									<Text>{event.functionalArea}</Text>
 								</Box>
 								<Box mt={1} bg='green.600' borderRadius={12} padding={2}>
 								<Collapse startingHeight={20} in={show}>
@@ -149,11 +150,7 @@ export const EventList = () => {
 								<Box mt={1} bg='green.500' borderRadius={12} padding={2}>
 								<Text>{event.serviceContactPhone}</Text>
 								</Box>
-
-
 								<Text>{event.date}</Text>
-								
-    		
 							</CardBody>
 							<CardFooter >
 								<HStack justifyContent={"space-between"}>
@@ -187,6 +184,7 @@ export const EventList = () => {
 			})}
 			  	
 			</List>
+			</SimpleGrid>
 
 		</VStack>
 
