@@ -6,7 +6,7 @@ import { Link } from "@chakra-ui/react";
 		<>
 			<Link as={NavLink} to="/">Home</Link>
 			<Link as={NavLink} to="/login">Login</Link>
-			<Link as={NavLink} to="/signup">Register</Link>
+			<Link as={NavLink} to="/register">Register</Link>
 			<Link>About</Link>
 			<Link>Services</Link>
 			<Link as={NavLink} to="/career">Career</Link>
