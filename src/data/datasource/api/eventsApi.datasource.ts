@@ -2,6 +2,7 @@ import axios from "axios";
 import { Event } from "../../../domain/model/event";
 import EventsDataSource from "../events.datasource";
 import { EventsApiEntity } from "./entity/eventsApi.entity";
+import { useEffect } from "react";
 
 const BASE_URL = " http://mobile-backend-s6ep.vercel.app";
 
