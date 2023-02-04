@@ -31,6 +31,7 @@ import EventBody from "../../../molecules/eventCard/eventBody";
 import EventFooter from "../../../molecules/eventCard/eventFooter";
 
 import { ReactComponent as Home} from '../../../../assets/building.svg';
+import warning from '../../../../assets/warning.png';
 
 
 
@@ -42,7 +43,6 @@ export const EventList = () => {
 	const cancelRef = useRef<any>(null)
 
 	const [show, setShow] = useState(false)
-	const handleToggle = () => setShow(!show)
 
 	useEffect(()=>{
 		getEvents();
@@ -65,20 +65,31 @@ export const EventList = () => {
 	
 	return(
 		<VStack >
+
 			   <AlertDialog
         			isOpen={isOpen}
 					leastDestructiveRef={cancelRef}
 					onClose={onClose}
-					  isCentered
+					isCentered
 				 >
        				 <AlertDialogOverlay>
-							<AlertDialogContent>
-								<AlertDialogHeader fontSize='lg' fontWeight='bold'>
+							<AlertDialogContent    color={"red.500"}  bgGradient={[
+							'linear(to-tr, teal.300, yellow.400)',
+							'linear(to-t, blue.200, teal.500)',
+							'linear(to-b, orange.100, purple.300)']}>
+
+								<AlertDialogHeader fontWeight='bold' fontSize='lg'  >
 									Delete Event
 									</AlertDialogHeader>
+								<VStack alignItems={"center"}>
+								<img src={warning} alt='warning' width='100px' height='100px' />
+
 								<AlertDialogBody>
+
+									
 									Are you sure? You can't undo this action afterwards.
 									</AlertDialogBody>
+									</VStack>
 
 								<AlertDialogFooter>
 									<Button ref={cancelRef} onClick={onClose}>
