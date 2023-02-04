@@ -1,4 +1,4 @@
-import { LegacyRef, MutableRefObject, RefObject, useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import { EventListViewModel } from "./eventList.viewmodel"
 import {
 	List,
@@ -7,7 +7,6 @@ import {
 	Card,
 	CardHeader,
 	Text,
-	CardFooter,
 	Box,
 	HStack,
 	Button,
@@ -18,23 +17,22 @@ import {
 	AlertDialogBody,
 	AlertDialog,
 	SimpleGrid,
-	VStack
+	VStack,
+	useDisclosure
   } from '@chakra-ui/react'
-import { IconBaseProps, IconContext, IconType } from "react-icons";
+
+import { IconContext } from "react-icons";
 import { IoMailOutline } from "react-icons/io5";
 import{IoMdDoneAll} from "react-icons/io"
-
-import {GrLaunch,GrUpdate} from "react-icons/gr"
-;
+import {GrLaunch,GrUpdate} from "react-icons/gr";
 
 import SkeletonEvents from "../../../molecules/skeletonBlock/skeletonEvents";
-
-
-import { ReactComponent as Home} from '../../../../assets/building.svg'
-import { useDisclosure } from "@chakra-ui/react";
-import { useRef} from "react";
 import EventBody from "../../../molecules/eventCard/eventBody";
 import EventFooter from "../../../molecules/eventCard/eventFooter";
+
+import { ReactComponent as Home} from '../../../../assets/building.svg';
+
+
 
 
 export const EventList = () => {
