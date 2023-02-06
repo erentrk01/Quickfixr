@@ -12,11 +12,12 @@ import Landing from './presentation/pages/landing';
 import Login from './presentation/pages/login';
 import NotFound from './presentation/pages/notFound';
 import EmailVerifyPage from './presentation/pages/emailverifypage';
-import { useAppSelector } from './store';
+import { useAppDispatch, useAppSelector } from './store';
 
 const App  =()=> {
 	const location = useLocation();
-
+	const dispatch = useAppDispatch();
+	const auth:any=useAppSelector(state => state.auth)
 
 
 
@@ -27,7 +28,7 @@ const App  =()=> {
 				location.pathname !==("/dashboard") &&
 				<HeaderView/>
 			}
-		
+
 			<Routes>
 				<Route path="/" element={<Landing/>}></Route>
 				<Route path="/home" element={<Landing/>}></Route>
@@ -36,12 +37,8 @@ const App  =()=> {
 				<Route path="/career" element={<Career/>}></Route>
 				<Route path="*" element={<NotFound/>}></Route>
 				<Route path="/:id/verify/:token" element={<EmailVerifyPage/>} />
-				
-
-					<Route path="/dashboard" element={<Dashboard/>}></Route>
-					<Route path="/Events" element={<Events/>}></Route>
-
-
+				<Route path="/dashboard" element={<Dashboard/>}></Route>
+				<Route path="/Events" element={<Events/>}></Route>
 			</Routes>
 		</>
 		
