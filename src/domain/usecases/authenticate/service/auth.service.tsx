@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL='http://localhost:3000';
+const BASE_URL='https://mobile-backend-kohl.vercel.app';
 
 
 
@@ -34,8 +34,5 @@ export const loginToAPI = async(url,values) => {
 	return token;
 }
 
-export const verifyToAPI = async(url) => {
-	const { data } = await axios.get(url);
-	return data;
-}
+
 

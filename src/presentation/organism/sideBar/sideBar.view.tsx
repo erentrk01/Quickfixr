@@ -2,9 +2,11 @@ import { Avatar, Divider, Flex, Heading ,VStack,Text, IconButton} from "@chakra-
 import { useState } from "react";
 
 import {  IoMdMenu,IoMdHome } from 'react-icons/io';
+import{SlLogout} from 'react-icons/sl';
 import {FcTodoList} from 'react-icons/fc';
 import NavItem from "../../molecules/sideBarBlock/navItem";
 import DayNightToggle from "react-day-and-night-toggle"
+
 
 const SideBar = () => {
 	const [navSize, setNavSize] = useState('large');
@@ -45,6 +47,7 @@ const SideBar = () => {
 				/>
 				<NavItem navSize={navSize} icon={IoMdHome} title="Dashboard"/>
 				<NavItem navSize={navSize} icon={FcTodoList} title="Events"/>
+				<NavItem navSize={navSize} icon={SlLogout} title="Logout"/>
 				
 
 			</Flex>

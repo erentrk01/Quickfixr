@@ -11,6 +11,7 @@ import Events from './presentation/pages/events';
 import Landing from './presentation/pages/landing';
 import Login from './presentation/pages/login';
 import NotFound from './presentation/pages/notFound';
+import EmailVerifyPage from './presentation/pages/emailverifypage';
 import { useAppSelector } from './store';
 
 const App  =()=> {
@@ -34,7 +35,7 @@ const App  =()=> {
 				<Route path="/register" element={<RegisterView/>}></Route>
 				<Route path="/career" element={<Career/>}></Route>
 				<Route path="*" element={<NotFound/>}></Route>
-				
+				<Route path="/:id/verify/:token" element={<EmailVerifyPage/>} />
 				
 
 					<Route path="/dashboard" element={<Dashboard/>}></Route>
