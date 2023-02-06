@@ -10,7 +10,7 @@ const EventBody  =({event})=>{
 
 	
 	return(
-		<CardBody>				
+		<CardBody>
 			<Box bg="gray.400" borderRadius={12} padding={2}>
 				<Tooltip label='Functional Area' fontSize='md'>
 					<Text>{event.functionalArea}</Text>

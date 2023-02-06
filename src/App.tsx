@@ -15,7 +15,7 @@ import { useAppSelector } from './store';
 
 const App  =()=> {
 	const location = useLocation();
-	let isAuthenticated =useAppSelector(state => state.login.isAuthenticated)
+
 
 
 
@@ -34,12 +34,12 @@ const App  =()=> {
 				<Route path="/register" element={<RegisterView/>}></Route>
 				<Route path="/career" element={<Career/>}></Route>
 				<Route path="*" element={<NotFound/>}></Route>
-				<Route path="/Events" element={<Events/>}></Route>
-				{
-					(isAuthenticated && localStorage.getItem("user") =="true")
-					 &&
+				
+				
+
 					<Route path="/dashboard" element={<Dashboard/>}></Route>
-				}
+					<Route path="/Events" element={<Events/>}></Route>
+
 
 			</Routes>
 		</>

@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import loginSlice from "./domain/usecases/authenticate/login/login.usecase";
+import authSlice from "./domain/usecases/authenticate/login/login.usecase";
 import { TypedUseSelectorHook, useDispatch,useSelector } from "react-redux";
 
 
 export const store=  configureStore({
 	  reducer: {
-		login:loginSlice.reducer,
-	  },
+		auth:authSlice.reducer
+	  }
 })
 
 export const useAppDispatch:() => typeof store.dispatch= useDispatch;

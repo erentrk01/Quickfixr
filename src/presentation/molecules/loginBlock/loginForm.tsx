@@ -1,5 +1,5 @@
 
-import { Box,Link,FormControl,FormLabel,Input, Stack,Checkbox,Button,Spinner } from '@chakra-ui/react'
+import { Box,Link,FormControl,FormLabel,Input, Stack,Checkbox,Button,Spinner, useToast } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 
 import { useEffect, useState } from 'react';
@@ -7,9 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 import { loginUser } from '../../../domain/usecases/authenticate/login/login.usecase';
 import { useAppDispatch, useAppSelector } from '../../../store';
-
-
-
 
 
 export const LoginForm = () => {
@@ -21,8 +18,9 @@ export const LoginForm = () => {
 	const navigate = useNavigate();
 
 	const dispatch = useAppDispatch()
-	let isLoading =useAppSelector(state => state.login.isLoading)
-	let isAuthenticated =useAppSelector(state => state.login.isAuthenticated)
+	let auth:any=useAppSelector(state => state.auth)
+	const toast = useToast()
+
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -32,10 +30,28 @@ export const LoginForm = () => {
 	};
 
 	useEffect(() => {
-		if (isAuthenticated) {
+		if(auth._id){
 			navigate("/dashboard");
+			toast({
+				title: "Successfully Logged In",
+				description: "",
+				status: "success",
+				duration: 3000,
+				isClosable: false,
+			  })
 		}
-	}, [isAuthenticated]);
+	}, [auth._id, navigate]);
+
+	useEffect(() => {
+		if (auth.loginStatus === "rejected") {
+			toast({
+                title: `${auth.loginError}`,
+                status: "error",
+                isClosable: true,
+				duration: 2000
+              })
+            }
+		  },[auth.loginStatus])
 	
 	
 	let easing =[0.6, -0.05, 0.01, 0.99]
@@ -77,7 +93,7 @@ export const LoginForm = () => {
 		
 		</Stack>
 		{
-			isLoading &&
+			(auth.loginStatus == "pending") &&
 				<Spinner
 					thickness='4px'
 					speed='0.65s'
