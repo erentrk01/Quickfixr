@@ -7,9 +7,12 @@ import {FcTodoList} from 'react-icons/fc';
 import NavItem from "../../molecules/sideBarBlock/navItem";
 import DayNightToggle from "react-day-and-night-toggle"
 
+import { useAppDispatch } from "../../../store";
 
 const SideBar = () => {
 	const [navSize, setNavSize] = useState('large');
+	const dispatch = useAppDispatch()
+	
 
 	return (
 		<Flex
@@ -47,7 +50,7 @@ const SideBar = () => {
 				/>
 				<NavItem navSize={navSize} icon={IoMdHome} title="Dashboard"/>
 				<NavItem navSize={navSize} icon={FcTodoList} title="Events"/>
-				<NavItem navSize={navSize} icon={SlLogout} title="Logout"/>
+				<NavItem  navSize={navSize} icon={SlLogout} title="Logout"/>
 				
 
 			</Flex>

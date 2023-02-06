@@ -1,9 +1,18 @@
 import { Heading, Text } from "@chakra-ui/react";
+import { useAppSelector } from "../../store";
 import DaynightToggleImpl from "../atoms/daynightToggle";
+import {  Navigate,useNavigate } from 'react-router-dom'
 import SideBar from "../organism/sideBar/sideBar.view";
+import { useEffect } from "react";
 
 const Dashboard = () => {
-	  return (
+	const auth:any = useAppSelector(state => state.auth)
+
+	if(!auth._id) return <Navigate to="/login" /> ;
+
+
+
+	return (
 	<>
 	<Text px={0}>Hello, Welcome back</Text>
 	
