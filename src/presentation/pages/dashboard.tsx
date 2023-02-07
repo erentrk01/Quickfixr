@@ -4,6 +4,7 @@ import DaynightToggleImpl from "../atoms/daynightToggle";
 import {  Navigate,useNavigate } from 'react-router-dom'
 import SideBar from "../organism/sideBar/sideBar.view";
 import { useEffect } from "react";
+import DashboardView from "../organism/dashboard/dashboard.view";
 
 const Dashboard = () => {
 	const auth:any = useAppSelector(state => state.auth)
@@ -17,6 +18,7 @@ const Dashboard = () => {
 	<Text px={0}>Hello, Welcome back</Text>
 	
 	  <SideBar/>
+	  <DashboardView buildingId={auth.buildingId}/>
 	</>
   );
 

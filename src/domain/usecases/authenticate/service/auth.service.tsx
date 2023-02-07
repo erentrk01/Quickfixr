@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL='https://mobile-backend-kohl.vercel.app';
+const BASE_URL='http://localhost:3000';
 
 
 

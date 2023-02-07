@@ -39,6 +39,7 @@ const App  =()=> {
 				<Route path="/:id/verify/:token" element={<EmailVerifyPage/>} />
 				<Route path="/dashboard" element={<Dashboard/>}></Route>
 				<Route path="/Events" element={<Events/>}></Route>
+				<Route path="/Logout" element={<Login/>}></Route>
 			</Routes>
 		</>
 		

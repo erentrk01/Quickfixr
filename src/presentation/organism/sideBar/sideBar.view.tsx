@@ -1,17 +1,22 @@
 import { Avatar, Divider, Flex, Heading ,VStack,Text, IconButton} from "@chakra-ui/react";
 import { useState } from "react";
 
+
 import {  IoMdMenu,IoMdHome } from 'react-icons/io';
 import{SlLogout} from 'react-icons/sl';
+import {SiAuth0} from 'react-icons/si';
 import {FcTodoList} from 'react-icons/fc';
 import NavItem from "../../molecules/sideBarBlock/navItem";
 import DayNightToggle from "react-day-and-night-toggle"
 
-import { useAppDispatch } from "../../../store";
+import { useAppDispatch, useAppSelector } from "../../../store";
+import { IconBase, IconContext } from "react-icons";
 
 const SideBar = () => {
 	const [navSize, setNavSize] = useState('large');
 	const dispatch = useAppDispatch()
+	const auth:any = useAppSelector(state => state.auth)
+	console.log(auth)
 	
 
 	return (
@@ -71,11 +76,17 @@ const SideBar = () => {
 				<Divider
 					display={navSize == "small" ? "none" : "flex"}
 				/>
-				<Flex mt={4} align="center">
+				<Flex mt={5} align="center">
 					<Avatar size="sm" src="avatar-1.jpg"/>
-					<VStack display={navSize == "small" ? "none" : "flex"}>
-						<Heading as="h3" size="sm"> Eren Tarak</Heading>
+					<VStack ml={2} alignItems={"center"} display={navSize == "small" ? "none" : "flex"}>
+						{auth.isManager &&
+						<IconContext.Provider  value={{color:"#14da8f",size:"22px"}}>
+			 				<SiAuth0/>
+						</IconContext.Provider >
+						}
+						<Heading as="h3" size="sm">{auth.name} </Heading>
 
+					
 					</VStack>
 				</Flex>
 

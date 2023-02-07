@@ -16,11 +16,12 @@ const initialState = {
 	registerError: "",
 	loginStatus: "",
 	loginError: "",
+	isManager: false,
 	userLoaded: false,
 	verified: false,
   };
 
-  const url ="https://mobile-backend-kohl.vercel.app"
+  const url ="http://localhost:3000"
 
   export const registerResidentUser = createAsyncThunk(
 	"auth/registerUser",
@@ -83,10 +84,10 @@ const initialState = {
 		  return {
 			...state,
 			token,
-			username: user.username,
+			name: user.name,
 			email: user.email,
 			_id: user._id,
-			buildingCode: user.buildingId,
+			buildingId: user.buildingId,
 			userLoaded: true,
 			verified: user.verifyStatus,
 		  };
@@ -101,7 +102,7 @@ const initialState = {
 		  name: "",
 		  email: "",
 		  _id: "",
-		  buildingCode: "",
+		  buildingId: "",
 		  registerStatus: "",
 		  registerError: "",
 		  loginStatus: "",
@@ -122,7 +123,6 @@ const initialState = {
 			...state,
 			token: action.payload,
 			name: user.name,
-			buildingId: user.buildingId,
 			email: user.email,
 			_id: user._id,
 			registerStatus: "success",
@@ -148,7 +148,6 @@ const initialState = {
 			...state,
 			token: action.payload,
 			name: user.name,
-			buildingId: user.buildingId,
 			email: user.email,
 			_id: user._id,
 			registerStatus: "success",
@@ -175,6 +174,7 @@ const initialState = {
 			token: action.payload,
 			name: user.name,
 			email: user.email,
+			isManager: user.isManager,
 			buildingId: user.buildingId,
 			_id: user._id,
 			loginStatus: "success",
