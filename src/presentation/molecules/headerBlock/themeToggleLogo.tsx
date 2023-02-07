@@ -8,13 +8,13 @@ export const ThemeToggleLogo = () => {
 		
 
 		<Show below='sm'>
-			<Heading >Quickfixr</Heading>
+			<Heading>Quickfixr</Heading>
 		</Show>
 		<Hide above='md'>
 		
 			<MobileDrawer/>
 		</Hide> 
-		<DaynightToggleImpl/>
+		<DaynightToggleImpl size={20}/>
 	</HStack>
 	)
 }

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Link } from "@chakra-ui/react";
+import { Link} from "@chakra-ui/react";
 
  const LinksRow = () => {
 	return(

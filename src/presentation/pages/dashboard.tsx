@@ -15,9 +15,10 @@ const Dashboard = () => {
 
 	return (
 	<>
-	<Text px={0}>Hello, Welcome back</Text>
+
 	
 	  <SideBar/>
+	  <Text px={0}>Hello, Welcome back</Text>
 	  <DashboardView buildingId={auth.buildingId}/>
 	</>
   );

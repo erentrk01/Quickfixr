@@ -28,6 +28,7 @@ const SideBar = () => {
 	return (
 		<Flex
 			pos='absolute'
+			
 			left='0'
 			h='75vh'
 			marginTop='0.5vh'
