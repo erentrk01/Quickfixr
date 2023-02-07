@@ -1,5 +1,5 @@
 import { Event } from "../model/event";
 
 export interface EventsRepository {
-    getEvents(): Promise<Event[]>;
+    getEvents(buildingId:string): Promise<Event[]>;
 }

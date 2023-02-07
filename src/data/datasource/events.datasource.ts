@@ -1,5 +1,5 @@
 import { Event } from "../../domain/model/event";
 
 export default interface EventDataSource {
-    getEvents(): Promise<Event[]>;
+    getEvents(buildingId:string): Promise<Event[]>;
 }

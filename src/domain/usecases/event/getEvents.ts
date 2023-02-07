@@ -4,7 +4,7 @@ import { EventsRepository } from "../../repository/events.repository";
 
 export interface GetEventsUseCase {
 
-    invoke: () => Promise<Event[]>
+    invoke: (buildingId:string) => Promise<Event[]>
 
 }
 
@@ -15,7 +15,7 @@ export  class GetEvents implements GetEventsUseCase {
 		
 	}
 	
-	async invoke(){
-		return this.eventsRepo.getEvents();
+	async invoke(buildingId:string){
+		return this.eventsRepo.getEvents(buildingId);
 	}
 }

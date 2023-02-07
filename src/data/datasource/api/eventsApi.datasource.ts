@@ -9,8 +9,8 @@ const BASE_URL = "http://localhost:3000";
 
 
 export default class EventAPIDataSourceImpl implements EventsDataSource {
-    async getEvents(): Promise<Event[]> {
-        let response:string = await axios.get(`${BASE_URL}/fetchEvents/844872`);
+    async getEvents(buildingId): Promise<Event[]> {
+        let response:string = await axios.get(`${BASE_URL}/fetchEvents/${buildingId}`);
 		let res =JSON.stringify(response);
 		var jsonData = JSON.parse(res);
 		

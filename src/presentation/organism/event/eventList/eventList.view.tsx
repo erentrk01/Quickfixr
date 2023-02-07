@@ -33,11 +33,13 @@ import EventFooter from "../../../molecules/eventCard/eventFooter";
 
 import { ReactComponent as Home} from '../../../../assets/building.svg';
 import warning from '../../../../assets/warning.png';
+import { useAppSelector } from "../../../../store";
 
 
 
 
 export const EventList = () => {
+	const auth:any = useAppSelector(state => state.auth)
 	const {getEvents,events} = EventListViewModel();
 	//Alert Dialog
 	const { isOpen, onOpen, onClose } = useDisclosure()
@@ -46,7 +48,7 @@ export const EventList = () => {
 	const [show, setShow] = useState(false)
 
 	useEffect(()=>{
-		getEvents();
+		getEvents(auth.buildingId);
 		
 	},[])
 

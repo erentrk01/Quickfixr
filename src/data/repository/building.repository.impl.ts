@@ -9,8 +9,8 @@ export class BuildingRepositoryImpl implements BuildingRepository{
 	}
 
 
-	async getBuilding(url): Promise<Building> {
-		return this.dataSource.getBuilding(url);
+	async getBuilding(buildingId): Promise<Building> {
+		return this.dataSource.getBuilding(buildingId);
 	}
 
 }
