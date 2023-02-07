@@ -1,29 +1,35 @@
-import { Avatar, Divider, Flex, Heading ,VStack,Text, IconButton} from "@chakra-ui/react";
+import { Avatar, Divider, Flex, Heading ,VStack,Text, IconButton, Button, useDisclosure, Tooltip} from "@chakra-ui/react";
 import { useState } from "react";
 
 
 import {  IoMdMenu,IoMdHome } from 'react-icons/io';
 import{SlLogout} from 'react-icons/sl';
 import {SiAuth0} from 'react-icons/si';
+import {IoAddCircleOutline} from 'react-icons/io5';
 import {FcTodoList} from 'react-icons/fc';
 import NavItem from "../../molecules/sideBarBlock/navItem";
 import DayNightToggle from "react-day-and-night-toggle"
 
 import { useAppDispatch, useAppSelector } from "../../../store";
 import { IconBase, IconContext } from "react-icons";
+import EventCreateView from "../event/creation/eventCreate.view";
+import DaynightToggleImpl from "../../atoms/daynightToggle";
 
 const SideBar = () => {
 	const [navSize, setNavSize] = useState('large');
 	const dispatch = useAppDispatch()
 	const auth:any = useAppSelector(state => state.auth)
 	console.log(auth)
+	const { isOpen, onOpen, onClose } = useDisclosure()
+
+
 	
 
 	return (
 		<Flex
 			pos='absolute'
 			left='0'
-			h='95vh'
+			h='75vh'
 			marginTop='0.5vh'
 			boxShadow='0px 4px 12px 0px rgba(0,0,0,0.95)'
 			w={navSize == "small" ? "60px" : "200px"}
@@ -38,7 +44,7 @@ const SideBar = () => {
 				as='nav'
 				borderRadius={navSize == "small" ? "15px" : "30px"}
 				w={navSize == "small" ? "75px" : "200px"}
-			>
+				>
 				<IconButton
 					aria-label="Menu"
 					background="none"
@@ -55,9 +61,20 @@ const SideBar = () => {
 				/>
 				<NavItem navSize={navSize} icon={IoMdHome} title="Dashboard"/>
 				<NavItem navSize={navSize} icon={FcTodoList} title="Events"/>
-				<NavItem  navSize={navSize} icon={SlLogout} title="Logout"/>
 				
-
+				<Tooltip label="Create Event" display={navSize =="small" ? "flex":"none"}  placement='auto-start' aria-label="A tooltip">
+					<Button mt={3}
+					onClick={onOpen}>
+						<IconContext.Provider  value={{color:"yellow",size:"22px"}}>
+							<IoAddCircleOutline/>
+						</IconContext.Provider>
+					</Button>
+				</Tooltip>
+				<EventCreateView 
+					isOpen={isOpen}
+					onClose={onClose}
+				 />
+				<NavItem  navSize={navSize} icon={SlLogout} title="Logout"/>
 			</Flex>
 			<Flex
 				p='5%'
@@ -67,32 +84,27 @@ const SideBar = () => {
 				mb={4}
 
 			>
-
-						<DayNightToggle
-						size={navSize == "small" ? 16 :18}
-						
-						
-						/>
+				<DaynightToggleImpl size={16} />
 				<Divider
 					display={navSize == "small" ? "none" : "flex"}
 				/>
+
 				<Flex mt={5} align="center">
-					<Avatar size="sm" src="avatar-1.jpg"/>
+					<Tooltip label={auth.name} display={navSize =="small" ? "flex":"none"}  placement='auto-start' aria-label="A tooltip">
+						<Avatar size="sm" src="avatar-1.jpg"/>
+					</Tooltip>
 					<VStack ml={2} alignItems={"center"} display={navSize == "small" ? "none" : "flex"}>
-						{auth.isManager &&
-						<IconContext.Provider  value={{color:"#14da8f",size:"22px"}}>
-			 				<SiAuth0/>
-						</IconContext.Provider >
+						{	auth.isManager &&
+							<IconContext.Provider  value={{color:"#14da8f",size:"22px"}}>
+			 					<SiAuth0/>
+							</IconContext.Provider >
 						}
 						<Heading as="h3" size="sm">{auth.name} </Heading>
-
-					
 					</VStack>
 				</Flex>
 
 			</Flex>
-
-		</Flex>	
+		</Flex>
 	)
 }
 

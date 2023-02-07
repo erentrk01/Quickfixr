@@ -18,6 +18,23 @@ const App  =()=> {
 	const location = useLocation();
 	const dispatch = useAppDispatch();
 	const auth:any=useAppSelector(state => state.auth)
+	// In Dashboard mode, header will not be visible
+	const[dashboardMode,setDashboardMode]=useState(false)
+
+
+
+	useEffect(() => {
+		if(location.pathname === "/Dashboard"){
+			setDashboardMode(true)
+		} else if(location.pathname === "/Events"){
+			setDashboardMode(true)
+		}
+		else{
+			setDashboardMode(false)
+		}
+	}
+	, [location.pathname])
+	
 
 
 
@@ -25,7 +42,7 @@ const App  =()=> {
 
 		<>
 			{
-				location.pathname !==("/dashboard") &&
+				!dashboardMode &&
 				<HeaderView/>
 			}
 
@@ -37,7 +54,7 @@ const App  =()=> {
 				<Route path="/career" element={<Career/>}></Route>
 				<Route path="*" element={<NotFound/>}></Route>
 				<Route path="/:id/verify/:token" element={<EmailVerifyPage/>} />
-				<Route path="/dashboard" element={<Dashboard/>}></Route>
+				<Route path="/Dashboard" element={<Dashboard/>}></Route>
 				<Route path="/Events" element={<Events/>}></Route>
 				<Route path="/Logout" element={<Login/>}></Route>
 			</Routes>
