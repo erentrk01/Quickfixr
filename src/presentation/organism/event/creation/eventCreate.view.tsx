@@ -15,6 +15,12 @@ const EventCreateView = ({isOpen,onClose}) => {
 		date:""
 	});
 
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		
+		e.target.reset()
+	}
+
 	return (
 		<>
 			<Modal 
@@ -48,6 +54,7 @@ const EventCreateView = ({isOpen,onClose}) => {
 								<FormControl mt={3}>
 									<FormLabel>Condition</FormLabel>
 									<Select 
+										onChange={(e) => setEvent({ ...event, condition: e.target.value })}
 										variant='filled' 
 										placeholder='pending'>
 											<option value='option1'>in progress</option>
@@ -76,7 +83,7 @@ const EventCreateView = ({isOpen,onClose}) => {
 								<Button colorScheme='blue' mr={3} onClick=		{onClose}>
 										Close
 								</Button>
-								<Button variant='ghost'>Create</Button>
+								<Button onClick={handleSubmit} variant='ghost'>Create</Button>
 							</ModalFooter>
 					</ModalContent>
 			</Modal>
