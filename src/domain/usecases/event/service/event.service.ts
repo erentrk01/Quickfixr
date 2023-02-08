@@ -1,5 +1,5 @@
 import axios from "axios"
-const postEvent = async(url,values) => {
+export const postEvent = async(url,values) => {
 	//buildingId, email,eventTitle, eventDate, eventDescription,functionalArea,condition,serviceContactPhone
 	const eventResponse = await axios.post(`${url}/createEvent`, {
         buildingId: values.buildingId,
@@ -16,7 +16,12 @@ const postEvent = async(url,values) => {
 }
 
 
- const deleteEvent = async(url,values) => {
+ export const deleteEvent = async(url,values) => {
 	const deleteResponse = await axios.post(`${url}/deleteEvent/${values.eventId}`);
 	return deleteResponse;
 }
+
+/*export const getEvents = async (url,values) => {
+	const response = await axios.get(`${url}/fetchEvents/${values.buildingId}`);
+}
+*/
