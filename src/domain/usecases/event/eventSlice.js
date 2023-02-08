@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-import {postEvent} from "../../../service/eventService/event.service";
+import {postEvent,deleteEvent} from "./service/event.service"
 
 
 
@@ -13,7 +12,9 @@ const initialState = {
 	showActiveEvents:false,
 	isLoading: false,
 	responseMessage: "",
+	responseStatus: "",
   };
+
 
   const url ="http://localhost:3000"
 
@@ -29,12 +30,17 @@ const initialState = {
 	}
   );
 
-/*export const addEventToDB = createAsyncThunk("events/addEventToDB", async (post) => {
-    const response = await postEvent(url,post);
-    return response;
-});
-*/
-
+  export const deleteEventFromDb = createAsyncThunk(
+	"events/deleteEventFromDB",
+	async (eventId, { rejectWithValue }) => {
+	  try {
+		const deleteRequest = deleteEvent(url,eventId);
+		return eventId;
+	  } catch (error) {
+		return rejectWithValue(error.response.data.message);
+	  }
+	}
+  );
 
 
   export const eventSlice = createSlice({
@@ -49,9 +55,6 @@ const initialState = {
 				}
 			});
 		},
-		deleteEvent: (state, action) => {
-			state.events.filter((event) => event._id !== action.payload);
-		}
 
 	},
 	extraReducers: (builder) => {
@@ -67,30 +70,56 @@ const initialState = {
 		//Fulfilled
         builder.addCase(addPostToDB.fulfilled, (state, action) => {
             state.events.unshift(action.payload);
-            state.isLoading = false;
 			return {
 				...state,
-				isLoading: "false",
+				isLoading: false,
 				events:events,
 				responseMessage:"Event posted successfully",
 			}
         });
         builder.addCase(addPostToDB.rejected, (state, action) => {
-            state.error = action.error;
-            state.isLoading = false;
+
 			return {
 				...state,
-				isLoading: "false",
+				isLoading: false,
 				responseMessage:action.payload
 			}
         });
 	
 		/* deleteEventFromDB */
+		//pending
+		 builder.addCase(deleteEventFromDb.pending, (state, action) => {
+			
+			return {
+					...state,
+					responseStatus: "pending",
+					};
+				});
+		//Fulfilled
+		builder.addCase(deleteEventFromDb.fulfilled, (state, action) => {
+			return {
+				...state,
+				events: state.events.filter((event) => event._id !== action.payload),
+				responseMessage: "Event deleted successfully",
+				responseStatus: "success",
+			}
+			});		
+		//Rejected
+		builder.addCase(deleteEventFromDb.rejected, (state, action) => {
+			return {
+				...state,
+				isLoading: false,
+				responseMessage:action.payload,
+				responseStatus: "rejected",
+				}
+			});
 
-	}
+		}
+
+
   });
 
   
-  export const { loadUser, logoutUser } = authSlice.actions;
+  export const { finishEvent } = eventSlice.actions;
   
   export default eventSlice
