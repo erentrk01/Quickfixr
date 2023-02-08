@@ -43,11 +43,19 @@ const initialState = {
   );
 
 
+
+
   export const eventSlice = createSlice({
 	name: "events",
 	initialState,
 	reducers:{
-
+		getEvents: (state, action) => {
+			return {
+				...state,
+				events:action.payload,
+				responseStatus: "success",
+			}
+		},
 		finishEvent: (state, action) => {
 			state.events.forEach((event) => {
 				if (event._id === action.payload) {
