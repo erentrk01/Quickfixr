@@ -18,7 +18,7 @@ const initialState = {
 
   const url ="http://localhost:3000"
 
-  export const addEventToDB  = createAsyncThunk(
+  export const addPostToDB  = createAsyncThunk(
 	"events/addEventToDB",
 	async (event, { rejectWithValue }) => {
 	  try {
@@ -49,7 +49,7 @@ const initialState = {
 	name: "events",
 	initialState,
 	reducers:{
-		getEvents: (state, action) => {
+		getEventsState: (state, action) => {
 			return {
 				...state,
 				events:action.payload,
@@ -128,6 +128,6 @@ const initialState = {
   });
 
   
-  export const { finishEvent } = eventSlice.actions;
+  export const { getEventsState,finishEvent } = eventSlice.actions;
   
   export default eventSlice

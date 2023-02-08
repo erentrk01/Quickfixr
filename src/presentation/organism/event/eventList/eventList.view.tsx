@@ -1,5 +1,7 @@
 import { useEffect, useState,useRef } from "react";
 import { EventListViewModel } from "./eventList.viewmodel"
+import {getEventsState} from "../../../../domain/usecases/event/eventSlice"
+
 import {
 	List,
 	ListItem,
@@ -33,7 +35,7 @@ import EventFooter from "../../../molecules/eventCard/eventFooter";
 
 import { ReactComponent as Home} from '../../../../assets/building.svg';
 import warning from '../../../../assets/warning.png';
-import { useAppSelector } from "../../../../store";
+import { useAppDispatch, useAppSelector } from "../../../../store";
 
 
 
@@ -41,6 +43,9 @@ import { useAppSelector } from "../../../../store";
 export const EventList = () => {
 	const auth:any = useAppSelector(state => state.auth)
 	const {getEvents,events} = EventListViewModel();
+		const dispatch = useAppDispatch()
+	let eventState:any=useAppSelector(state => state.event)
+
 	//Alert Dialog
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const cancelRef = useRef<any>(null)
@@ -49,8 +54,11 @@ export const EventList = () => {
 
 	useEffect(()=>{
 		getEvents(auth.buildingId);
+		dispatch(getEventsState(eventState.events))
 		
 	},[])
+
+
 
 	const detectConditionIcon  = (condition) => {
 		switch (condition) {
@@ -64,7 +72,7 @@ export const EventList = () => {
 				return <IoMailOutline/>
 		}
 	}
-	
+	if(eventState.events.length===0) return <Text>No Events Posted</Text>
 	
 	return(
 		<VStack >
@@ -106,9 +114,16 @@ export const EventList = () => {
 						</AlertDialogOverlay>
 					</AlertDialog> 
 		
-			{events.length === 0 &&
+			{eventState.status ==! "success" &&
 				<SkeletonEvents/>
+			
 			}
+
+			{
+				
+			}
+
+			
 			 <SimpleGrid columns={1}>
 			<List>
 			
