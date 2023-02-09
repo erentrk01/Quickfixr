@@ -2,8 +2,19 @@ import {Textarea, Modal,ModalBody,ModalContent,ModalCloseButton,ModalFooter,Moda
 import {motion} from "framer-motion"
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../../store";
+import { addPostToDB } from "../../../../domain/usecases/event/eventSlice";
 
 const EventCreateView = ({isOpen,onClose}) => {
+
+	const dispatch = useAppDispatch()
+	const eventState = useAppSelector(state => state.event)
+	const auth = useAppSelector(state => state.auth)
+	const { token } = auth;
+	const config = { headers: { Authorization: `Bearer ${token}` } };
+
+
+
 	const VARIANT_COLOR = 'teal'
 	let easing =[0.6, -0.05, 0.01, 0.99]
 	 const[event,setEvent] =useState({
@@ -11,14 +22,16 @@ const EventCreateView = ({isOpen,onClose}) => {
 		description:'',
 		functionalArea:'',
 		serviceContactPhone:'',
-		condition:'',
-		date:""
+		condition:'pending',
+		date: new Date(),
 	});
 
 	const handleSubmit = (e) => {
-		e.preventDefault()
-		
-		e.target.reset()
+		e.preventDefault();
+		console.log("create button clicked")
+		console.log("condition:" +event.condition)
+		dispatch(addPostToDB(event))
+
 	}
 
 	return (
@@ -57,8 +70,8 @@ const EventCreateView = ({isOpen,onClose}) => {
 										onChange={(e) => setEvent({ ...event, condition: e.target.value })}
 										variant='filled' 
 										placeholder='pending'>
-											<option value='option1'>in progress</option>
-											<option value='option2'>done</option>
+											<option value='in progress'>in progress</option>
+											<option value='done'>done</option>
 									</Select>
 								</FormControl>
 

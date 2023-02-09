@@ -18,11 +18,21 @@ const initialState = {
 
   const url ="http://localhost:3000"
 
+/*  export const fetchEvents = createAsyncThunk("events/fetchEvents", async () => {
+	try {
+	   //const response = await axios.get(`${url}/api/tasks`);
+	  return response.data;
+	} catch (error) {
+	  return error.response.data.message;
+	}
+  });*/
+
   export const addPostToDB  = createAsyncThunk(
 	"events/addEventToDB",
 	async (event, { rejectWithValue }) => {
 	  try {
-		const response = await postEvent(url,event);
+		console.log("ıt s hitted")
+		const response = postEvent(url,event);
 		return response.data;
 	  } catch (error) {
 		return rejectWithValue(error.response.data.message);
@@ -49,20 +59,14 @@ const initialState = {
 	name: "events",
 	initialState,
 	reducers:{
-		getEventsState: (state, action) => {
+		getEventsState(state, action) {
 			return {
 				...state,
 				events:action.payload,
 				responseStatus: "success",
 			}
-		},
-		finishEvent: (state, action) => {
-			state.events.forEach((event) => {
-				if (event._id === action.payload) {
-					event.condition = "done";
-				}
-			});
-		},
+		}
+
 
 	},
 	extraReducers: (builder) => {
@@ -81,7 +85,7 @@ const initialState = {
 			return {
 				...state,
 				isLoading: false,
-				events:events,
+				events:[...state.events, action.payload],
 				responseMessage:"Event posted successfully",
 			}
         });

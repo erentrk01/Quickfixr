@@ -1,16 +1,26 @@
 import axios from "axios"
+import { store } from "../../../../store";
+
 export const postEvent = async(url,values) => {
 	//buildingId, email,eventTitle, eventDate, eventDescription,functionalArea,condition,serviceContactPhone
-	const eventResponse = await axios.post(`${url}/createEvent`, {
-        buildingId: values.buildingId,
-        email: values.email,
-        eventTitle: values.eventTitle,
+	const reduxStore = store.getState();
+	const auth:any = reduxStore.auth;
+
+	console.log("auth token:" +auth.token);
+
+	const config = { headers: { Authorization: `Bearer ${auth.token}` } };
+
+	
+		const eventResponse = await axios.post(`${url}/createEvent`, {
+        buildingId: auth.buildingId,
+		email: auth.email,
+        eventTitle: values.title,
 		eventDate: values.eventDate,
-		eventDescription: values.eventDescription,
+		eventDescription: values.description,
 		functionalArea: values.functionalArea,
 		condition: values.condition,
 		serviceContactPhone: values.serviceContactPhone
-      });
+      },config);
 
 	return eventResponse;
 }
@@ -21,7 +31,4 @@ export const postEvent = async(url,values) => {
 	return deleteResponse;
 }
 
-/*export const getEvents = async (url,values) => {
-	const response = await axios.get(`${url}/fetchEvents/${values.buildingId}`);
-}
-*/
+

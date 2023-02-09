@@ -36,15 +36,53 @@ import EventFooter from "../../../molecules/eventCard/eventFooter";
 import { ReactComponent as Home} from '../../../../assets/building.svg';
 import warning from '../../../../assets/warning.png';
 import { useAppDispatch, useAppSelector } from "../../../../store";
+import axios from "axios";
+import { Event } from "../../../../domain/model/event";
 
 
 
 
 export const EventList = () => {
 	const auth:any = useAppSelector(state => state.auth)
-	const {getEvents,events} = EventListViewModel();
+	const {events,getEvents}=EventListViewModel();
+
 		const dispatch = useAppDispatch()
 	let eventState:any=useAppSelector(state => state.event)
+
+	const BASE_URL = "http://localhost:3000";
+
+
+	//fetching
+/*	const getEvent = async (buildingId,config): Promise<Event[]> {
+
+        let response:string = await axios.get(`${BASE_URL}/fetchEvents/${buildingId}`, config);
+		let res =JSON.stringify(response);
+		var jsonData = JSON.parse(res);
+		
+	
+	
+		let events:Event[] = [];
+		
+		for(let i=0; i<jsonData.data.events.length; i++){
+			let item = jsonData.data.events[i][0];
+
+			let event: Event = {
+				title: item.title,
+				description: item.eventDescription,
+				date: item.date,
+				functionalArea: item.functionalArea,
+				condition: item.condition,
+				serviceContactPhone: item.serviceContactPhone,
+			}
+			events.push(event);
+		}
+
+
+			//gelen data boş ise
+
+			
+			return events;
+		}*/
 
 	//Alert Dialog
 	const { isOpen, onOpen, onClose } = useDisclosure()
@@ -53,6 +91,8 @@ export const EventList = () => {
 	const [show, setShow] = useState(false)
 
 	useEffect(()=>{
+		
+		console.log("triggered")
 		getEvents(auth.buildingId);
 		dispatch(getEventsState(eventState.events))
 		
@@ -72,7 +112,14 @@ export const EventList = () => {
 				return <IoMailOutline/>
 		}
 	}
-	if(eventState.events.length===0) return <Text>No Events Posted</Text>
+	console.log("events length :" +events.length)
+
+	
+		if(events.length===0){
+			 return <Text>No Events Posted</Text>
+		}
+
+	
 	
 	return(
 		<VStack >
