@@ -27,7 +27,9 @@ import {
 import { IconContext } from "react-icons";
 import { IoMailOutline } from "react-icons/io5";
 import{IoMdDoneAll} from "react-icons/io"
+import {MdOutlinePending} from "react-icons/md"
 import {GrLaunch,GrUpdate} from "react-icons/gr";
+import {GiProgression} from "react-icons/gi"
 
 import SkeletonEvents from "../../../molecules/skeletonBlock/skeletonEvents";
 import EventBody from "../../../molecules/eventCard/eventBody";
@@ -36,8 +38,8 @@ import EventFooter from "../../../molecules/eventCard/eventFooter";
 import { ReactComponent as Home} from '../../../../assets/building.svg';
 import warning from '../../../../assets/warning.png';
 import { useAppDispatch, useAppSelector } from "../../../../store";
-import axios from "axios";
-import { Event } from "../../../../domain/model/event";
+
+
 
 
 
@@ -51,40 +53,6 @@ export const EventList = () => {
 
 	const BASE_URL = "http://localhost:3000";
 
-
-	//fetching
-/*	const getEvent = async (buildingId,config): Promise<Event[]> {
-
-        let response:string = await axios.get(`${BASE_URL}/fetchEvents/${buildingId}`, config);
-		let res =JSON.stringify(response);
-		var jsonData = JSON.parse(res);
-		
-	
-	
-		let events:Event[] = [];
-		
-		for(let i=0; i<jsonData.data.events.length; i++){
-			let item = jsonData.data.events[i][0];
-
-			let event: Event = {
-				title: item.title,
-				description: item.eventDescription,
-				date: item.date,
-				functionalArea: item.functionalArea,
-				condition: item.condition,
-				serviceContactPhone: item.serviceContactPhone,
-			}
-			events.push(event);
-		}
-
-
-			//gelen data boş ise
-
-			
-			return events;
-		}*/
-
-	//Alert Dialog
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const cancelRef = useRef<any>(null)
 
@@ -102,12 +70,12 @@ export const EventList = () => {
 
 	const detectConditionIcon  = (condition) => {
 		switch (condition) {
-			case "ongoing" :
-				return <GrLaunch/>
+			case "in progress" || "devam ediyor":
+				return <GiProgression/>
 			case "done" || "tamamlandı":
 				return <IoMdDoneAll/>
-			case "waiting":
-				return <IoMailOutline/>
+			case "pending":
+				return <MdOutlinePending/>
 			default:
 				return <IoMailOutline/>
 		}
