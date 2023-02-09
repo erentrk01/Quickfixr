@@ -10,9 +10,8 @@ const initialState = {
 	showFinishedEvents:true,
 	showEvents:true,
 	showActiveEvents:false,
-	isLoading: false,
 	responseMessage: "",
-	responseStatus: "",
+	eventCreationStatus: "",
   };
 
 
@@ -76,25 +75,25 @@ const initialState = {
            
 			return {
 				...state,
-				isLoading: "true",
+				eventCreationStatus:"pending",
 			  };
         });
 		//Fulfilled
         builder.addCase(addPostToDB.fulfilled, (state, action) => {
-            state.events.unshift(action.payload);
 			return {
 				...state,
 				isLoading: false,
 				events:[...state.events, action.payload],
 				responseMessage:"Event posted successfully",
+				eventCreationStatus:"success",
 			}
         });
         builder.addCase(addPostToDB.rejected, (state, action) => {
 
 			return {
 				...state,
-				isLoading: false,
-				responseMessage:action.payload
+				responseMessage:action.payload,
+				eventCreationStatus:"failed"
 			}
         });
 	
@@ -120,7 +119,6 @@ const initialState = {
 		builder.addCase(deleteEventFromDb.rejected, (state, action) => {
 			return {
 				...state,
-				isLoading: false,
 				responseMessage:action.payload,
 				responseStatus: "rejected",
 				}

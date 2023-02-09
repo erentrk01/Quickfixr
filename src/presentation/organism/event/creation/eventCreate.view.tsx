@@ -1,6 +1,6 @@
-import {Textarea, Modal,ModalBody,ModalContent,ModalCloseButton,ModalFooter,ModalHeader,Button,ModalOverlay,Text,Stack,Box, FormControl, FormLabel, Input, Select} from "@chakra-ui/react";
+import {Textarea, Modal,ModalBody,ModalContent,ModalCloseButton,ModalFooter,ModalHeader,Button,ModalOverlay,Text,Stack,Box, FormControl, FormLabel, Input, Select, Spinner, Toast, useToast} from "@chakra-ui/react";
 import {motion} from "framer-motion"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../store";
 import { addPostToDB } from "../../../../domain/usecases/event/eventSlice";
@@ -8,10 +8,11 @@ import { addPostToDB } from "../../../../domain/usecases/event/eventSlice";
 const EventCreateView = ({isOpen,onClose}) => {
 
 	const dispatch = useAppDispatch()
-	const eventState = useAppSelector(state => state.event)
+	const eventState:any = useAppSelector(state => state.event)
 	const auth = useAppSelector(state => state.auth)
 	const { token } = auth;
 	const config = { headers: { Authorization: `Bearer ${token}` } };
+	const toast = useToast();
 
 
 
@@ -26,6 +27,19 @@ const EventCreateView = ({isOpen,onClose}) => {
 		date: new Date(),
 	});
 
+	useEffect(() => {
+		console.log("eventState"+eventState)
+		if (eventState.eventCreationStatus === "success") {
+			toast({
+                title: `Event posted successfully`,
+                status: "success",
+                isClosable: true,
+				duration: 2000
+              })
+            }
+		  },[eventState.eventCreationStatus ])
+	
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		console.log("create button clicked")
@@ -33,6 +47,7 @@ const EventCreateView = ({isOpen,onClose}) => {
 		dispatch(addPostToDB(event))
 
 	}
+
 
 	return (
 		<>
@@ -89,9 +104,18 @@ const EventCreateView = ({isOpen,onClose}) => {
 										<Input type='text' placeholder='Enter the contact phone'
 											onChange={(e) => setEvent({ ...event, serviceContactPhone: e.target.value })}/>
 									</motion.div>
+									{eventState.eventCreationStatus}
 								</FormControl>
-
+								{
+								(eventState.eventCreationStatus =="pending") && <Spinner mt={1}
+								thickness='4px'
+								speed='0.65s'
+								emptyColor='gray.200'
+								color={`${VARIANT_COLOR}.500`}
+							/>
+							}
 							</ModalBody>
+						
 							<ModalFooter>
 								<Button colorScheme='blue' mr={3} onClick=		{onClose}>
 										Close

@@ -80,7 +80,7 @@ export const EventList = () => {
 				return <IoMailOutline/>
 		}
 	}
-	console.log("events length :" +events.length)
+
 
 	
 		if(events.length===0){
