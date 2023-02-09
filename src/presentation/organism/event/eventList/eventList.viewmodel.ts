@@ -14,6 +14,9 @@ export  const EventListViewModel = () => {
 		new EventsRepositoryImpl(new EventAPIDataSourceImpl())
 		);
 
+
+
+	
 	const getEvents = async (buildingId:string) => {
 			setEvents(await UseCase.invoke(buildingId))
 
