@@ -1,6 +1,6 @@
 import { useEffect, useState,useRef } from "react";
 import { EventListViewModel } from "./eventList.viewmodel"
-import {getEventsState} from "../../../../domain/usecases/event/eventSlice"
+import {resetFetchedEvents,resetResponseStatus} from "../../../../domain/usecases/event/eventSlice"
 
 import {
 	List,
@@ -38,17 +38,20 @@ import EventFooter from "../../../molecules/eventCard/eventFooter";
 import { ReactComponent as Home} from '../../../../assets/building.svg';
 import warning from '../../../../assets/warning.png';
 import { useAppDispatch, useAppSelector } from "../../../../store";
-
+import { Player } from "@lottiefiles/react-lottie-player";
+import loading from "../../../../assets/loading.json"
 
 
 
 
 
 export const EventList = () => {
+	
 	const auth:any = useAppSelector(state => state.auth)
+	console.log("heeyed")
 	const {events,getEvents}=EventListViewModel();
 
-		const dispatch = useAppDispatch()
+	const dispatch = useAppDispatch()
 	let eventState:any=useAppSelector(state => state.event)
 
 	const BASE_URL = "http://localhost:3000";
@@ -59,16 +62,30 @@ export const EventList = () => {
 	const [show, setShow] = useState(false)
 
 	useEffect(()=>{
-		
+		dispatch(resetFetchedEvents(null))
 		console.log("triggered")
-		getEvents(auth.buildingId);
-		dispatch(getEventsState(eventState.events))
 		
+		getEvents(auth.buildingId);
+		console.log(events)
+
+		//dispatch(getEventsState(events))
+		console.log(eventState.events)
+
+		
+	},[events.length])
+
+
+	useEffect(()=>{
+		dispatch(resetResponseStatus(null))
 	},[])
 
+	
+	
 
 
 	const detectConditionIcon  = (condition) => {
+
+		
 		switch (condition) {
 			case "in progress" || "devam ediyor":
 				return <GiProgression/>
@@ -83,14 +100,25 @@ export const EventList = () => {
 
 
 	
-		if(events.length===0){
-			 return <Text>No Events Posted</Text>
+		if(eventState.responseStatus == ""){
+			console.log(eventState.responseStatus)
+			 return (
+			 <Player
+			 src={loading}
+			 className="player"
+			 loop
+			 autoplay
+			 style={{ height: '400px', width: '80%' }}/>)
 		}
-
+		
+	
+			
+		
 	
 	
 	return(
 		<VStack >
+			 <Text>{events.length } events posted in this building</Text>
 
 			   <AlertDialog
         			isOpen={isOpen}
@@ -128,21 +156,11 @@ export const EventList = () => {
 							</AlertDialogContent>
 						</AlertDialogOverlay>
 					</AlertDialog> 
-		
-			{eventState.status ==! "success" &&
-				<SkeletonEvents/>
-			
-			}
 
-			{
-				
-			}
-
-			
 			 <SimpleGrid columns={1}>
 			<List>
 			
-			{
+			{	
 				events.map((event,i) => {
 					return (
 					
