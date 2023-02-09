@@ -1,5 +1,5 @@
 
-import { Box,Link,FormControl,FormLabel,Input, Stack,Checkbox,Button,Spinner, useToast } from '@chakra-ui/react'
+import { Box,Link,FormControl,FormLabel,Input, Stack,Checkbox,Button,Spinner, useToast, Text } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 
 import { useEffect, useState } from 'react';
@@ -90,7 +90,6 @@ export const LoginForm = () => {
 			  <Box>
 				<Link color={`${VARIANT_COLOR}.500`}>Forgot your password?</Link>
 			  </Box>
-		
 		</Stack>
 		{
 			(auth.loginStatus == "pending") &&
