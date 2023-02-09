@@ -3,11 +3,13 @@ import EventAPIDataSourceImpl from "../../../../data/datasource/api/eventsApi.da
 import { EventsRepositoryImpl } from "../../../../data/repository/events.repository.impl";
 import { Event } from "../../../../domain/model/event";
 import { GetEvents } from "../../../../domain/usecases/event/getEvents";
-import { useAppDispatch } from "../../../../store";
-
+import { useAppDispatch, useAppSelector } from "../../../../store";
+import {getEventsState} from "../../../../domain/usecases/event/eventSlice"
 
 export  const EventListViewModel = () => {
-	const dispatch = useAppDispatch();
+	
+	const dispatch = useAppDispatch()
+	let eventState:any=useAppSelector(state => state.event)
 	
 	const [events, setEvents] = useState<Event[]>([]);
 	const UseCase = new GetEvents(
@@ -19,6 +21,8 @@ export  const EventListViewModel = () => {
 	
 	const getEvents = async (buildingId:string) => {
 			setEvents(await UseCase.invoke(buildingId))
+			dispatch(getEventsState(events))
+
 
 	}
 

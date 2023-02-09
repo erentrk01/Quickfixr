@@ -11,6 +11,7 @@ const initialState = {
 	showEvents:true,
 	showActiveEvents:false,
 	responseMessage: "",
+	responseStatus:"",
 	eventCreationStatus: "",
   };
 
@@ -58,13 +59,33 @@ const initialState = {
 	name: "events",
 	initialState,
 	reducers:{
-		getEventsState(state, action) {
-			return {
+		getEventsState(state = initialState, action) {
+			
+			action.payload.forEach(value => {
+				state.events.push(value);
+			  });
+			return{
 				...state,
-				events:action.payload,
-				responseStatus: "success",
+				responseStatus:"success",
 			}
+			
 		},
+		resetResponseStatus(state, action) {
+			return{
+				...state,
+				responseStatus:""
+			}
+		}
+		,
+
+		resetFetchedEvents(state, action) {
+			return{
+				...state,
+				events:[]
+			}
+		}
+
+		,
 		resetEventCreationState(state, action) {
 			console.log("resetEventCreationState triggered")
 			return {
@@ -137,6 +158,6 @@ const initialState = {
   });
 
   
-  export const { getEventsState,finishEvent,resetEventCreationState } = eventSlice.actions;
+  export const { getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus } = eventSlice.actions;
   
   export default eventSlice
