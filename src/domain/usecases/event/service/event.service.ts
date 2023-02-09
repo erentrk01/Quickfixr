@@ -6,7 +6,7 @@ export const postEvent = async(url,values) => {
 	const reduxStore = store.getState();
 	const auth:any = reduxStore.auth;
 
-	console.log("auth token:" +auth.token);
+	//console.log("auth token:" +auth.token);
 
 	const config = { headers: { Authorization: `Bearer ${auth.token}` } };
 

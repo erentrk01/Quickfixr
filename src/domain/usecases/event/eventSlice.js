@@ -64,6 +64,13 @@ const initialState = {
 				events:action.payload,
 				responseStatus: "success",
 			}
+		},
+		resetEventCreationState(state, action) {
+			console.log("resetEventCreationState triggered")
+			return {
+				...state,
+				eventCreationStatus: "",
+			}
 		}
 
 
@@ -130,6 +137,6 @@ const initialState = {
   });
 
   
-  export const { getEventsState,finishEvent } = eventSlice.actions;
+  export const { getEventsState,finishEvent,resetEventCreationState } = eventSlice.actions;
   
   export default eventSlice

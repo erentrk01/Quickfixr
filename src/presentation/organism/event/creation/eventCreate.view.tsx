@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../store";
 import { addPostToDB } from "../../../../domain/usecases/event/eventSlice";
+import {resetEventCreationState} from "../../../../domain/usecases/event/eventSlice";
+
 
 const EventCreateView = ({isOpen,onClose}) => {
 
 	const dispatch = useAppDispatch()
-	const eventState:any = useAppSelector(state => state.event)
+	let eventState:any = useAppSelector(state => state.event)
 	const auth = useAppSelector(state => state.auth)
 	const { token } = auth;
 	const config = { headers: { Authorization: `Bearer ${token}` } };
@@ -27,8 +29,10 @@ const EventCreateView = ({isOpen,onClose}) => {
 		date: new Date(),
 	});
 
+
+
 	useEffect(() => {
-		console.log("eventState"+eventState)
+		
 		if (eventState.eventCreationStatus === "success") {
 			toast({
                 title: `Event posted successfully`,
@@ -38,6 +42,10 @@ const EventCreateView = ({isOpen,onClose}) => {
               })
             }
 		  },[eventState.eventCreationStatus ])
+
+		  useEffect(() => {
+			console.log("event creation opened")
+		  },[])
 	
 
 	const handleSubmit = (e) => {
@@ -45,6 +53,8 @@ const EventCreateView = ({isOpen,onClose}) => {
 		console.log("create button clicked")
 		console.log("condition:" +event.condition)
 		dispatch(addPostToDB(event))
+		
+
 
 	}
 

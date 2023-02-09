@@ -1,5 +1,5 @@
 import { Avatar, Divider, Flex, Heading ,VStack,Text, IconButton, Button, useDisclosure, Tooltip} from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 import {  IoMdMenu,IoMdHome } from 'react-icons/io';
@@ -8,7 +8,9 @@ import {SiAuth0} from 'react-icons/si';
 import {IoAddCircleOutline} from 'react-icons/io5';
 import {FcTodoList} from 'react-icons/fc';
 import NavItem from "../../molecules/sideBarBlock/navItem";
-import DayNightToggle from "react-day-and-night-toggle"
+
+import {resetEventCreationState} from "../../../domain/usecases/event/eventSlice";
+
 
 import { useAppDispatch, useAppSelector } from "../../../store";
 import { IconBase, IconContext } from "react-icons";
@@ -19,10 +21,15 @@ const SideBar = () => {
 	const [navSize, setNavSize] = useState('large');
 	const dispatch = useAppDispatch()
 	const auth:any = useAppSelector(state => state.auth)
-	console.log(auth)
+	const eventState = useAppSelector(state => state.event)
+	//console.log(auth)
 	const { isOpen, onOpen, onClose } = useDisclosure()
 
-
+	const handleCloseEventCreation = () => {
+		console.log("closing")
+		dispatch(resetEventCreationState(eventState))
+		onClose()
+	}
 	
 
 	return (
@@ -73,7 +80,7 @@ const SideBar = () => {
 				</Tooltip>
 				<EventCreateView 
 					isOpen={isOpen}
-					onClose={onClose}
+					onClose={ handleCloseEventCreation}
 				 />
 				<NavItem  navSize={navSize} icon={SlLogout} title="Logout"/>
 			</Flex>
