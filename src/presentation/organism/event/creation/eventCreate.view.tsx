@@ -43,9 +43,6 @@ const EventCreateView = ({isOpen,onClose}) => {
             }
 		  },[eventState.eventCreationStatus ])
 
-		  useEffect(() => {
-			console.log("event creation opened")
-		  },[])
 	
 
 	const handleSubmit = (e) => {
@@ -53,6 +50,7 @@ const EventCreateView = ({isOpen,onClose}) => {
 		console.log("create button clicked")
 		console.log("condition:" +event.condition)
 		dispatch(addPostToDB(event))
+		onClose()
 		
 
 
@@ -114,7 +112,7 @@ const EventCreateView = ({isOpen,onClose}) => {
 										<Input type='text' placeholder='Enter the contact phone'
 											onChange={(e) => setEvent({ ...event, serviceContactPhone: e.target.value })}/>
 									</motion.div>
-									{eventState.eventCreationStatus}
+									
 								</FormControl>
 								{
 								(eventState.eventCreationStatus =="pending") && <Spinner mt={1}
