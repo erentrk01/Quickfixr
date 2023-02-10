@@ -32,7 +32,7 @@ const EventCreateView = ({isOpen,onClose}) => {
 
 
 	useEffect(() => {
-		
+		console.log("event creation status:" +eventState.eventCreationStatus)
 		if (eventState.eventCreationStatus === "success") {
 			toast({
                 title: `Event posted successfully`,
@@ -40,6 +40,8 @@ const EventCreateView = ({isOpen,onClose}) => {
                 isClosable: true,
 				duration: 2000
               })
+
+			  dispatch(resetEventCreationState(null))
             }
 		  },[eventState.eventCreationStatus ])
 

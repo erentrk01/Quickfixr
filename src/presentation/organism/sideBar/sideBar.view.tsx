@@ -21,13 +21,12 @@ const SideBar = () => {
 	const [navSize, setNavSize] = useState('large');
 	const dispatch = useAppDispatch()
 	const auth:any = useAppSelector(state => state.auth)
-	const eventState = useAppSelector(state => state.event)
+	const eventState:any= useAppSelector(state => state.event)
 	//console.log(auth)
 	const { isOpen, onOpen, onClose } = useDisclosure()
 
 	const handleCloseEventCreation = () => {
 		console.log("closing")
-		dispatch(resetEventCreationState(eventState))
 		onClose()
 	}
 	
