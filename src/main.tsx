@@ -5,8 +5,9 @@ import App from './App'
 import * as ReactDOM from 'react-dom/client'
 import {theme} from './services/theme/theme';
 import { BrowserRouter } from "react-router-dom";
+
 import { Provider } from 'react-redux';
-import {store} from "./store"
+import {store} from "./store";
 
 
 const rootElement = document.getElementById('root') as Element;
