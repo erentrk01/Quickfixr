@@ -1,8 +1,11 @@
-import { Heading, VStack } from "@chakra-ui/react";
+import { Heading, Text, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../../store";
 import { DashboardViewModel } from "./dashboard.viewmodel";
 
 const DashboardView = ({buildingId}) => {
+	const dispatch = useAppDispatch()
+	const eventState:any= useAppSelector(state => state.event)
 	const {getBuilding,building} = DashboardViewModel();
 	useEffect(()=>{
 		getBuilding(buildingId);
@@ -16,6 +19,13 @@ const DashboardView = ({buildingId}) => {
 				<Heading>{building?.name}</Heading>
 				<Heading>{building?.address}</Heading>
 				<Heading>Id:{buildingId}</Heading>
+				{
+					eventState.events.map((event:any)=>{
+						return(
+							<Text>{event.title}</Text>
+						)
+					})
+				}
 				
 			</VStack>
 		</>

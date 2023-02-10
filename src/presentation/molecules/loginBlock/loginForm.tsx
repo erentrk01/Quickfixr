@@ -31,7 +31,7 @@ export const LoginForm = () => {
 
 	useEffect(() => {
 		if(auth._id){
-			navigate("/Dashboard");
+			navigate("/Events");
 			toast({
 				title: "Successfully Logged In",
 				description: "",

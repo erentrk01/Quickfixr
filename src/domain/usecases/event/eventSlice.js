@@ -61,11 +61,10 @@ const initialState = {
 	reducers:{
 		getEventsState(state = initialState, action) {
 			
-			action.payload.forEach(value => {
-				state.events.push(value);
-			  });
+
 			return{
 				...state,
+				events:state.events.concat(action.payload),
 				responseStatus:"success",
 			}
 			
