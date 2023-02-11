@@ -3,7 +3,7 @@ import EventAPIDataSourceImpl from "../../../../data/datasource/api/eventsApi.da
 import { EventsRepositoryImpl } from "../../../../data/repository/events.repository.impl";
 import { Event } from "../../../../domain/model/event";
 import { GetEvents } from "../../../../domain/usecases/event/getEvents";
-import { useAppDispatch, useAppSelector } from "../../../../store";
+import { useAppDispatch, useAppSelector } from "../../../../configureStore";
 import {getEventsState} from "../../../../domain/usecases/event/eventSlice"
 
 export  const EventListViewModel = () => {

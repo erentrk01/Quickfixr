@@ -1,5 +1,5 @@
 import axios from "axios"
-import { store } from "../../../../store";
+import  store  from "../../../../configureStore";
 
 export const postEvent = async(url,values) => {
 	//buildingId, email,eventTitle, eventDate, eventDescription,functionalArea,condition,serviceContactPhone

@@ -37,10 +37,11 @@ import EventFooter from "../../../molecules/eventCard/eventFooter";
 
 import { ReactComponent as Home} from '../../../../assets/building.svg';
 import warning from '../../../../assets/warning.png';
-import { useAppDispatch, useAppSelector } from "../../../../store";
+import { useAppDispatch, useAppSelector } from "../../../../configureStore";
 import { Player } from "@lottiefiles/react-lottie-player";
 import loading from "../../../../assets/loading.json"
 
+import { selectCurrentAccessToken } from "../../../../domain/usecases/authenticate/login/login.usecase";
 
 
 
@@ -48,11 +49,12 @@ import loading from "../../../../assets/loading.json"
 export const EventList = () => {
 	
 	const auth:any = useAppSelector(state => state.auth)
-	console.log("heeyed")
+	
 	const {events,getEvents}=EventListViewModel();
 
 	const dispatch = useAppDispatch()
 	let eventState:any=useAppSelector(state => state.event)
+	const token = useAppSelector(selectCurrentAccessToken);
 
 	const BASE_URL = "http://localhost:3000";
 
@@ -61,10 +63,18 @@ export const EventList = () => {
 
 	const [show, setShow] = useState(false)
 
+
+ 
+useEffect(() => {
+	console.log("buildingID: " +auth.buildingId)
+	getEvents(auth.buildingId);
+}, [token]);
+
+	//
 	useEffect(()=>{
 		dispatch(resetFetchedEvents(null))
 		console.log("triggered")
-		
+		console.log("build ıd:" +auth.buildingId)
 		getEvents(auth.buildingId);
 		console.log(events)
 

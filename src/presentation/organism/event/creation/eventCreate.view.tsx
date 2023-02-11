@@ -1,8 +1,8 @@
 import {Textarea, Modal,ModalBody,ModalContent,ModalCloseButton,ModalFooter,ModalHeader,Button,ModalOverlay,Text,Stack,Box, FormControl, FormLabel, Input, Select, Spinner, Toast, useToast} from "@chakra-ui/react";
 import {motion} from "framer-motion"
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../../store";
+
+import { useAppDispatch, useAppSelector } from "../../../../configureStore";
 import { addPostToDB } from "../../../../domain/usecases/event/eventSlice";
 import {resetEventCreationState} from "../../../../domain/usecases/event/eventSlice";
 
@@ -30,7 +30,7 @@ const EventCreateView = ({isOpen,onClose}) => {
 	});
 
 
-
+	
 	useEffect(() => {
 		console.log("event creation status:" +eventState.eventCreationStatus)
 		if (eventState.eventCreationStatus === "success") {

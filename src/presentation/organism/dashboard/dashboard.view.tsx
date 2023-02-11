@@ -1,6 +1,6 @@
 import { Heading, Text, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../store";
+import { useAppDispatch, useAppSelector } from "../../../configureStore";
 import { DashboardViewModel } from "./dashboard.viewmodel";
 
 const DashboardView = ({buildingId}) => {

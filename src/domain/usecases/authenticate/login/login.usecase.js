@@ -2,11 +2,12 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import{loginToAPI} from "../service/auth.service";
 import { signupToBuildingAPI } from "../service/auth.service";
 import { signupToResidentAPI } from "../service/auth.service";
+
+
 import jwtDecode from "jwt-decode";
 
-
 const initialState = {
-	token: localStorage.getItem("token"),
+	accessToken: localStorage.getItem("accessToken"),
 	name: "",
 	email: "",
 	buildingId: "",
@@ -22,15 +23,16 @@ const initialState = {
   };
 
   const url ="http://localhost:3000"
+  
 
   export const registerResidentUser = createAsyncThunk(
 	"auth/registerUser",
 	async (values, { rejectWithValue }) => {
 	  try {
-		  const token= await signupToResidentAPI(url,values);
+		  const accessToken= await signupToResidentAPI(url,values);
 
   
-		return token.data;
+		return accessToken.data;
 	  } catch (err) {
 		console.log(err.response.data);
 		return rejectWithValue(err.response.data);
@@ -42,10 +44,10 @@ const initialState = {
 	"auth/registerBuilding",
 	async (values, { rejectWithValue }) => {
 	  try {
-		  const token= await signupToBuildingAPI(url,values);
+		  const accessToken= await signupToBuildingAPI(url,values);
 
   
-		return token.data;
+		return accessToken.data;
 	  } catch (err) {
 		console.log(err.response.data);
 		return rejectWithValue(err.response.data);
@@ -64,7 +66,7 @@ const initialState = {
 		  password: values.password,
 		});
   */
-		localStorage.setItem("token", token.data);
+		
 		return token.data;
 	  } catch (error) {
 		console.log(error.response);
@@ -77,13 +79,20 @@ const initialState = {
 	name: "auth",
 	initialState,
 	reducers: {
+		reset: (state) => {
+            state.accessToken = "";
+			state.refreshToken = "";
+        },
+        setAccessToken: (state, action) => {
+            state.accessToken = action.payload;
+        },
 	  loadUser(state, action) {
-		const token = state.token;
+		const token = state.accessToken;
 		if (token) {
 		  const user = jwtDecode(token);
 		  return {
 			...state,
-			token,
+			accessToken:token,
 			name: user.name,
 			email: user.email,
 			_id: user._id,
@@ -94,11 +103,11 @@ const initialState = {
 		} else return { ...state, userLoaded: true };
 	  },
 	  logoutUser(state, action) {
-		localStorage.removeItem("token");
+		localStorage.removeItem("accessToken");
   
 		return {
 		  ...state,
-		  token: "",
+		  accessToken: "",
 		  name: "",
 		  email: "",
 		  _id: "",
@@ -121,7 +130,7 @@ const initialState = {
 		  const user = jwtDecode(action.payload);
 		  return {
 			...state,
-			token: action.payload,
+			accessToken: action.payload,
 			name: user.name,
 			email: user.email,
 			_id: user._id,
@@ -146,7 +155,7 @@ const initialState = {
 		  const user = jwtDecode(action.payload);
 		  return {
 			...state,
-			token: action.payload,
+			accessToken: action.payload,
 			name: user.name,
 			email: user.email,
 			_id: user._id,
@@ -168,18 +177,21 @@ const initialState = {
 	  });
 	  builder.addCase(loginUser.fulfilled, (state, action) => {
 		if (action.payload) {
-		  const user= jwtDecode(action.payload);
-		  return {
-			...state,
-			token: action.payload,
-			name: user.name,
-			email: user.email,
-			isManager: user.isManager,
-			buildingId: user.buildingId,
-			_id: user._id,
-			loginStatus: "success",
-			verified: user.verifyStatus,
-		  };
+
+	
+		 
+			  return {
+				...state,
+				accessToken: action.payload.accessToken,
+				name:action.payload.user.name ,
+				email:action.payload.user.email ,
+				isManager: action.payload.user.isManager,
+				buildingId: action.payload.user.buildingId,
+				_id: action.payload.user._id,
+				loginStatus: "success",
+				verified: action.payload.user.verifyStatus,
+			  };
+		
 		} else return state;
 	  });
 	  builder.addCase(loginUser.rejected, (state, action) => {
@@ -192,6 +204,11 @@ const initialState = {
 	},
   });
   
-  export const { loadUser, logoutUser } = authSlice.actions;
+  export const { loadUser, logoutUser,setAccessToken,reset } = authSlice.actions;
   
-  export default authSlice
+  export default authSlice.reducer;
+  
+  export const selectCurrentUser = (state) => state.auth._id;
+  export const selectCurrentAccessToken = (state) => state.auth.accessToken;
+  export const selectCurrentRefreshToken = (state) => state.auth.refreshToken;
+  

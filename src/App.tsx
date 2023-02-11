@@ -12,7 +12,7 @@ import Landing from './presentation/pages/landing';
 import Login from './presentation/pages/login';
 import NotFound from './presentation/pages/notFound';
 import EmailVerifyPage from './presentation/pages/emailverifypage';
-import { useAppDispatch, useAppSelector } from './store';
+import { useAppDispatch, useAppSelector } from './configureStore';
 
 const App  =()=> {
 	const location = useLocation();

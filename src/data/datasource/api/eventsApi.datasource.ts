@@ -2,11 +2,10 @@ import axios from "axios";
 import { Event } from "../../../domain/model/event";
 import EventsDataSource from "../events.datasource";
 
-import { useEffect } from "react";
-import { useAppSelector } from "../../../store";
 
 const BASE_URL = "http://localhost:3000";
-import { store } from "../../../store";
+import  store  from "../../../configureStore";
+import axiosAuth from "../../../domain/usecases/authenticate/service/auth.service.api"
 
 
 
@@ -21,7 +20,7 @@ export default class EventAPIDataSourceImpl implements EventsDataSource {
 	  
 	
 	  
-        let response:string = await axios.get(`${BASE_URL}/fetchEvents/${buildingId}`, config);
+        let response:string = await axiosAuth.get(`${BASE_URL}/fetchEvents/${buildingId}`, config);
 		let res =JSON.stringify(response);
 		var jsonData = JSON.parse(res);
 		

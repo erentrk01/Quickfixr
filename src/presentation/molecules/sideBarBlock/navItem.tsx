@@ -1,6 +1,6 @@
 import { Flex, Link, Menu, MenuButton,Text,Icon,Tooltip} from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-import { useAppDispatch } from "../../../store";
+import { useAppDispatch } from "../../../configureStore";
 import{SlLogout} from 'react-icons/sl';
 import { logoutUser } from "../../../domain/usecases/authenticate/login/login.usecase";
 const NavItem =({navSize,title,icon})=>{

@@ -6,7 +6,7 @@ import BuildingRegisterForm from '../../molecules/registerBlock/buildingRegister
 import {registerResidentUser} from "../../../domain/usecases/authenticate/login/login.usecase";
 import {registerBuilding} from  "../../../domain/usecases/authenticate/login/login.usecase";
 
-import { useAppDispatch, useAppSelector } from '../../../store'
+import { useAppDispatch, useAppSelector } from '../../../configureStore'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 

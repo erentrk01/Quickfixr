@@ -159,4 +159,4 @@ const initialState = {
   
   export const { getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus } = eventSlice.actions;
   
-  export default eventSlice
+  export default eventSlice.reducer;

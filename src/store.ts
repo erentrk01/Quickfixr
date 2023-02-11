@@ -1,19 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
+import store from "./configureStore"
 
-import authSlice from "./domain/usecases/authenticate/login/login.usecase";
-import eventSlice from "./domain/usecases/event/eventSlice";
-import { TypedUseSelectorHook, useDispatch,useSelector } from "react-redux";
+import {
+    persistStore,
+ 
+} from "redux-persist";
 
-import createSagaMiddleware from '@redux-saga/core';
-const saga = createSagaMiddleware()
+export const persistor = persistStore(store);
 
-export const store=  configureStore({
-	  reducer: {
-		auth:authSlice.reducer,
-		event:eventSlice.reducer
-	  },
-	  middleware:[saga]
-})
 
-export const useAppDispatch:() => typeof store.dispatch= useDispatch;
-export const useAppSelector: TypedUseSelectorHook<ReturnType<typeof store.getState>> = useSelector;

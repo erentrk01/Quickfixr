@@ -5,8 +5,8 @@ import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
-import { loginUser } from '../../../domain/usecases/authenticate/login/login.usecase';
-import { useAppDispatch, useAppSelector } from '../../../store';
+import { loginUser,selectCurrentUser } from '../../../domain/usecases/authenticate/login/login.usecase';
+import { useAppDispatch, useAppSelector } from '../../../configureStore';
 
 
 export const LoginForm = () => {
@@ -20,7 +20,7 @@ export const LoginForm = () => {
 	const dispatch = useAppDispatch()
 	let auth:any=useAppSelector(state => state.auth)
 	const toast = useToast()
-
+ const currentUser = useAppSelector(selectCurrentUser);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -30,17 +30,10 @@ export const LoginForm = () => {
 	};
 
 	useEffect(() => {
-		if(auth._id){
-			navigate("/Events");
-			toast({
-				title: "Successfully Logged In",
-				description: "",
-				status: "success",
-				duration: 3000,
-				isClosable: false,
-			  })
-		}
-	}, [auth._id, navigate]);
+		console.log("current user: "+currentUser)
+        if (currentUser) navigate('/Events');
+    }, [currentUser]);
+
 
 	useEffect(() => {
 		if (auth.loginStatus === "rejected") {

@@ -12,7 +12,7 @@ import NavItem from "../../molecules/sideBarBlock/navItem";
 import {resetEventCreationState} from "../../../domain/usecases/event/eventSlice";
 
 
-import { useAppDispatch, useAppSelector } from "../../../store";
+import { useAppDispatch, useAppSelector } from "../../../configureStore";
 import { IconBase, IconContext } from "react-icons";
 import EventCreateView from "../event/creation/eventCreate.view";
 import DaynightToggleImpl from "../../atoms/daynightToggle";

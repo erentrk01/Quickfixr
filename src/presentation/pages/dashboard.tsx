@@ -1,5 +1,5 @@
 import { Heading, Text } from "@chakra-ui/react";
-import { useAppSelector } from "../../store";
+import { useAppSelector } from "../../configureStore";
 import DaynightToggleImpl from "../atoms/daynightToggle";
 import {  Navigate,useNavigate } from 'react-router-dom'
 import SideBar from "../organism/sideBar/sideBar.view";

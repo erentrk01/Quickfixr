@@ -34,5 +34,3 @@ export const loginToAPI = async(url,values) => {
 	return token;
 }
 
-
-
