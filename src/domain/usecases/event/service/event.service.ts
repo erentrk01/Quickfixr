@@ -7,8 +7,10 @@ export const postEvent = async(url,values) => {
 	const auth:any = reduxStore.auth;
 
 	//console.log("auth token:" +auth.token);
+	console.log("auth token for create:" +auth.accessToken)
 
-	const config = { headers: { Authorization: `Bearer ${auth.token}` } };
+	const config = { headers: { Authorization: `Bearer ${auth.accessToken}` } };
+	console.log("config:" +JSON.stringify(config))
 
 	
 		const eventResponse = await axios.post(`${url}/createEvent`, {

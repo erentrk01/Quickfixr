@@ -11,9 +11,9 @@ const EventCreateView = ({isOpen,onClose}) => {
 
 	const dispatch = useAppDispatch()
 	let eventState:any = useAppSelector(state => state.event)
-	const auth = useAppSelector(state => state.auth)
-	const { token } = auth;
-	const config = { headers: { Authorization: `Bearer ${token}` } };
+	const auth :any= useAppSelector(state => state.auth)
+	
+	const config = { headers: { Authorization: `Bearer ${auth.accessToken}` } };
 	const toast = useToast();
 
 

@@ -69,6 +69,14 @@ const initialState = {
 			}
 			
 		},
+		setActiveEvents(state , action) {
+			const activeEvents = state.events.filter((event) => event.condition === "in progress")
+			return {
+				...state,
+				activeEvents:activeEvents,
+			}
+		}
+		,
 		resetResponseStatus(state, action) {
 			return{
 				...state,
@@ -157,6 +165,6 @@ const initialState = {
   });
 
   
-  export const { getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus } = eventSlice.actions;
+  export const { getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus,setActiveEvents } = eventSlice.actions;
   
   export default eventSlice.reducer;

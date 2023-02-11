@@ -12,7 +12,9 @@ const DashboardView = ({buildingId}) => {
 		console.log(building?.name)
 		console.log(building?.address)
 		
+		
 	},[])
+	console.log(eventState.activeEvents)
 	return(
 		<>	
 			<VStack>
@@ -20,7 +22,7 @@ const DashboardView = ({buildingId}) => {
 				<Heading>{building?.address}</Heading>
 				<Heading>Id:{buildingId}</Heading>
 				{
-					eventState.events.map((event:any)=>{
+					eventState.activeEvents.map((event:any)=>{
 						return(
 							<Text>{event.title}</Text>
 						)
