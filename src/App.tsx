@@ -13,6 +13,7 @@ import Login from './presentation/pages/login';
 import NotFound from './presentation/pages/notFound';
 import EmailVerifyPage from './presentation/pages/emailverifypage';
 import { useAppDispatch, useAppSelector } from './configureStore';
+import { useNavigate} from 'react-router-dom';
 
 const App  =()=> {
 	const location = useLocation();
@@ -20,8 +21,8 @@ const App  =()=> {
 	const auth:any=useAppSelector(state => state.auth)
 	// In Dashboard mode, header will not be visible
 	const[dashboardMode,setDashboardMode]=useState(false)
-
-
+	const navigate = useNavigate();
+	
 
 	useEffect(() => {
 		if(location.pathname === "/Dashboard"){
@@ -34,8 +35,12 @@ const App  =()=> {
 		}
 	}
 	, [location.pathname])
-	
 
+
+	useEffect(() => {
+		if(auth._id && location.pathname=="/") navigate("/Events");
+	},[])
+	
 
 
   return (
