@@ -41,7 +41,7 @@ export default class EventAPIDataSourceImpl implements EventsDataSource {
 			}
 			events.push(event);
 		}
-			console.log("eventaPI:"+ events)
+			
 
 			//gelen data boş ise
 
