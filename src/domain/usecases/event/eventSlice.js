@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {postEvent,deleteEvent} from "./service/event.service"
+import _ from 'lodash';
 
 
 
@@ -70,10 +71,11 @@ const initialState = {
 			
 		},
 		setActiveEvents(state , action) {
-			const activeEvents = state.events.filter((event) => event.condition === "in progress")
+			
 			return {
 				...state,
-				activeEvents:activeEvents,
+				activeEvents: _.filter(items, item => item.condition.includes('in')),
+				responseStatus:"success",
 			}
 		}
 		,
