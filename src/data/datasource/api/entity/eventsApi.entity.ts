@@ -1,5 +1,6 @@
 export interface EventsApiEntity {
-    title: string;
+    _id:string;
+	title: string;
     description: string;
 	functionalArea:string;
 	condition:string;

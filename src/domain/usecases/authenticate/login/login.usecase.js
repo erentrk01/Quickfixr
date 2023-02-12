@@ -158,6 +158,7 @@ const initialState = {
 			accessToken: action.payload,
 			name: user.name,
 			email: user.email,
+			buildingId: user.buildingId,
 			_id: user._id,
 			registerStatus: "success",
 			verified: user.verifyStatus,
@@ -169,6 +170,7 @@ const initialState = {
 		  ...state,
 		  registerStatus: "rejected",
 		  registerError: action.payload,
+	
 		};
 	  });
 	  //

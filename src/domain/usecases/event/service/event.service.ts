@@ -29,7 +29,7 @@ export const postEvent = async(url,values) => {
 
 
  export const deleteEvent = async(url,values) => {
-	const deleteResponse = await axios.post(`${url}/deleteEvent/${values.eventId}`);
+	const deleteResponse = await axios.delete(`${url}/deleteEvent/${values}`);
 	return deleteResponse;
 }
 

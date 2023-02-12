@@ -31,17 +31,17 @@ import {MdOutlinePending} from "react-icons/md"
 import {GrLaunch,GrUpdate} from "react-icons/gr";
 import {GiProgression} from "react-icons/gi"
 
-import SkeletonEvents from "../../../molecules/skeletonBlock/skeletonEvents";
+
 import EventBody from "../../../molecules/eventCard/eventBody";
 import EventFooter from "../../../molecules/eventCard/eventFooter";
 
 import { ReactComponent as Home} from '../../../../assets/building.svg';
-import warning from '../../../../assets/warning.png';
 import { useAppDispatch, useAppSelector } from "../../../../configureStore";
 import { Player } from "@lottiefiles/react-lottie-player";
 import loading from "../../../../assets/loading.json"
 
 import { selectCurrentAccessToken } from "../../../../domain/usecases/authenticate/login/login.usecase";
+
 
 import {motion} from 'framer-motion'
 
@@ -62,6 +62,7 @@ export const EventList = () => {
 	const cancelRef = useRef<any>(null)
 
 	const [show, setShow] = useState(false)
+
 
 
  
@@ -86,6 +87,7 @@ useEffect(() => {
 
 
 	useEffect(()=>{
+		
 		dispatch(resetResponseStatus(null))
 	},[])
 
@@ -130,42 +132,7 @@ useEffect(() => {
 		<VStack >
 			 <Text>{events.length } events posted in this building</Text>
 
-			   <AlertDialog
-        			isOpen={isOpen}
-					leastDestructiveRef={cancelRef}
-					onClose={onClose}
-					isCentered
-				 >
-       				 <AlertDialogOverlay>
-							<AlertDialogContent    color={"red.500"}  bgGradient={[
-							'linear(to-tr, teal.300, yellow.400)',
-							'linear(to-t, blue.200, teal.500)',
-							'linear(to-b, orange.100, purple.300)']}>
-
-								<AlertDialogHeader fontWeight='bold' fontSize='lg'  >
-									Delete Event
-									</AlertDialogHeader>
-								<VStack alignItems={"center"}>
-								<img src={warning} alt='warning' width='100px' height='100px' />
-
-								<AlertDialogBody>
-
-									
-									Are you sure? You can't undo this action afterwards.
-									</AlertDialogBody>
-									</VStack>
-
-								<AlertDialogFooter>
-									<Button ref={cancelRef} onClick={onClose}>
-										Cancel
-									</Button>
-									<Button colorScheme='red' onClick={onClose} ml={3}>
-										Delete
-									</Button>
-								</AlertDialogFooter>
-							</AlertDialogContent>
-						</AlertDialogOverlay>
-					</AlertDialog> 
+	
 
 			 <SimpleGrid columns={1} >
 			<List>
@@ -205,7 +172,8 @@ useEffect(() => {
 								{}
 							</ListItem>
 							<EventBody event={event}/>
-							<EventFooter onOpen={onOpen}/>
+							<EventFooter eventId={event._id}/>
+
 						</Card>
 						</motion.div>
 
