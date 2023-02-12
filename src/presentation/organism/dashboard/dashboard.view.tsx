@@ -68,7 +68,7 @@ const DashboardView = ({buildingId}) => {
 				<Tabs variant='soft-rounded' colorScheme='green'>
   <TabList>
 	<Box maxW="md" mx="auto">
-  <SimpleGrid columns={{ base: 1, md: 3, lg: 3 }} >
+  <SimpleGrid columns={{ base: 1, md: 3, lg: 3 }}  mt={4}>
     <Tab >Active Events</Tab>
     <Tab>Pending Events</Tab>
 	<Tab>Completed Events</Tab>
@@ -129,8 +129,8 @@ const DashboardView = ({buildingId}) => {
 				}
 				</SimpleGrid>
     </TabPanel>
-	<TabPanel>
-	<SimpleGrid columns={{ base: 1, md: 3, lg: 3 }} gap={5}>
+	<TabPanel  >
+	<SimpleGrid columns={{ base: 1, md: 3, lg: 3 }} gap={5} >
 				{
 					eventState.finishedEvents.map((event:any,index)=>{
 						return(
@@ -153,16 +153,25 @@ const DashboardView = ({buildingId}) => {
 						)
 					})
 				}
+				
 				</SimpleGrid>
+				
 	</TabPanel>
+	
   </TabPanels>
-
+  
 				
 				</Tabs>
+
+				
+	
+				
+			
 				
 
 				
 				</SimpleGrid>
+				
 		</>
 	)
 }
