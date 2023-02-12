@@ -1,8 +1,7 @@
 import {Box,Heading,Text,Link,VStack,Checkbox,Stack,FormControl,Input,FormLabel,Button, PinInputField, PinInput, HStack,useToast, Spinner} from '@chakra-ui/react'
 import {motion} from 'framer-motion'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
-import ResidentRegisterForm from '../../molecules/registerBlock/residentRegisterForm'
-import BuildingRegisterForm from '../../molecules/registerBlock/buildingRegisterForm'
+
 import {registerResidentUser} from "../../../domain/usecases/authenticate/login/login.usecase";
 import {registerBuilding} from  "../../../domain/usecases/authenticate/login/login.usecase";
 
