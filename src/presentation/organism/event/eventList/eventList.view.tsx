@@ -43,7 +43,7 @@ import loading from "../../../../assets/loading.json"
 
 import { selectCurrentAccessToken } from "../../../../domain/usecases/authenticate/login/login.usecase";
 
-
+import {motion} from 'framer-motion'
 
 
 export const EventList = () => {
@@ -173,7 +173,11 @@ useEffect(() => {
 			{	
 				events.map((event,i) => {
 					return (
-					
+						<motion.div 
+									initial={{ opacity: 0 }}
+									whileInView={{ opacity: 1 }}
+									viewport={{ once: true }}
+						>
 						<Card  mt={4} key={i} borderRadius={12}>
 							<CardHeader >
 								<HStack
@@ -203,6 +207,7 @@ useEffect(() => {
 							<EventBody event={event}/>
 							<EventFooter onOpen={onOpen}/>
 						</Card>
+						</motion.div>
 
 					);
 			})}

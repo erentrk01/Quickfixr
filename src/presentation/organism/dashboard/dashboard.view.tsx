@@ -6,9 +6,11 @@ import { DashboardViewModel } from "./dashboard.viewmodel";
 import {resetResponseStatus} from "../../../domain/usecases/event/eventSlice"
 
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import {motion} from 'framer-motion'
 
 
 const DashboardView = ({buildingId}) => {
+	let easing =[0.6, -0.05, 0.01, 0.99]
 	const dispatch = useAppDispatch()
 	const eventState:any= useAppSelector(state => state.event)
 
@@ -54,7 +56,7 @@ const DashboardView = ({buildingId}) => {
 				{
 					eventState.activeEvents.map((event:any,index)=>{
 						return(
-							
+							<motion.div initial={{opacity:0,scale:0}} animate={{opacity:1,scale:1}} transition={{duration:0.2,ease:easing}}>
 							<Card  variant='outline'
 							w={120}
 							h={120}
@@ -68,6 +70,7 @@ const DashboardView = ({buildingId}) => {
 					</CardBody>
 							
 						</Card>
+						</motion.div>
 						
 						)
 					})
