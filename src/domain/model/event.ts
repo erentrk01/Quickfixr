@@ -1,4 +1,5 @@
 export interface Event {
+	_id: any;
 	title: string;
     description: string;
 	functionalArea:string;

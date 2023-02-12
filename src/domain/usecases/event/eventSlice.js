@@ -44,7 +44,7 @@ const initialState = {
   );
 
   export const deleteEventFromDb = createAsyncThunk(
-	"events/deleteEventFromDB",
+	"events/deleteEventFromDb",
 	async (eventId, { rejectWithValue }) => {
 	  try {
 		const deleteRequest = deleteEvent(url,eventId);
