@@ -167,7 +167,7 @@ useEffect(() => {
 						</AlertDialogOverlay>
 					</AlertDialog> 
 
-			 <SimpleGrid columns={1}>
+			 <SimpleGrid columns={1} >
 			<List>
 			
 			{	

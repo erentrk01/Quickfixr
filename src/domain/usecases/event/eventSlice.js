@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {postEvent,deleteEvent} from "./service/event.service"
-import _ from 'lodash';
+import _ from "lodash"
+
 
 
 
@@ -74,7 +75,7 @@ const initialState = {
 			
 			return {
 				...state,
-				activeEvents: _.filter(items, item => item.condition.includes('in')),
+				activeEvents:  _.filter(items, item => item.condition.includes('in')),
 				responseStatus:"success",
 			}
 		}

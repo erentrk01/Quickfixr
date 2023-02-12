@@ -1,12 +1,11 @@
-import { Card, CardBody, CardHeader, Flex, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import { Card, CardBody, CardHeader, Flex, Heading, HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../configureStore";
 import { DashboardViewModel } from "./dashboard.viewmodel";
 
 import {resetResponseStatus} from "../../../domain/usecases/event/eventSlice"
 
-
-
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
 
 const DashboardView = ({buildingId}) => {
@@ -27,7 +26,7 @@ const DashboardView = ({buildingId}) => {
 		dispatch(resetResponseStatus(null))
 	},[])
 
-
+	
 	
 	 
 
@@ -35,13 +34,23 @@ const DashboardView = ({buildingId}) => {
 	return(
 		<>	
 			<VStack mt={3}>
-				<HStack >
+			<SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={5}>
 				<Text>{building?.name}</Text>
 				<Text>{building?.address}</Text>
 				<Text>Id:{buildingId}</Text>
-				</HStack>
+			</SimpleGrid>
 				<HStack>
-				
+				<Tabs variant='soft-rounded' colorScheme='green'>
+  <TabList>
+  <SimpleGrid columns={{ base: 1, md: 3, lg: 3 }} gap={2}>
+    <Tab>Active Events</Tab>
+    <Tab>Pending Event</Tab>
+	<Tab>Completed Events</Tab>
+	</SimpleGrid>
+  </TabList>
+  <TabPanels>
+    <TabPanel>
+	<SimpleGrid columns={{ base: 1, md: 3, lg: 3 }} gap={5}>
 				{
 					eventState.activeEvents.map((event:any,index)=>{
 						return(
@@ -63,7 +72,17 @@ const DashboardView = ({buildingId}) => {
 						)
 					})
 				}
+				</SimpleGrid>
+    </TabPanel>
+    <TabPanel>
+      <p>two!</p>
+    </TabPanel>
+  </TabPanels>
+
+				
+				</Tabs>
 				</HStack>
+
 				
 			</VStack>
 		</>
