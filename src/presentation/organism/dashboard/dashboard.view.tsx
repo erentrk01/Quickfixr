@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardBody, CardHeader, Divider, Flex, Heading, HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, CardHeader, Divider, Flex, Heading, HStack, SimpleGrid, Text, Tooltip, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../configureStore";
 import { DashboardViewModel } from "./dashboard.viewmodel";
@@ -49,11 +49,16 @@ const DashboardView = ({buildingId}) => {
 				<Divider orientation='horizontal' />
 				<Text>{building?.address}</Text>
 				<Divider orientation='horizontal' />
+				
 				<HStack justifyContent={"center"}>
+				<Tooltip borderRadius={15} label={"Share with your neighbours!"} placement='top-start'  defaultIsOpen >
 					<Text>Building Id:{buildingId}</Text>
+					</Tooltip>
 				<Button h="20px" size="sm" onClick={onCopy}>{hasCopied ? "Copied!" : "Copy"}
 				</Button>
+				
 				</HStack>
+				
 				
 			</SimpleGrid>
 			</VStack>
