@@ -1,4 +1,4 @@
-import { Box, Card, CardBody, CardHeader, Flex, Heading, HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, CardHeader, Divider, Flex, Heading, HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../configureStore";
 import { DashboardViewModel } from "./dashboard.viewmodel";
@@ -6,6 +6,7 @@ import { DashboardViewModel } from "./dashboard.viewmodel";
 import {resetResponseStatus} from "../../../domain/usecases/event/eventSlice"
 
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import { useClipboard } from '@chakra-ui/react'
 import {motion} from 'framer-motion'
 
 import { ReactComponent as Team} from '../../../assets/team.svg'
@@ -15,6 +16,8 @@ const DashboardView = ({buildingId}) => {
 	let easing =[0.6, -0.05, 0.01, 0.99]
 	const dispatch = useAppDispatch()
 	const eventState:any= useAppSelector(state => state.event)
+	const { onCopy, hasCopied } = useClipboard(buildingId);
+
 	
 
 	const {getBuilding,building} = DashboardViewModel();
@@ -43,8 +46,15 @@ const DashboardView = ({buildingId}) => {
 				<Team/>
 			<SimpleGrid columns={{ base: 1, md: 2, lg: 1 }} gap={5}>
 				<Text>{building?.name}</Text>
+				<Divider orientation='horizontal' />
 				<Text>{building?.address}</Text>
-				<Text>Id:{buildingId}</Text>
+				<Divider orientation='horizontal' />
+				<HStack justifyContent={"center"}>
+					<Text>Building Id:{buildingId}</Text>
+				<Button h="20px" size="sm" onClick={onCopy}>{hasCopied ? "Copied!" : "Copy"}
+				</Button>
+				</HStack>
+				
 			</SimpleGrid>
 			</VStack>
 				
