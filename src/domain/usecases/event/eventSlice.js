@@ -9,6 +9,7 @@ const initialState = {
 	events:[],
 	activeEvents:[],
 	finishedEvents:[],
+	pendingEvents:[],
 	showFinishedEvents:true,
 	showEvents:true,
 	showActiveEvents:false,
@@ -71,11 +72,26 @@ const initialState = {
 			}
 			
 		},
+		setPendingEvents(state, action) {
+			return{
+				...state,
+				pendingEvents:  _.filter(state.events, item => item.condition.includes('pending')),
+				responseStatus:"success",
+			}
+		},
+		setFinishedEvents(state, action) {
+			return{
+				...state,
+				finishedEvents:  _.filter(state.events, item => item.condition.includes('done')),
+				responseStatus:"success",
+			}
+		}
+		,
 		setActiveEvents(state , action) {
 			
 			return {
 				...state,
-				activeEvents:  _.filter(items, item => item.condition.includes('in')),
+				activeEvents:  _.filter(state.events, item => item.condition === 'in progress'),
 				responseStatus:"success",
 			}
 		}
@@ -168,6 +184,6 @@ const initialState = {
   });
 
   
-  export const { getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus,setActiveEvents } = eventSlice.actions;
+  export const { getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus,setActiveEvents,setPendingEvents,setFinishedEvents} = eventSlice.actions;
   
   export default eventSlice.reducer;

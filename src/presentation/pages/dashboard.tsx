@@ -1,4 +1,4 @@
-import { Heading, Text } from "@chakra-ui/react";
+import { Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import { useAppSelector } from "../../configureStore";
 import DaynightToggleImpl from "../atoms/daynightToggle";
 import {  Navigate,useNavigate } from 'react-router-dom'
@@ -18,8 +18,8 @@ const Dashboard = () => {
 
 	
 	  <SideBar/>
-	  <Text px={0}>Hello, Welcome back</Text>
 	  <DashboardView buildingId={auth.buildingId}/>
+
 	</>
   );
 

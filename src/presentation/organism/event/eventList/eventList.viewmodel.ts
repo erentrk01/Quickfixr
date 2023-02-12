@@ -4,7 +4,7 @@ import { EventsRepositoryImpl } from "../../../../data/repository/events.reposit
 import { Event } from "../../../../domain/model/event";
 import { GetEvents } from "../../../../domain/usecases/event/getEvents";
 import { useAppDispatch, useAppSelector } from "../../../../configureStore";
-import {getEventsState,setActiveEvents} from "../../../../domain/usecases/event/eventSlice"
+import {getEventsState,setActiveEvents,setPendingEvents,setFinishedEvents} from "../../../../domain/usecases/event/eventSlice"
 
 export  const EventListViewModel = () => {
 	
@@ -23,6 +23,8 @@ export  const EventListViewModel = () => {
 			setEvents(await UseCase.invoke(buildingId))
 			dispatch(getEventsState(events))
 			dispatch(setActiveEvents(events))
+			dispatch(setPendingEvents(events))
+			
 
 
 	}
