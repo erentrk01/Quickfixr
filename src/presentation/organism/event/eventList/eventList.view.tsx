@@ -58,11 +58,6 @@ export const EventList = () => {
 	const toast = useToast()
 	const navigate = useNavigate()
 
-	const [show, setShow] = useState(false)
-
-
-
- 
 	useEffect(() => {
 		if(eventState.deleteStatus === "success" || eventState.eventCreationStatus === "success")
 		{
@@ -80,12 +75,12 @@ export const EventList = () => {
 		console.log("useeffect 2")
 		if (eventState.deleteStatus === "rejected") {
 			toast({
-                title: `${eventState.deleteError}`,
-                status: "error",
-                isClosable: true,
+				title: `${eventState.deleteError}`,
+				status: "error",
+				isClosable: true,
 				duration: 2000
-              })
-            }
+				})
+			}
 		else if (eventState.deleteStatus === "success") {
 			console.log("event deleted successfully:" + eventState.deleteStatus)
 			toast({
@@ -96,16 +91,11 @@ export const EventList = () => {
 			})
 			
 		}
-		
+
 		dispatch(resetDeleteState(null))
 	}, [eventState.deleteStatus])
-	
-	
-
 
 	const detectConditionIcon  = (condition) => {
-
-		
 		switch (condition) {
 			case "in progress" || "devam ediyor":
 				return <GiProgression/>
@@ -118,8 +108,6 @@ export const EventList = () => {
 		}
 	}
 
-
-	
 		if(eventState.responseStatus == ""){
 			console.log(eventState.responseStatus)
 			 return (
@@ -130,12 +118,7 @@ export const EventList = () => {
 					autoplay
 					style={{ height: '400px', width: '80%' }}/>)
 		}
-		
-	
-			
-		
-	
-	
+
 	return(
 		<VStack >
 			 <Text>{events.length } events posted in this building</Text>
@@ -183,7 +166,6 @@ export const EventList = () => {
 			})}
 			</List>
 			</SimpleGrid>
-
 		</VStack>
 	)
 }
