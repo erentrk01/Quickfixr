@@ -17,9 +17,9 @@ const initialState = {
 	deleteError: ""
   };
 
-  const url ="http://localhost:3000"
+const url ="http://localhost:3000"
 
-  export const addPostToDB  = createAsyncThunk(
+export const addPostToDB  = createAsyncThunk(
 	"events/addEventToDB",
 	async (event, { rejectWithValue }) => {
 		return postEvent(url, event)
@@ -30,7 +30,7 @@ const initialState = {
 	}
   );
 
-  export const deleteEventFromDb = createAsyncThunk(
+export const deleteEventFromDb = createAsyncThunk(
 	"events/deleteEventFromDb",
 	async (eventId, { rejectWithValue }) => {
 	  try {
@@ -42,8 +42,7 @@ const initialState = {
 	}
   );
 
-
-  export const eventSlice = createSlice({
+export const eventSlice = createSlice({
 	name: "events",
 	initialState,
 	reducers:{
@@ -70,8 +69,7 @@ const initialState = {
 				finishedEvents:  _.filter(state.events, item => item.condition.includes('done')),
 				responseStatus:"success",
 			}
-		}
-		,
+		},
 		setActiveEvents(state , action) {
 			
 			return {
@@ -79,24 +77,19 @@ const initialState = {
 				activeEvents:  _.filter(state.events, item => item.condition === 'in progress'),
 				responseStatus:"success",
 			}
-		}
-		,
+		},
 		resetResponseStatus(state, action) {
 			return{
 				...state,
 				responseStatus:""
 			}
-		}
-		,
-
+		},
 		resetFetchedEvents(state, action) {
 			return{
 				...state,
 				events:[]
 			}
-		}
-
-		,
+		},
 		resetEventCreationState(state, action) {
 			console.log("resetEventCreationState triggered")
 			return {
@@ -111,21 +104,18 @@ const initialState = {
 				deleteError: "",
 			}
 		}
-
-
 	},
 	extraReducers: (builder) => {
 		 /* addPostToDB */
 		 //pending
 		 builder.addCase(addPostToDB.pending, (state, action) => {
-           
 			return {
 				...state,
 				eventCreationStatus:"pending",
 			  };
         });
 		//Fulfilled
-        builder.addCase(addPostToDB.fulfilled, (state, action) => {
+		 builder.addCase(addPostToDB.fulfilled, (state, action) => {
 			return {
 				...state,
 				isLoading: false,
@@ -133,8 +123,8 @@ const initialState = {
 				responseMessage:"Event posted successfully",
 				eventCreationStatus:"success",
 			}
-        });
-        builder.addCase(addPostToDB.rejected, (state, action) => {
+		});
+		builder.addCase(addPostToDB.rejected, (state, action) => {
 
 			return {
 				...state,
@@ -171,12 +161,9 @@ const initialState = {
 				deleteError: action.payload,
 				}
 			});
-
 		}
-
 	});
 
-  
-  export const { getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus,setActiveEvents,setPendingEvents,setFinishedEvents,resetDeleteState} = eventSlice.actions;
-  
-  export default eventSlice.reducer;
+export const { 
+	getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus,setActiveEvents,setPendingEvents,setFinishedEvents,resetDeleteState} = eventSlice.actions;
+export default eventSlice.reducer;
