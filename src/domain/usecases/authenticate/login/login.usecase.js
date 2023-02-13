@@ -3,7 +3,6 @@ import{loginToAPI} from "../service/auth.service";
 import { signupToBuildingAPI } from "../service/auth.service";
 import { signupToResidentAPI } from "../service/auth.service";
 
-
 import jwtDecode from "jwt-decode";
 
 const initialState = {
@@ -23,15 +22,12 @@ const initialState = {
   };
 
   const url ="http://localhost:3000"
-  
 
   export const registerResidentUser = createAsyncThunk(
 	"auth/registerUser",
 	async (values, { rejectWithValue }) => {
 	  try {
-		  const accessToken= await signupToResidentAPI(url,values);
-
-  
+		const accessToken= await signupToResidentAPI(url,values);
 		return accessToken.data;
 	  } catch (err) {
 		console.log(err.response.data);
@@ -179,10 +175,7 @@ const initialState = {
 	  });
 	  builder.addCase(loginUser.fulfilled, (state, action) => {
 		if (action.payload) {
-
-	
-		 
-			  return {
+			return {
 				...state,
 				accessToken: action.payload.accessToken,
 				name:action.payload.user.name ,
