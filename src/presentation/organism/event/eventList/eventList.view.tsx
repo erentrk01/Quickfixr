@@ -106,7 +106,7 @@ useEffect(() => {
 				duration: 3000
 			})
 			dispatch(resetDeleteState(null))
-			window.location.reload()
+			
 			
 		}
 	}, [eventState.deleteStatus])

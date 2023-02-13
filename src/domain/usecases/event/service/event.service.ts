@@ -1,6 +1,7 @@
 import axios from "axios"
 import  store  from "../../../../configureStore";
 
+
 export const postEvent = async(url,values) => {
 	//buildingId, email,eventTitle, eventDate, eventDescription,functionalArea,condition,serviceContactPhone
 	const reduxStore = store.getState();
@@ -29,7 +30,9 @@ export const postEvent = async(url,values) => {
 
 
  export const deleteEvent = async(url,values) => {
-	const deleteResponse = await axios.delete(`${url}/deleteEvent/${values}`);
+	const reduxStore = store.getState();
+	const auth:any = reduxStore.auth;
+	const deleteResponse = await axios.delete(`${url}/deleteEvent/${values}/${auth.buildingId}`);
 	return deleteResponse;
 }
 
