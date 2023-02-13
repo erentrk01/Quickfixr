@@ -2,9 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {postEvent,deleteEvent} from "./service/event.service"
 import _ from "lodash"
 
-
-
-
 const initialState = {
 	events:[],
 	activeEvents:[],
@@ -20,17 +17,7 @@ const initialState = {
 	deleteError: ""
   };
 
-
   const url ="http://localhost:3000"
-
-/*  export const fetchEvents = createAsyncThunk("events/fetchEvents", async () => {
-	try {
-	   //const response = await axios.get(`${url}/api/tasks`);
-	  return response.data;
-	} catch (error) {
-	  return error.response.data.message;
-	}
-  });*/
 
   export const addPostToDB  = createAsyncThunk(
 	"events/addEventToDB",
@@ -54,8 +41,6 @@ const initialState = {
 	  }
 	}
   );
-
-
 
 
   export const eventSlice = createSlice({
@@ -189,8 +174,7 @@ const initialState = {
 
 		}
 
-
-  });
+	});
 
   
   export const { getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus,setActiveEvents,setPendingEvents,setFinishedEvents,resetDeleteState} = eventSlice.actions;

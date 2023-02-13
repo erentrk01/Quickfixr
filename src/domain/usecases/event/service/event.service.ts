@@ -14,16 +14,15 @@ export const postEvent = async(url,values) => {
 	console.log("config:" +JSON.stringify(config))
 
 	
-		const eventResponse = await axios.post(`${url}/createEvent`, {
-        buildingId: auth.buildingId,
+		const eventResponse = await axios.post(`${url}/createEvent`, {			buildingId: auth.buildingId,
 		email: auth.email,
-        eventTitle: values.title,
+		eventTitle: values.title,
 		eventDate: values.eventDate,
 		eventDescription: values.description,
 		functionalArea: values.functionalArea,
 		condition: values.condition,
 		serviceContactPhone: values.serviceContactPhone
-      },config);
+		},config);
 
 	return eventResponse;
 }

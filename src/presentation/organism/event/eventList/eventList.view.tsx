@@ -42,7 +42,6 @@ import {motion} from 'framer-motion'
 
 
 export const EventList = () => {
-	
 	const auth:any = useAppSelector(state => state.auth)
 	
 	const {events,getEvents}=EventListViewModel();
@@ -124,12 +123,12 @@ export const EventList = () => {
 		if(eventState.responseStatus == ""){
 			console.log(eventState.responseStatus)
 			 return (
-			 <Player
-			 src={loading}
-			 className="player"
-			 loop
-			 autoplay
-			 style={{ height: '400px', width: '80%' }}/>)
+				 <Player
+					src={loading}
+					className="player"
+					loop
+					autoplay
+					style={{ height: '400px', width: '80%' }}/>)
 		}
 		
 	
@@ -140,56 +139,48 @@ export const EventList = () => {
 	return(
 		<VStack >
 			 <Text>{events.length } events posted in this building</Text>
-
-	
-
 			 <SimpleGrid columns={1} >
 			<List>
-			
-			{	
+			{
 				events.map((event,i) => {
 					return (
 						<motion.div 
-									initial={{ opacity: 0 }}
-									whileInView={{ opacity: 1 }}
-									viewport={{ once: true }}
-									key={i}
+								initial={{ opacity: 0 }}
+								whileInView={{ opacity: 1 }}
+								viewport={{ once: true }}
+								key={i}
 						>
-						<Card  mt={4}  borderRadius={12}>
-							<CardHeader >
-								<HStack
-								justifyContent={"space-between"}
-								><Tooltip label={event.condition} 
-								borderRadius={10}
-								placement='auto-start' fontSize='md'>
-									<Box>
-										<IconContext.Provider value={{color:"#14da8f",size:"22px"}}>
-											{detectConditionIcon(event.condition)}
-										</IconContext.Provider>
-									</Box>
-									</Tooltip>
-									<Home 
-
-										width="100px"
-										height="100px"/>
-								</HStack>
-								<Box width="300px" bg='orange.300' borderRadius={12} padding={2}>
-								<Text>{event.title}</Text>
-								</Box>
-							</CardHeader>
-							<ListItem >
-								<ListIcon color='green.500' />
-								{}
-							</ListItem>
-							<EventBody event={event}/>
-							<EventFooter eventId={event._id}/>
-
-						</Card>
+							<Card  mt={4} borderRadius={12}>
+								<CardHeader >
+									<HStack justifyContent={"space-between"}
+									>
+										<Tooltip label={event.condition} 
+											borderRadius={10}
+											placement='auto-start' fontSize='md'>
+											<Box>
+												<IconContext.Provider value={{color:"#14da8f",size:"22px"}}>
+												{detectConditionIcon(event.condition)}
+												</IconContext.Provider>
+											</Box>
+										</Tooltip>
+										<Home 
+											width="100px"
+											height="100px"/>
+										</HStack>
+										<Box width="300px" bg='orange.300' borderRadius={12} padding={2}>
+											<Text>{event.title}</Text>
+										</Box>
+								</CardHeader>
+								<ListItem >
+									<ListIcon color='green.500' />
+										{}
+								</ListItem>
+								<EventBody event={event}/>
+								<EventFooter eventId={event._id}/>
+							</Card>
 						</motion.div>
-
 					);
 			})}
-			  	
 			</List>
 			</SimpleGrid>
 

@@ -17,10 +17,9 @@ const EventCreateView = ({isOpen,onClose}) => {
 	const toast = useToast();
 	const navigate = useNavigate();
 
-
-
 	const VARIANT_COLOR = 'teal'
 	let easing =[0.6, -0.05, 0.01, 0.99]
+	
 	 const[event,setEvent] =useState({
 		title:'',
 		description:'',
@@ -30,8 +29,6 @@ const EventCreateView = ({isOpen,onClose}) => {
 		date: new Date(),
 	});
 
-
-	
 	useEffect(() => {
 		console.log("event creation status:" +eventState.eventCreationStatus)
 		if (eventState.eventCreationStatus === "success") {
@@ -44,17 +41,15 @@ const EventCreateView = ({isOpen,onClose}) => {
 			}
 		else if (eventState.eventCreationStatus === "failed") {
 			toast({
-                title: `${eventState.responseMessage}`,
-                status: "error",
-                isClosable: true,
+				title: `${eventState.responseMessage}`,
+				status: "error",
+				isClosable: true,
 				duration: 2000
-              })
+			})
 		}
 
-			  dispatch(resetEventCreationState(null))
-			  
-			 
- 	 },[eventState.eventCreationStatus ])
+		dispatch(resetEventCreationState(null)
+	)},[eventState.eventCreationStatus ])
 
 	
 
@@ -64,9 +59,6 @@ const EventCreateView = ({isOpen,onClose}) => {
 		console.log("condition:" +event.condition)
 		dispatch(addPostToDB(event))
 		onClose()
-		
-
-
 	}
 
 
