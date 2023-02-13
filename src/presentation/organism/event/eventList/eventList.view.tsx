@@ -1,6 +1,7 @@
 import { useEffect, useState,useRef } from "react";
 import { EventListViewModel } from "./eventList.viewmodel"
-import {resetFetchedEvents,resetResponseStatus} from "../../../../domain/usecases/event/eventSlice"
+import {resetFetchedEvents,resetResponseStatus,resetDeleteState} from "../../../../domain/usecases/event/eventSlice"
+import { useNavigate} from 'react-router-dom';
 
 import {
 	List,
@@ -11,17 +12,11 @@ import {
 	Text,
 	Box,
 	HStack,
-	Button,
-	AlertDialogFooter,
-	AlertDialogOverlay,
-	AlertDialogContent,
-	AlertDialogHeader,
-	AlertDialogBody,
-	AlertDialog,
 	SimpleGrid,
 	VStack,
 	useDisclosure,
-	Tooltip
+	Tooltip,
+	useToast
   } from '@chakra-ui/react'
 
 import { IconContext } from "react-icons";
@@ -60,6 +55,8 @@ export const EventList = () => {
 
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const cancelRef = useRef<any>(null)
+	const toast = useToast()
+	const navigate = useNavigate()
 
 	const [show, setShow] = useState(false)
 
@@ -91,6 +88,28 @@ useEffect(() => {
 		dispatch(resetResponseStatus(null))
 	},[])
 
+	useEffect(() => {
+		if (eventState.deleteStatus === "rejected") {
+			toast({
+                title: `${eventState.deleteError}`,
+                status: "error",
+                isClosable: true,
+				duration: 2000
+              })
+            }
+		else if (eventState.deleteStatus === "success") {
+			console.log("event deleted successfully:" + eventState.deleteStatus)
+			toast({
+				title: "Event deleted successfully",
+				status: "success",
+				isClosable: true,
+				duration: 3000
+			})
+			dispatch(resetDeleteState(null))
+			window.location.reload()
+			
+		}
+	}, [eventState.deleteStatus])
 	
 	
 

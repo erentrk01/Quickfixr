@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../configureStore";
 import { addPostToDB } from "../../../../domain/usecases/event/eventSlice";
 import {resetEventCreationState} from "../../../../domain/usecases/event/eventSlice";
-
+import { useNavigate} from 'react-router-dom';
 
 const EventCreateView = ({isOpen,onClose}) => {
 
@@ -15,6 +15,7 @@ const EventCreateView = ({isOpen,onClose}) => {
 	
 	const config = { headers: { Authorization: `Bearer ${auth.accessToken}` } };
 	const toast = useToast();
+	const navigate = useNavigate();
 
 
 
@@ -42,8 +43,9 @@ const EventCreateView = ({isOpen,onClose}) => {
               })
 
 			  dispatch(resetEventCreationState(null))
-            }
-		  },[eventState.eventCreationStatus ])
+			  
+			  if(location.pathname === '/Events') window.location.reload()
+ 	} },[eventState.eventCreationStatus ])
 
 	
 
