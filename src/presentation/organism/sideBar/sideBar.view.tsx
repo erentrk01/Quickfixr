@@ -18,7 +18,7 @@ import EventCreateView from "../event/creation/eventCreate.view";
 import DaynightToggleImpl from "../../atoms/daynightToggle";
 
 const SideBar = () => {
-	const [navSize, setNavSize] = useState('large');
+	const [navSize, setNavSize] = useState('small');
 	const dispatch = useAppDispatch()
 	const auth:any = useAppSelector(state => state.auth)
 	const eventState:any= useAppSelector(state => state.event)
