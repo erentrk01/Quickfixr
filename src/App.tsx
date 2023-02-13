@@ -19,10 +19,10 @@ const App  =()=> {
 	const location = useLocation();
 	const dispatch = useAppDispatch();
 	const auth:any=useAppSelector(state => state.auth)
+
 	// In Dashboard mode, header will not be visible
 	const[dashboardMode,setDashboardMode]=useState(false)
 	const navigate = useNavigate();
-	
 
 	useEffect(() => {
 		if(location.pathname === "/Dashboard"){
@@ -33,18 +33,13 @@ const App  =()=> {
 		else{
 			setDashboardMode(false)
 		}
-	}
-	, [location.pathname])
-
+	}, [location.pathname])
 
 	useEffect(() => {
 		if(auth._id && location.pathname=="/") navigate("/Events");
 	},[])
 	
-
-
-  return (
-
+	return (
 		<>
 			{
 				!dashboardMode &&
@@ -64,10 +59,7 @@ const App  =()=> {
 				<Route path="/Logout" element={<Login/>}></Route>
 			</Routes>
 		</>
-		
-		
-			
-  )
+	)
 }
 
 export default App;
