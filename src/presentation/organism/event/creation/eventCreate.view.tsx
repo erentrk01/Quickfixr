@@ -41,11 +41,20 @@ const EventCreateView = ({isOpen,onClose}) => {
                 isClosable: true,
 				duration: 2000
               })
+			}
+		else if (eventState.eventCreationStatus === "failed") {
+			toast({
+                title: `${eventState.responseMessage}`,
+                status: "error",
+                isClosable: true,
+				duration: 2000
+              })
+		}
 
 			  dispatch(resetEventCreationState(null))
 			  
 			 
- 	} },[eventState.eventCreationStatus ])
+ 	 },[eventState.eventCreationStatus ])
 
 	
 

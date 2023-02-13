@@ -35,13 +35,11 @@ const initialState = {
   export const addPostToDB  = createAsyncThunk(
 	"events/addEventToDB",
 	async (event, { rejectWithValue }) => {
-	  try {
-		console.log("ıt s hitted")
-		const response = postEvent(url,event);
-		return response.data;
-	  } catch (error) {
-		return rejectWithValue(error.response.data.message);
-	  }
+		return postEvent(url, event)
+		.then(response => response.data)
+		.catch(error => {
+		  return rejectWithValue(error.response.data.message);
+		});
 	}
   );
 
