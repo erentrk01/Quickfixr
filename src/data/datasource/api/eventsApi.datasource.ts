@@ -29,15 +29,16 @@ export default class EventAPIDataSourceImpl implements EventsDataSource {
 		let events:Event[] = [];
 			console.log("events length: " + JSON.stringify( jsonData.data.events.length))
 			console.log("bu: " + JSON.stringify( jsonData.data.events))
+
 		if(jsonData.data.events.length ==0 ) return [];
 
-	
-		if(typeof jsonData.data.events[1] === "undefined") return [];
-		
-		for(let i=jsonData.data.events.length-1; i>0; i--){
-		
-			let item = jsonData.data.events[i][0];
-		
+
+
+		for(var i=jsonData.data.events.length-1; i>=0; i--)
+		{
+			console.log("item-"+i+JSON.stringify(jsonData.data.events[i]))
+			let item = jsonData.data.events[i][0]
+			console.log("in loop:"+ JSON.stringify(item))
 
 			let event: Event = {
 				_id: item._id,
