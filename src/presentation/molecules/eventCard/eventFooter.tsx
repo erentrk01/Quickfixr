@@ -12,6 +12,7 @@ import {
 	AlertDialogBody,
 	AlertDialog,
 	VStack,
+	useToast
  } from "@chakra-ui/react";
 
 import { IconContext } from "react-icons";
@@ -22,20 +23,46 @@ import {MdTipsAndUpdates} from "react-icons/md"
 import warning from '../../../assets/warning.png';
 
 import { deleteEventFromDb } from "../../../domain/usecases/event/eventSlice";
-import { useAppDispatch } from "../../../configureStore";
+import { useAppDispatch, useAppSelector } from "../../../configureStore";
+import { resetDeleteState } from "../../../domain/usecases/event/eventSlice";
 
 
 
 const EventFooter = ({eventId}) => {
 	const dispatch = useAppDispatch()
+	const eventState:any= useAppSelector(state => state.event)
 	const cancelRef = useRef<any>(null)
 	const { isOpen, onOpen, onClose } = useDisclosure()
+	const toast = useToast()
 
 	const handleDelete = (id) => {
 		console.log("delete eventId: " + id)
 		dispatch(deleteEventFromDb(id))
+		
 		onClose();
 	}
+
+	useEffect(() => {
+		if (eventState.deleteStatus === "rejected") {
+			toast({
+                title: `${eventState.deleteError}`,
+                status: "error",
+                isClosable: true,
+				duration: 2000
+              })
+            }
+		else if (eventState.deleteStatus === "success") {
+			console.log("event deleted successfully:" + eventState.deleteStatus)
+			toast({
+				title: "Event deleted successfully",
+				status: "success",
+				isClosable: true,
+				duration: 2000
+			})
+			dispatch(resetDeleteState(null))
+		}
+	}, [eventState.deleteStatus])
+	
 
 
 	return (<>

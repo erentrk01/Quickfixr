@@ -16,6 +16,8 @@ const initialState = {
 	responseMessage: "",
 	responseStatus:"",
 	eventCreationStatus: "",
+	deleteStatus: "",
+	deleteError: ""
   };
 
 
@@ -118,6 +120,13 @@ const initialState = {
 				...state,
 				eventCreationStatus: "",
 			}
+		},
+		resetDeleteState(state, action) {
+			return {
+				...state,
+				deleteStatus: "",
+				deleteError: "",
+			}
 		}
 
 
@@ -157,7 +166,7 @@ const initialState = {
 			
 			return {
 					...state,
-					responseStatus: "pending",
+					deleteStatus: "pending",
 					};
 				});
 		//Fulfilled
@@ -166,6 +175,7 @@ const initialState = {
 				...state,
 				events: state.events.filter((event) => event._id !== action.payload),
 				responseMessage: "Event deleted successfully",
+				deleteStatus: "success",
 				responseStatus: "success",
 			}
 			});		
@@ -174,7 +184,8 @@ const initialState = {
 			return {
 				...state,
 				responseMessage:action.payload,
-				responseStatus: "rejected",
+				deleteStatus: "rejected",
+				deleteError: action.payload,
 				}
 			});
 
@@ -184,6 +195,6 @@ const initialState = {
   });
 
   
-  export const { getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus,setActiveEvents,setPendingEvents,setFinishedEvents} = eventSlice.actions;
+  export const { getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus,setActiveEvents,setPendingEvents,setFinishedEvents,resetDeleteState} = eventSlice.actions;
   
   export default eventSlice.reducer;
