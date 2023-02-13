@@ -46,6 +46,7 @@ export const EventList = () => {
 	const auth:any = useAppSelector(state => state.auth)
 	
 	const {events,getEvents}=EventListViewModel();
+	const [loading, setLoading] = useState(true);
 
 	const dispatch = useAppDispatch()
 	let eventState:any=useAppSelector(state => state.event)
@@ -63,32 +64,21 @@ export const EventList = () => {
 
 
  
-useEffect(() => {
-	console.log("buildingID: " +auth.buildingId)
-	getEvents(auth.buildingId);
-}, [token,eventState.eventCreationStatus,eventState.deleteStatus]);
+	useEffect(() => {
+		if(eventState.deleteStatus === "success" || eventState.eventCreationStatus === "success")
+		{
+ 			getEvents(auth.buildingId);
+		}
 
-	//
+	}, [eventState.eventCreationStatus,eventState.deleteStatus]);
+
 	useEffect(()=>{
-		dispatch(resetFetchedEvents(null))
-		console.log("triggered")
-		console.log("build ıd:" +auth.buildingId)
 		getEvents(auth.buildingId);
-		console.log(events)
-
-		//dispatch(getEventsState(events))
-		console.log(eventState.events)
-
-		
-	},[events.length])
-
-
-	useEffect(()=>{
-		
 		dispatch(resetResponseStatus(null))
 	},[])
 
 	useEffect(() => {
+		console.log("useeffect 2")
 		if (eventState.deleteStatus === "rejected") {
 			toast({
                 title: `${eventState.deleteError}`,
@@ -105,10 +95,10 @@ useEffect(() => {
 				isClosable: true,
 				duration: 3000
 			})
-			dispatch(resetDeleteState(null))
-			
 			
 		}
+		
+		dispatch(resetDeleteState(null))
 	}, [eventState.deleteStatus])
 	
 	
@@ -163,8 +153,9 @@ useEffect(() => {
 									initial={{ opacity: 0 }}
 									whileInView={{ opacity: 1 }}
 									viewport={{ once: true }}
+									key={i}
 						>
-						<Card  mt={4} key={i} borderRadius={12}>
+						<Card  mt={4}  borderRadius={12}>
 							<CardHeader >
 								<HStack
 								justifyContent={"space-between"}

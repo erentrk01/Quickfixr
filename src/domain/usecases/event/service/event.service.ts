@@ -30,9 +30,12 @@ export const postEvent = async(url,values) => {
 
 
  export const deleteEvent = async(url,values) => {
+	
 	const reduxStore = store.getState();
 	const auth:any = reduxStore.auth;
-	const deleteResponse = await axios.delete(`${url}/deleteEvent/${values}/${auth.buildingId}`);
+	const config = { headers: { Authorization: `Bearer ${auth.accessToken}` } };
+
+	const deleteResponse = await axios.delete(`${url}/deleteEvent/${values}/${auth.buildingId}`,config);
 	return deleteResponse;
 }
 
