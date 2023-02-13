@@ -74,7 +74,7 @@ import { useNavigate } from 'react-router-dom'
 
 	return (
 	<>
-		<Box textAlign='center'>
+		<Box mt={7} textAlign='center'>
 			<VStack>
 					<motion.div initial={{opacity:0,scale:0}} animate={{opacity:1,scale:1}} transition={{duration:0.3,ease:easing}}>
 					<Tabs variant='soft-rounded' colorScheme='green'>
@@ -239,7 +239,7 @@ import { useNavigate } from 'react-router-dom'
 						</TabPanels>
 					</Tabs>
 
-						<Heading>Sign Up to Your Account</Heading>
+						<Heading size="md">Sign Up to Your Account</Heading>
 					</motion.div>
 			</VStack>
 	
