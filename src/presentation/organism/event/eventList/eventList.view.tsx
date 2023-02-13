@@ -66,7 +66,7 @@ export const EventList = () => {
 useEffect(() => {
 	console.log("buildingID: " +auth.buildingId)
 	getEvents(auth.buildingId);
-}, [token,eventState.eventCreationStatus]);
+}, [token,eventState.eventCreationStatus,eventState.deleteStatus]);
 
 	//
 	useEffect(()=>{
