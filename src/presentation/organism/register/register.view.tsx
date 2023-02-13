@@ -1,4 +1,4 @@
-import {Box,Heading,Text,Link,VStack,Checkbox,Stack,FormControl,Input,FormLabel,Button, PinInputField, PinInput, HStack,useToast, Spinner} from '@chakra-ui/react'
+import {Box,Heading,Text,Link,VStack,Checkbox,Stack,FormControl,Input,FormLabel,Button, PinInputField, PinInput, HStack,useToast, Spinner, Flex} from '@chakra-ui/react'
 import {motion} from 'framer-motion'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
@@ -73,8 +73,18 @@ import { useNavigate } from 'react-router-dom'
 	
 
 	return (
-	<>
-		<Box mt={7} textAlign='center'>
+
+	<Flex minHeight='100vh' width='full' align='center' justifyContent='center'>
+		<Box 
+		  borderWidth={1}
+		  px={4}
+		  py={2}
+		  width='full'
+		  maxWidth='500px'
+		  borderRadius={4}
+		  textAlign='center'
+		  boxShadow='lg'
+		mt={4} >
 			<VStack>
 					<motion.div initial={{opacity:0,scale:0}} animate={{opacity:1,scale:1}} transition={{duration:0.3,ease:easing}}>
 					<Tabs variant='soft-rounded' colorScheme='green'>
@@ -247,7 +257,8 @@ import { useNavigate } from 'react-router-dom'
 		  Or <Link color={`${VARIANT_COLOR}.500`}>start your 14 days trial</Link>
 		</Text>
 	  </Box>
-	</>
+	  </Flex>
+	
 	)
   }
   
