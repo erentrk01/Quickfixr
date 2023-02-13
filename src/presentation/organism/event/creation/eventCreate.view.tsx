@@ -44,7 +44,7 @@ const EventCreateView = ({isOpen,onClose}) => {
 
 			  dispatch(resetEventCreationState(null))
 			  
-			  if(location.pathname === '/Events') window.location.reload()
+			 
  	} },[eventState.eventCreationStatus ])
 
 	
