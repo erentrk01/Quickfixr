@@ -33,13 +33,14 @@ const SideBar = () => {
 
 	return (
 		<Flex
-			pos='absolute'
+		position="fixed" backgroundColor={"#ff63c"} zIndex={100} 
+		top={20}
 			
 			left='0'
 			h='75vh'
 			marginTop='0.5vh'
 			boxShadow='0px 4px 12px 0px rgba(0,0,0,0.95)'
-			w={navSize == "small" ? "60px" : "200px"}
+			w={navSize == "small" ? "40px" : "200px"}
 			flexDirection='column'
 			justifyContent='space-between'
 			borderRadius="10px 10px 10px 10px"

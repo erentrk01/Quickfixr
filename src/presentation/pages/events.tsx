@@ -15,9 +15,9 @@ const Events = () => {
 
 	return (
 		<>
-			<Hide below="md">
+			
 				<SideBar/>
-			</Hide>
+			
 			<EventList/>
 		
 		</>
