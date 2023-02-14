@@ -30,10 +30,7 @@ const DashboardView = ({buildingId}) => {
 	useEffect(()=>{
 		getBuilding(buildingId);
 		getEvents(buildingId);
-		setActiveEvents(events.filter((event:any)=>event.condition === "in progress"))
-		setPendingEvents(events.filter((event:any)=>event.condition === "pending"))
-		console.log(building?.name)
-		console.log(building?.address)
+	
 
 		
 	

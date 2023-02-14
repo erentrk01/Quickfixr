@@ -3,7 +3,7 @@ import { EventListViewModel } from "./eventList.viewmodel"
 import {resetFetchedEvents,resetResponseStatus,resetDeleteState} from "../../../../domain/usecases/event/eventSlice"
 import { useNavigate} from 'react-router-dom';
 import {SearchIcon} from "@chakra-ui/icons"
-import { Button, IconButton, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { Button, Flex, IconButton, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import {
 	List,
 	ListItem,
@@ -144,10 +144,14 @@ console.log("useeffect dispathc")
 		<VStack >
 			 <Text>Page {currentPage}</Text>
 			 <motion.div
-      initial={{ opacity: 0, y: -20 }}
+      initial={{ opacity: 0, y: -20}}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
+	<Flex
+	
+	position="fixed" backgroundColor={"black"} zIndex={100000}  top={1} left={0}  
+	>
       <InputGroup>
         <InputLeftElement pointerEvents="none">
 			<SearchIcon color="gray.300" />
@@ -165,9 +169,9 @@ console.log("useeffect dispathc")
           size="md"
         />
       </InputGroup>
-	 
+	  </Flex>
     </motion.div>
-			 <SimpleGrid columns={1} >
+			 <SimpleGrid columns={1}    >
 			{<List>
 			{
 				eventsData.events.map((event,i) => {
