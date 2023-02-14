@@ -20,6 +20,9 @@ import {
 	useToast
   } from '@chakra-ui/react'
 
+  import searching from "../../../../assets/searching.json"
+
+
 
 import { IconContext } from "react-icons";
 import { IoMailOutline } from "react-icons/io5";
@@ -171,6 +174,18 @@ console.log("useeffect dispathc")
       </InputGroup>
 	  </Flex>
     </motion.div>
+	{eventsData.events.length === 0 && <>
+	<Text>No such a post exist :(</Text>
+	<Player
+		src={searching}
+		className="player"
+		loop
+		autoplay
+		style={{ height: '400px', width: '80%' }}
+
+		/>
+		</>
+		}
 			 <SimpleGrid columns={1}    >
 			{<List>
 			{
