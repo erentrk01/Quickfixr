@@ -2,7 +2,8 @@ import { useEffect, useState,useRef } from "react";
 import { EventListViewModel } from "./eventList.viewmodel"
 import {resetFetchedEvents,resetResponseStatus,resetDeleteState} from "../../../../domain/usecases/event/eventSlice"
 import { useNavigate} from 'react-router-dom';
-
+import {SearchIcon} from "@chakra-ui/icons"
+import { Button, IconButton, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import {
 	List,
 	ListItem,
@@ -19,13 +20,14 @@ import {
 	useToast
   } from '@chakra-ui/react'
 
+
 import { IconContext } from "react-icons";
 import { IoMailOutline } from "react-icons/io5";
 import{IoMdDoneAll} from "react-icons/io"
 import {MdOutlinePending} from "react-icons/md"
 import {GrLaunch,GrUpdate} from "react-icons/gr";
 import {GiProgression} from "react-icons/gi"
-
+import {getEventsState,setActiveEvents,setPendingEvents,setFinishedEvents} from "../../../../domain/usecases/event/eventSlice"
 
 import EventBody from "../../../molecules/eventCard/eventBody";
 import EventFooter from "../../../molecules/eventCard/eventFooter";
@@ -39,13 +41,16 @@ import { selectCurrentAccessToken } from "../../../../domain/usecases/authentica
 
 
 import {motion} from 'framer-motion'
+import PaginationView from "../../pagination/paginationView";
 
 
 export const EventList = () => {
+	const {eventsData,getEvents}=EventListViewModel();
 	const auth:any = useAppSelector(state => state.auth)
-	
-	const {events,getEvents}=EventListViewModel();
-	const [loading, setLoading] = useState(true);
+
+	const[query,setQuery] = useState<any>("")
+	const [currentPage, setCurrentPage] = useState(1);
+	const [totalPages, setTotalPages] = useState(1);
 
 	const dispatch = useAppDispatch()
 	let eventState:any=useAppSelector(state => state.event)
@@ -58,17 +63,44 @@ export const EventList = () => {
 	const toast = useToast()
 	const navigate = useNavigate()
 
+
+	const handlePageChange = (page: number) => {
+		setCurrentPage(page);
+	}
+
+
 	useEffect(() => {
+		getEvents(auth.buildingId,query,currentPage);
+		setTotalPages(eventsData.totalPages);
+		console.log(eventsData)
+	  }, [query, currentPage]);
+	
+
+	useEffect(() => {
+		console.log("hookkkkkk !")
 		if(eventState.deleteStatus === "success" || eventState.eventCreationStatus === "success")
-		{
- 			getEvents(auth.buildingId);
+		{	 
+ 			getEvents(auth.buildingId,query,currentPage);
+			setTotalPages(eventsData.totalPages);
+			 //dispatch(getEventsState(events))
+			 //dispatch(setPendingEvents(events))
+			// dispatch(setActiveEvents(events))
+			 //dispatch(setFinishedEvents(events))
+			 dispatch(resetResponseStatus(null))
+			
 		}
 
 	}, [eventState.eventCreationStatus,eventState.deleteStatus]);
 
 	useEffect(()=>{
-		getEvents(auth.buildingId);
-		dispatch(resetResponseStatus(null))
+console.log("useeffect dispathc")
+		getEvents(auth.buildingId,query,currentPage);
+		setTotalPages(eventsData.totalPages);
+	
+	
+		console.log("Events state:" + eventState.events.length+ JSON.stringify( eventState.events))
+		
+		//
 	},[])
 
 	useEffect(() => {
@@ -108,24 +140,37 @@ export const EventList = () => {
 		}
 	}
 
-		if(eventState.responseStatus == ""){
-			console.log(eventState.responseStatus)
-			 return (
-				 <Player
-					src={loading}
-					className="player"
-					loop
-					autoplay
-					style={{ height: '400px', width: '80%' }}/>)
-		}
-
 	return(
 		<VStack >
-			 <Text>{events.length } events posted in this building</Text>
+			 <Text>Page {currentPage}</Text>
+			 <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <InputGroup>
+        <InputLeftElement pointerEvents="none">
+			<SearchIcon color="gray.300" />
+        </InputLeftElement>
+        <Input
+          type="text"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search events..."
+          _placeholder={{ color: "gray.400" }}
+          variant="outline"
+          borderColor="gray.300"
+          focusBorderColor="blue.500"
+          borderRadius="full"
+          size="md"
+        />
+      </InputGroup>
+	 
+    </motion.div>
 			 <SimpleGrid columns={1} >
-			<List>
+			{<List>
 			{
-				events.map((event,i) => {
+				eventsData.events.map((event,i) => {
 					return (
 						<motion.div 
 								initial={{ opacity: 0 }}
@@ -164,8 +209,9 @@ export const EventList = () => {
 						</motion.div>
 					);
 			})}
-			</List>
+			</List>}
 			</SimpleGrid>
+			<PaginationView onPageChange={handlePageChange} currentPage={currentPage} totalPages={totalPages}/>
 		</VStack>
 	)
 }

@@ -20,7 +20,7 @@ const EventBody  =({event})=>{
 			<Box mt={1} bg='green.600' borderRadius={12} padding={2}>
 				<Collapse startingHeight={20} in={show}>
 
-				{event.description}
+				{event.eventDescription}
 
 
 				</Collapse>

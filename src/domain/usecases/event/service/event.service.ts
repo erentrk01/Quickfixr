@@ -16,7 +16,7 @@ export const postEvent = async(url,values) => {
 	
 		const eventResponse = await axios.post(`${url}/createEvent`, {			buildingId: auth.buildingId,
 		email: auth.email,
-		eventTitle: values.title,
+		title: values.title,
 		eventDate: values.eventDate,
 		eventDescription: values.description,
 		functionalArea: values.functionalArea,

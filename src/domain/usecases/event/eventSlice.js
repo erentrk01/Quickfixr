@@ -12,8 +12,8 @@ const initialState = {
 	showActiveEvents:false,
 	responseMessage: "",
 	responseStatus:"",
-	eventCreationStatus: "",
-	deleteStatus: "",
+	eventCreationStatus: null,
+	deleteStatus: null,
 	deleteError: ""
   };
 
@@ -51,7 +51,7 @@ export const eventSlice = createSlice({
 
 			return{
 				...state,
-				events:state.events.concat(action.payload),
+				events:action.payload,
 				responseStatus:"success",
 			}
 			
@@ -59,7 +59,7 @@ export const eventSlice = createSlice({
 		setPendingEvents(state, action) {
 			return{
 				...state,
-				pendingEvents:  _.filter(state.events, item => item.condition.includes('pending')),
+				pendingEvents:  _.filter(state.events, item => item.condition === 'pending'),
 				responseStatus:"success",
 			}
 		},
@@ -119,7 +119,6 @@ export const eventSlice = createSlice({
 			return {
 				...state,
 				isLoading: false,
-				events:[...state.events, action.payload],
 				responseMessage:"Event posted successfully",
 				eventCreationStatus:"success",
 			}

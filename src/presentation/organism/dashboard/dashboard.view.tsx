@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardBody, CardHeader, Divider, Flex, Heading, HStack, SimpleGrid, Text, Tooltip, VStack } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../configureStore";
 import { DashboardViewModel } from "./dashboard.viewmodel";
 
@@ -10,29 +10,41 @@ import { useClipboard } from '@chakra-ui/react'
 import {motion} from 'framer-motion'
 
 import { ReactComponent as Team} from '../../../assets/team.svg'
-
+import loading from "../../../assets/loading.json"
+import { Player } from "@lottiefiles/react-lottie-player";
 
 const DashboardView = ({buildingId}) => {
 	let easing =[0.6, -0.05, 0.01, 0.99]
 	const dispatch = useAppDispatch()
 	const eventState:any= useAppSelector(state => state.event)
 	const { onCopy, hasCopied } = useClipboard(buildingId);
+	const[activeEvents,setActiveEvents] = useState<any>([])
+	const[pendingEvents,setPendingEvents] = useState<any>([])
+	const[finishedEvents,setFinishedEvents] = useState<any>([])
 
 	
 
-	const {getBuilding,building} = DashboardViewModel();
-	useEffect(()=>{
-		getBuilding(buildingId);
-		console.log(building?.name)
-		console.log(building?.address)
-		
-		
-	},[])
-	console.log(eventState.activeEvents)
+	const {getBuilding,building,getEvents,events} = DashboardViewModel();
+
 
 	useEffect(()=>{
+		getBuilding(buildingId);
+		getEvents(buildingId);
+		setActiveEvents(events.filter((event:any)=>event.condition === "in progress"))
+		setPendingEvents(events.filter((event:any)=>event.condition === "pending"))
+		console.log(building?.name)
+		console.log(building?.address)
+
+		
+	
+	},[events.length])
+
+
+
+	useEffect(()=>{
+
 		dispatch(resetResponseStatus(null))
-	},[])
+	},[eventState.deleteStatus,eventState.eventCreationStatus])
 
 	
 	
@@ -79,7 +91,7 @@ const DashboardView = ({buildingId}) => {
     <TabPanel>
 	<SimpleGrid columns={{ base: 1, md: 2, lg: 3}} gap={6} >
 				{
-					eventState.activeEvents.map((event:any,index)=>{
+					activeEvents.map((event:any,index)=>{
 						return(
 							<motion.div initial={{opacity:0,scale:0}} animate={{opacity:1,scale:1}} transition={{duration:0.2,ease:easing}}>
 							<Card  variant='outline'
@@ -106,7 +118,7 @@ const DashboardView = ({buildingId}) => {
     <TabPanel>
 	<SimpleGrid columns={{ base: 1, md: 3, lg: 3 }} gap={5}>
 				{
-					eventState.pendingEvents.map((event:any,index)=>{
+					pendingEvents.map((event:any,index)=>{
 						return(
 							<motion.div initial={{opacity:0,scale:0}} animate={{opacity:1,scale:1}} transition={{duration:0.2,ease:easing}}>
 							<Card  variant='outline'

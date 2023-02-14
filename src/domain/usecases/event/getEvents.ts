@@ -1,10 +1,11 @@
 import { Event } from "../../model/event";
+import { EventData } from "../../model/eventData";
 import { EventsRepository } from "../../repository/events.repository";
 
 
 export interface GetEventsUseCase {
 
-    invoke: (buildingId:string) => Promise<Event[]>
+    invoke: (buildingId:string,query,currentPage) => Promise<EventData>
 
 }
 
@@ -15,7 +16,7 @@ export  class GetEvents implements GetEventsUseCase {
 		
 	}
 	
-	async invoke(buildingId:string){
-		return this.eventsRepo.getEvents(buildingId);
+	async invoke(buildingId:string,query,currentPage){
+		return this.eventsRepo.getEvents(buildingId,query,currentPage);
 	}
 }
