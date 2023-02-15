@@ -1,11 +1,9 @@
 import { useEffect, useState,useRef } from "react";
 import { EventListViewModel } from "./eventList.viewmodel"
 import {resetFetchedEvents,resetResponseStatus,resetDeleteState} from "../../../../domain/usecases/event/eventSlice"
-import { useNavigate} from 'react-router-dom';
-import {SearchIcon} from "@chakra-ui/icons"
-import { Button, ButtonGroup, filter, Flex, FormControl, FormLabel, Heading, Input, InputGroup, InputLeftElement, InputRightElement, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Select } from "@chakra-ui/react";
+
+import {   Flex  } from "@chakra-ui/react";
 import {
-	IconButton,
 	List,
 	ListItem,
 	ListIcon,
@@ -16,7 +14,6 @@ import {
 	HStack,
 	SimpleGrid,
 	VStack,
-	useDisclosure,
 	Tooltip,
 	useToast
   } from '@chakra-ui/react'
@@ -26,7 +23,7 @@ import {
 
 
 import { IconContext } from "react-icons";
-import { IoMailOutline } from "react-icons/io5";
+
 import{IoMdDoneAll} from "react-icons/io"
 import {MdOutlinePending} from "react-icons/md"
 import {GrLaunch,GrUpdate} from "react-icons/gr";
@@ -39,18 +36,16 @@ import EventFooter from "../../../molecules/eventCard/eventFooter";
 import { ReactComponent as Home} from '../../../../assets/building.svg';
 import { useAppDispatch, useAppSelector } from "../../../../configureStore";
 import { Player } from "@lottiefiles/react-lottie-player";
-import loading from "../../../../assets/loading.json"
+
 
 import { selectCurrentAccessToken } from "../../../../domain/usecases/authenticate/login/login.usecase";
 
 
 import {motion} from 'framer-motion'
 import PaginationView from "../../pagination/paginationView";
-import FilterBar from "../../filterBar/filterBar.view";
-import {FcFilledFilter} from "react-icons/fc"
 import React from "react";
 import AnimatedHeading from "../../../atoms/animatedHeading";
- 
+import SearchBar from "../../searchBar/searchBar.view";
 
 export const EventList = () => {
 	const {eventsData,getEvents}=EventListViewModel();
@@ -60,6 +55,11 @@ export const EventList = () => {
 	const[query,setQuery] = useState<any>("")
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
+
+	// Function to update query state in parent component
+	function handleQueryChange(newQuery: string) {
+		setQuery(newQuery);
+	  }
 
 	const handlePageChange = (page: number) => {
 		setCurrentPage(page);
@@ -94,10 +94,7 @@ export const EventList = () => {
 	let eventState:any=useAppSelector(state => state.event)
 	const token = useAppSelector(selectCurrentAccessToken);
 
-	const BASE_URL = "http://localhost:3000";
 
-	const { isOpen, onOpen, onClose } = useDisclosure()
-	const cancelRef = useRef<any>(null)
 	const toast = useToast()
 
 	const iconLookUp = {
@@ -160,65 +157,21 @@ export const EventList = () => {
 	return(
 		<VStack >
 			{filterHeading}
-			 <Text>Page {currentPage}</Text>
-			 <motion.div
-      initial={{ opacity: 0, y: -20}}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-    >
-	<Flex
-	
-	position="fixed" backgroundColor={"black"} zIndex={100000}  top={1} left={0}  
-	>
-      <InputGroup>
-        <InputLeftElement pointerEvents="none">
-			<SearchIcon color="gray.300" />
-			</InputLeftElement>
-			<Tooltip
-			borderRadius={10}
-			placement='right' 
-			fontSize='md'
-			label="filter"
-		>
-		<InputRightElement>
-		<Popover
-      placement='bottom'
-      closeOnBlur={false}
-    >
-      <PopoverTrigger>
-	  <IconButton borderRadius={11} size="sm" aria-label='Search database' icon={<FcFilledFilter/>} />
-      </PopoverTrigger>
-     <FilterBar handleConditionFilterChange={handleConditionFilterChange}
-	 handleFunctionalAreaFilterChange={handleFunctionalAreaFilterChange}
-	 />
-    </Popover>
-		
-			
-			</InputRightElement>
-		</Tooltip>
-		
-			
-
-        <Input
-          type="text"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search events..."
-          _placeholder={{ color: "gray.400" }}
-          variant="outline"
-          borderColor="gray.300"
-          focusBorderColor="blue.500"
-          borderRadius="full"
-          size="md"
-        />
-      </InputGroup>
-
-	  </Flex>
-    </motion.div>
+			<Text>Page {currentPage}</Text>
+			<motion.div
+				initial={{ opacity: 0, y: -20}}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.3 }}
+			>
+				<Flex position="fixed" backgroundColor={"black"} zIndex={100000}  top={1} left={0}>
+					<SearchBar
+						onQueryChange={handleQueryChange} 
+						handleConditionFilterChange={handleConditionFilterChange}
+						handleFunctionalAreaFilterChange={handleFunctionalAreaFilterChange}/>
+				</Flex>
+			</motion.div>
 	
 	{ 
-	
-	
 	eventsData.events.length === 0 && <>
 	<Text>No such a post exist :(</Text>
 	<Player
@@ -227,11 +180,10 @@ export const EventList = () => {
 		loop
 		autoplay
 		style={{ height: '400px', width: '80%' }}
-
 		/>
 		</>
 		}
-			 <SimpleGrid columns={1}>
+			 <SimpleGrid columns={1}    >
 			{<List>
 			{
 				eventsData.events.map((event,i) => {

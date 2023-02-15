@@ -22,9 +22,11 @@ const FilterBar: React.FC<ChildProps> = ({ handleConditionFilterChange, handleFu
 							onChange={(e) => handleConditionFilterChange(e)}
 							variant='filled' 
 							placeholder="all">
+								
 								<option value="pending">pending</option>
 								<option value="in progress">in progress</option>
 								<option value="done">done</option>
+								
 						</Select>
 				</FormControl>
 				<FormControl mt={3}>
