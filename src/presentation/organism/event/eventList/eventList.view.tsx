@@ -18,17 +18,12 @@ import {
 	useToast
   } from '@chakra-ui/react'
 
-  import searching from "../../../../assets/searching.json"
-
-
-
+import searching from "../../../../assets/searching.json"
 import { IconContext } from "react-icons";
 
 import{IoMdDoneAll} from "react-icons/io"
 import {MdOutlinePending} from "react-icons/md"
-import {GrLaunch,GrUpdate} from "react-icons/gr";
 import {GiProgression} from "react-icons/gi"
-import {getEventsState,setActiveEvents,setPendingEvents,setFinishedEvents} from "../../../../domain/usecases/event/eventSlice"
 
 import EventBody from "../../../molecules/eventCard/eventBody";
 import EventFooter from "../../../molecules/eventCard/eventFooter";
@@ -37,9 +32,7 @@ import { ReactComponent as Home} from '../../../../assets/building.svg';
 import { useAppDispatch, useAppSelector } from "../../../../configureStore";
 import { Player } from "@lottiefiles/react-lottie-player";
 
-
 import { selectCurrentAccessToken } from "../../../../domain/usecases/authenticate/login/login.usecase";
-
 
 import {motion} from 'framer-motion'
 import PaginationView from "../../pagination/paginationView";
@@ -61,27 +54,25 @@ export const EventList = () => {
 		setQuery(newQuery);
 	  }
 
-	const handlePageChange = (page: number) => {
+	const handlePageChange = (page: number):void => {
 		setCurrentPage(page);
 	}
 
-
-	//filtering
+	//Filtering
 	const [conditionFilter, setConditionFilter] = useState("");
 	const [functionalAreaFilter, setFunctionalAreaFilter] = useState("");
 
-	const handleConditionFilterChange = (e) => {
+	const handleConditionFilterChange = (e):void => {
 		console.log("conditon filter "+conditionFilter)
 		setConditionFilter(e.target.value);
 		setCurrentPage(1);
 	  };
 	
-	  const handleFunctionalAreaFilterChange = (e) => {
+	  const handleFunctionalAreaFilterChange = (e):void => {
 		setFunctionalAreaFilter(e.target.value);
 		setCurrentPage(1);
 	  };
 
-  
 	// Filter Headings
 	const headingLookUp = {
 	pending: <AnimatedHeading title="Pending Events"/>,
@@ -94,7 +85,6 @@ export const EventList = () => {
 	let eventState:any=useAppSelector(state => state.event)
 	const token = useAppSelector(selectCurrentAccessToken);
 
-
 	const toast = useToast()
 
 	const iconLookUp = {
@@ -103,13 +93,11 @@ export const EventList = () => {
 		pending: <MdOutlinePending/>
 	  }
 
-
 	useEffect(() => {
 		getEvents(auth.buildingId,query,currentPage, conditionFilter, functionalAreaFilter);
 		setTotalPages(eventsData.totalPages);
 		console.log(eventsData)
 	  }, [query, currentPage, conditionFilter, functionalAreaFilter]);
-	
 
 	useEffect(() => {
 		
@@ -216,10 +204,6 @@ export const EventList = () => {
 											<Text>{event.title}</Text>
 										</Box>
 								</CardHeader>
-								<ListItem >
-									<ListIcon color='green.500' />
-										{}
-								</ListItem>
 								<EventBody event={event}/>
 								<EventFooter eventId={event._id}/>
 							</Card>

@@ -1,6 +1,14 @@
-import { Stack } from "@chakra-ui/react";
+import { Button, Stack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-const PaginationView=({ currentPage, totalPages, onPageChange })=> {
+import { ReactNode } from "react";
+
+interface PaginationType{
+	onPageChange: (i:number) => void,
+	currentPage:number,
+	totalPages:number
+}
+const PaginationView: React.FC<PaginationType> = ({ currentPage, totalPages, onPageChange })=> {
+	const MotionButton = motion(Button)
 	const buttonVariants = {
 		initial: { opacity: 0 },
 		animate: { opacity: 1 },
@@ -11,7 +19,7 @@ const PaginationView=({ currentPage, totalPages, onPageChange })=> {
 	
 	  for (let i = 1; i <= totalPages; i++) {
 		buttons.push(
-		  <motion.button
+		  <MotionButton
 			key={i}
 			variants={buttonVariants}
 			initial="initial"
@@ -23,10 +31,10 @@ const PaginationView=({ currentPage, totalPages, onPageChange })=> {
 			bg={i === currentPage ? "blue.500" : "gray.200"}
 			color={i === currentPage ? "white" : "gray.800"}
 			size="sm"
-			onClick={() => onPageChange(i)}
+			onClick={() => onPageChange(i as number)}
 		  >
-			{i}
-		  </motion.button>
+			{i as ReactNode}
+		  </MotionButton>
 		);
 	  }
 	
