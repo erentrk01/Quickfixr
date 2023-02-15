@@ -15,7 +15,9 @@ export  const EventListViewModel = () => {
 	const [eventsData, setEvents] = useState<EventData>({
 		events:[],
 		totalPages:1,
-		currentPage:1
+		currentPage:1,
+		conditionFilter:"",
+		functionalAreaFilter:""
 	});
 	const UseCase = new GetEvents(
 		new EventsRepositoryImpl(new EventAPIDataSourceImpl())
@@ -24,12 +26,11 @@ export  const EventListViewModel = () => {
 
 
 	
-	const getEvents = async (buildingId:string,query,currentPage) => {
-		setEvents(await UseCase.invoke(buildingId,query,currentPage))
+	const getEvents = async (buildingId:string,query,currentPage,conditionFilter,functionalAreaFilter) => {
+		setEvents(await UseCase.invoke(buildingId,query,currentPage,conditionFilter,functionalAreaFilter))
 		dispatch(getEventsState(eventsData))
 		console.log("eventsdata:" + JSON.stringify(eventsData))
 		
-
 
 	}
 

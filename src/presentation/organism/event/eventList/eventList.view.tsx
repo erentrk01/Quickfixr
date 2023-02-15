@@ -3,8 +3,9 @@ import { EventListViewModel } from "./eventList.viewmodel"
 import {resetFetchedEvents,resetResponseStatus,resetDeleteState} from "../../../../domain/usecases/event/eventSlice"
 import { useNavigate} from 'react-router-dom';
 import {SearchIcon} from "@chakra-ui/icons"
-import { Button, Flex, IconButton, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { Button, ButtonGroup, filter, Flex, FormControl, FormLabel, Heading, Input, InputGroup, InputLeftElement, InputRightElement, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Select } from "@chakra-ui/react";
 import {
+	IconButton,
 	List,
 	ListItem,
 	ListIcon,
@@ -45,15 +46,49 @@ import { selectCurrentAccessToken } from "../../../../domain/usecases/authentica
 
 import {motion} from 'framer-motion'
 import PaginationView from "../../pagination/paginationView";
-
+import FilterBar from "../../filterBar/filterBar.view";
+import {FcFilledFilter} from "react-icons/fc"
+import React from "react";
+import AnimatedHeading from "../../../atoms/animatedHeading";
+ 
 
 export const EventList = () => {
 	const {eventsData,getEvents}=EventListViewModel();
 	const auth:any = useAppSelector(state => state.auth)
 
+	//paging
 	const[query,setQuery] = useState<any>("")
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
+
+	const handlePageChange = (page: number) => {
+		setCurrentPage(page);
+	}
+
+
+	//filtering
+	const [conditionFilter, setConditionFilter] = useState("");
+	const [functionalAreaFilter, setFunctionalAreaFilter] = useState("");
+
+	const handleConditionFilterChange = (e) => {
+		console.log("conditon filter "+conditionFilter)
+		setConditionFilter(e.target.value);
+		setCurrentPage(1);
+	  };
+	
+	  const handleFunctionalAreaFilterChange = (e) => {
+		setFunctionalAreaFilter(e.target.value);
+		setCurrentPage(1);
+	  };
+
+  
+	// Filter Headings
+	const headingLookUp = {
+	pending: <AnimatedHeading title="Pending Events"/>,
+	"in progress": <AnimatedHeading title="Active Events"/>,
+	done: <AnimatedHeading title="Completed Events"/>
+	}
+	const filterHeading =headingLookUp[conditionFilter]
 
 	const dispatch = useAppDispatch()
 	let eventState:any=useAppSelector(state => state.event)
@@ -64,31 +99,27 @@ export const EventList = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const cancelRef = useRef<any>(null)
 	const toast = useToast()
-	const navigate = useNavigate()
 
-
-	const handlePageChange = (page: number) => {
-		setCurrentPage(page);
-	}
+	const iconLookUp = {
+		"in progress": <GiProgression/>,
+		done: <IoMdDoneAll/>,
+		pending: <MdOutlinePending/>
+	  }
 
 
 	useEffect(() => {
-		getEvents(auth.buildingId,query,currentPage);
+		getEvents(auth.buildingId,query,currentPage, conditionFilter, functionalAreaFilter);
 		setTotalPages(eventsData.totalPages);
 		console.log(eventsData)
-	  }, [query, currentPage]);
+	  }, [query, currentPage, conditionFilter, functionalAreaFilter]);
 	
 
 	useEffect(() => {
-		console.log("hookkkkkk !")
+		
 		if(eventState.deleteStatus === "success" || eventState.eventCreationStatus === "success")
 		{	 
- 			getEvents(auth.buildingId,query,currentPage);
+ 			getEvents(auth.buildingId,query,currentPage, conditionFilter, functionalAreaFilter);
 			setTotalPages(eventsData.totalPages);
-			 //dispatch(getEventsState(events))
-			 //dispatch(setPendingEvents(events))
-			// dispatch(setActiveEvents(events))
-			 //dispatch(setFinishedEvents(events))
 			 dispatch(resetResponseStatus(null))
 			
 		}
@@ -96,12 +127,8 @@ export const EventList = () => {
 	}, [eventState.eventCreationStatus,eventState.deleteStatus]);
 
 	useEffect(()=>{
-console.log("useeffect dispathc")
-		getEvents(auth.buildingId,query,currentPage);
+		getEvents(auth.buildingId,query,currentPage, conditionFilter, functionalAreaFilter);
 		setTotalPages(eventsData.totalPages);
-	
-	
-		console.log("Events state:" + eventState.events.length+ JSON.stringify( eventState.events))
 		
 		//
 	},[])
@@ -130,21 +157,9 @@ console.log("useeffect dispathc")
 		dispatch(resetDeleteState(null))
 	}, [eventState.deleteStatus])
 
-	const detectConditionIcon  = (condition) => {
-		switch (condition) {
-			case "in progress" || "devam ediyor":
-				return <GiProgression/>
-			case "done" || "tamamlandı":
-				return <IoMdDoneAll/>
-			case "pending":
-				return <MdOutlinePending/>
-			default:
-				return <IoMailOutline/>
-		}
-	}
-
 	return(
 		<VStack >
+			{filterHeading}
 			 <Text>Page {currentPage}</Text>
 			 <motion.div
       initial={{ opacity: 0, y: -20}}
@@ -158,7 +173,32 @@ console.log("useeffect dispathc")
       <InputGroup>
         <InputLeftElement pointerEvents="none">
 			<SearchIcon color="gray.300" />
-        </InputLeftElement>
+			</InputLeftElement>
+			<Tooltip
+			borderRadius={10}
+			placement='right' 
+			fontSize='md'
+			label="filter"
+		>
+		<InputRightElement>
+		<Popover
+      placement='bottom'
+      closeOnBlur={false}
+    >
+      <PopoverTrigger>
+	  <IconButton borderRadius={11} size="sm" aria-label='Search database' icon={<FcFilledFilter/>} />
+      </PopoverTrigger>
+     <FilterBar handleConditionFilterChange={handleConditionFilterChange}
+	 handleFunctionalAreaFilterChange={handleFunctionalAreaFilterChange}
+	 />
+    </Popover>
+		
+			
+			</InputRightElement>
+		</Tooltip>
+		
+			
+
         <Input
           type="text"
           value={query}
@@ -172,9 +212,14 @@ console.log("useeffect dispathc")
           size="md"
         />
       </InputGroup>
+
 	  </Flex>
     </motion.div>
-	{eventsData.events.length === 0 && <>
+	
+	{ 
+	
+	
+	eventsData.events.length === 0 && <>
 	<Text>No such a post exist :(</Text>
 	<Player
 		src={searching}
@@ -186,10 +231,11 @@ console.log("useeffect dispathc")
 		/>
 		</>
 		}
-			 <SimpleGrid columns={1}    >
+			 <SimpleGrid columns={1}>
 			{<List>
 			{
 				eventsData.events.map((event,i) => {
+					const eventIcon = iconLookUp[event.condition];
 					return (
 						<motion.div 
 								initial={{ opacity: 0 }}
@@ -206,7 +252,7 @@ console.log("useeffect dispathc")
 											placement='auto-start' fontSize='md'>
 											<Box>
 												<IconContext.Provider value={{color:"#14da8f",size:"22px"}}>
-												{detectConditionIcon(event.condition)}
+												{eventIcon}
 												</IconContext.Provider>
 											</Box>
 										</Tooltip>

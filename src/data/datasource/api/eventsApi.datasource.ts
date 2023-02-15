@@ -8,11 +8,12 @@ import  store  from "../../../configureStore";
 import axiosAuth from "../../../domain/usecases/authenticate/service/auth.service.api"
 
 import { EventData } from "../../../domain/model/eventData";
+import { json } from "react-router-dom";
   
 
 
 export default class EventAPIDataSourceImpl implements EventsDataSource {
-    async getEvents(buildingId,query,currentPage): Promise<EventData> {
+    async getEvents(buildingId,query,currentPage,conditionFilter,functionalAreaFilter): Promise<EventData> {
 
 	const reduxStore = store.getState();
 	const auth:any = reduxStore.auth;
@@ -22,13 +23,15 @@ export default class EventAPIDataSourceImpl implements EventsDataSource {
 	  
 	
 	  
-        let response:string =await axios.get(`${BASE_URL}/fetchEvents/${buildingId}?q=${query}&page=${currentPage}`,config);
+        let response:string =await axios.get(`${BASE_URL}/fetchEvents/${buildingId}?q=${query}&page=${currentPage}&condition=${conditionFilter}&functionalArea=${functionalAreaFilter}`,config);
 		let res =JSON.stringify(response);
 		var jsonData = JSON.parse(res);
 		const data: EventData = {
 			events:jsonData.data.events,
 		   totalPages:jsonData.data.totalPages,
 		   currentPage:jsonData.data.currentPage,
+		   conditionFilter:jsonData.data.conditionFilter,
+			functionalAreaFilter:jsonData.data.functionalAreaFilter
 		   }
 		   console.log("Events data:" + data.events.length+ JSON.stringify( data))
 		

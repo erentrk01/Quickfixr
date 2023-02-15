@@ -5,7 +5,7 @@ import { EventsRepository } from "../../repository/events.repository";
 
 export interface GetEventsUseCase {
 
-    invoke: (buildingId:string,query,currentPage) => Promise<EventData>
+    invoke: (buildingId:string,query,currentPage,conditionFilter,functionalAreaFilter) => Promise<EventData>
 
 }
 
@@ -16,7 +16,7 @@ export  class GetEvents implements GetEventsUseCase {
 		
 	}
 	
-	async invoke(buildingId:string,query,currentPage){
-		return this.eventsRepo.getEvents(buildingId,query,currentPage);
+	async invoke(buildingId:string,query,currentPage,conditionFilter,functionalAreaFilter){
+		return this.eventsRepo.getEvents(buildingId,query,currentPage,conditionFilter,functionalAreaFilter);
 	}
 }

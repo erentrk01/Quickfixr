@@ -10,8 +10,8 @@ export class EventsRepositoryImpl implements EventsRepository{
 	}
 
 
-	async getEvents(buildingId,query,currentPage): Promise<EventData> {
-		return this.dataSource.getEvents(buildingId,query,currentPage);
+	async getEvents(buildingId,query,currentPage,conditionFilter,functionalAreaFilter): Promise<EventData> {
+		return this.dataSource.getEvents(buildingId,query,currentPage,conditionFilter,functionalAreaFilter);
 	}
 
 }
