@@ -52,6 +52,7 @@ export const EventList = () => {
 	// Function to update query state in parent component
 	function handleQueryChange(newQuery: string) {
 		setQuery(newQuery);
+		
 	  }
 
 	const handlePageChange = (page: number):void => {
@@ -93,6 +94,7 @@ export const EventList = () => {
 		pending: <MdOutlinePending/>
 	  }
 
+	 
 	useEffect(() => {
 		getEvents(auth.buildingId,query,currentPage, conditionFilter, functionalAreaFilter);
 		setTotalPages(eventsData.totalPages);
@@ -112,6 +114,7 @@ export const EventList = () => {
 	}, [eventState.eventCreationStatus,eventState.deleteStatus]);
 
 	useEffect(()=>{
+	
 		getEvents(auth.buildingId,query,currentPage, conditionFilter, functionalAreaFilter);
 		setTotalPages(eventsData.totalPages);
 		

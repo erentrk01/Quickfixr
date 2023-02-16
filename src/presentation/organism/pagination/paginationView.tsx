@@ -17,7 +17,7 @@ const PaginationView: React.FC<PaginationType> = ({ currentPage, totalPages, onP
 	
 	  const buttons = [];
 	
-	  for (let i = 1; i <= totalPages; i++) {
+	  for (let i = 1; i <= totalPages+1; i++) {
 		buttons.push(
 		  <MotionButton
 			key={i}

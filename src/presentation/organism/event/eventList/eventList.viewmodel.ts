@@ -23,15 +23,9 @@ export  const EventListViewModel = () => {
 		new EventsRepositoryImpl(new EventAPIDataSourceImpl())
 		);
 
-
-
-	
 	const getEvents = async (buildingId:string,query,currentPage,conditionFilter,functionalAreaFilter) => {
 		setEvents(await UseCase.invoke(buildingId,query,currentPage,conditionFilter,functionalAreaFilter))
 		dispatch(getEventsState(eventsData))
-		console.log("eventsdata:" + JSON.stringify(eventsData))
-		
-
 	}
 
 	return{
