@@ -1,7 +1,7 @@
 import { useEffect, useState,useRef } from "react";
 import { EventListViewModel } from "./eventList.viewmodel"
-import {resetFetchedEvents,resetResponseStatus,resetDeleteState} from "../../../../domain/usecases/event/eventSlice"
-
+import {resetLikeState,resetFetchedEvents,resetResponseStatus,resetDeleteState} from "../../../../domain/usecases/event/eventSlice"
+import {resetEventCreationState} from "../../../../domain/usecases/event/eventSlice";
 import {   Flex  } from "@chakra-ui/react";
 import {
 	List,
@@ -56,6 +56,7 @@ export const EventList = () => {
 	  }
 
 	const handlePageChange = (page: number):void => {
+		window.scrollTo(0, 0);
 		setCurrentPage(page);
 	}
 
@@ -102,19 +103,20 @@ export const EventList = () => {
 	  }, [query, currentPage, conditionFilter, functionalAreaFilter]);
 
 	useEffect(() => {
-		
+		console.log("event creations statusss: "+eventState.eventCreationStatus)
 		if(eventState.deleteStatus === "success" || eventState.eventCreationStatus === "success")
 		{	 
  			getEvents(auth.buildingId,query,currentPage, conditionFilter, functionalAreaFilter);
 			setTotalPages(eventsData.totalPages);
 			 dispatch(resetResponseStatus(null))
-			
-		}
+			 resetEventCreationState(null)
 
+		}
+		
 	}, [eventState.eventCreationStatus,eventState.deleteStatus]);
 
 	useEffect(()=>{
-	
+		
 		getEvents(auth.buildingId,query,currentPage, conditionFilter, functionalAreaFilter);
 		setTotalPages(eventsData.totalPages);
 		
@@ -145,10 +147,32 @@ export const EventList = () => {
 		dispatch(resetDeleteState(null))
 	}, [eventState.deleteStatus])
 
+	useEffect(() => {
+		if(eventState.likeStatus === "success")
+		{
+			toast({
+				title: "Event liked successfully",
+				status: "success",
+				isClosable: false,
+				duration: 1000
+			})
+		}
+		else if(eventState.likeStatus === "rejected")
+		{
+			toast({
+				title: "Event like failed",
+				status: "error",
+				isClosable: false,
+				duration: 1000
+			})
+		}
+
+		dispatch(resetLikeState(null))
+	}, [eventState.likeStatus])
+
 	return(
 		<VStack >
 			{filterHeading}
-			<Text>Page {currentPage}</Text>
 			<motion.div
 				initial={{ opacity: 0, y: -20}}
 				animate={{ opacity: 1, y: 0 }}
@@ -175,7 +199,7 @@ export const EventList = () => {
 		</>
 		}
 			 <SimpleGrid columns={1}    >
-			{<List>
+			
 			{
 				eventsData.events.map((event,i) => {
 					const eventIcon = iconLookUp[event.condition];
@@ -208,12 +232,12 @@ export const EventList = () => {
 										</Box>
 								</CardHeader>
 								<EventBody event={event}/>
+								<Text>Likes:{event.likes}</Text>
 								<EventFooter eventId={event._id}/>
 							</Card>
 						</motion.div>
 					);
 			})}
-			</List>}
 			</SimpleGrid>
 			<PaginationView onPageChange={handlePageChange} currentPage={currentPage} totalPages={totalPages}/>
 		</VStack>

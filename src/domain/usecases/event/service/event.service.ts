@@ -38,4 +38,18 @@ export const postEvent = async(url,values) => {
 	return deleteResponse;
 }
 
-
+export const likeEventService = async(url,values) => {
+	const reduxStore = store.getState();
+	const auth:any = reduxStore.auth;
+	console.log(auth.accessToken);
+	const config = { headers: { Authorization: `Bearer ${auth.accessToken}` } };
+	const likeResponse = await axios.post(`${url}/events/${values}/like`,{email:auth.email});
+	return likeResponse;
+}
+export const unlikeEventService = async(url,values) => {
+	const reduxStore = store.getState();
+	const auth:any = reduxStore.auth;
+	
+	const config = { headers: { Authorization: `Bearer ${auth.accessToken}` } };
+	const likeResponse = await axios.post(`${url}/events/${values}/unlike`, config);
+}

@@ -1,11 +1,12 @@
-import {Textarea, Modal,ModalBody,ModalContent,ModalCloseButton,ModalFooter,ModalHeader,Button,ModalOverlay,Text,Stack,Box, FormControl, FormLabel, Input, Select, Spinner, Toast, useToast} from "@chakra-ui/react";
+import {Textarea, Modal,ModalBody,ModalContent,ModalCloseButton,ModalFooter,ModalHeader,Button,ModalOverlay,Text,Stack,Box, FormControl, FormLabel, Input, Select, Spinner, Toast, useToast, resolveStyleConfig} from "@chakra-ui/react";
 import {motion} from "framer-motion"
 import { useEffect, useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../../../configureStore";
 import { addPostToDB } from "../../../../domain/usecases/event/eventSlice";
-import {resetEventCreationState} from "../../../../domain/usecases/event/eventSlice";
+
 import { useNavigate} from 'react-router-dom';
+import {resetEventCreationState} from "../../../../domain/usecases/event/eventSlice";
 
 const EventCreateView = ({isOpen,onClose}) => {
 
@@ -30,6 +31,7 @@ const EventCreateView = ({isOpen,onClose}) => {
 	});
 
 	useEffect(() => {
+		console.log("createeeeeeeee")
 		console.log("event creation status:" +eventState.eventCreationStatus)
 		if (eventState.eventCreationStatus === "success") {
 			toast({
@@ -38,6 +40,8 @@ const EventCreateView = ({isOpen,onClose}) => {
                 isClosable: true,
 				duration: 2000
               })
+			
+			
 			}
 		else if (eventState.eventCreationStatus === "failed") {
 			toast({
@@ -47,9 +51,9 @@ const EventCreateView = ({isOpen,onClose}) => {
 				duration: 2000
 			})
 		}
-
-		dispatch(resetEventCreationState(null)
-	)},[eventState.eventCreationStatus ])
+		dispatch(resetEventCreationState(null))
+		
+	},[eventState.eventCreationStatus ])
 
 	
 
@@ -58,6 +62,7 @@ const EventCreateView = ({isOpen,onClose}) => {
 		console.log("create button clicked")
 		console.log("condition:" +event.condition)
 		dispatch(addPostToDB(event))
+		
 		onClose()
 	}
 

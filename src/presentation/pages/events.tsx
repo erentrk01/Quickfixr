@@ -12,7 +12,12 @@ const Events = () => {
 	
 	if(!auth._id) return <Navigate to="/login" /> ;
 	
-
+	const pageVariants = {
+		initial: { opacity: 0, y: 50 },
+		animate: { opacity: 1, y: 0 },
+		exit: { opacity: 0, y: -50 }
+	  };
+	
 	return (
 		<>
 			

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {postEvent,deleteEvent} from "./service/event.service"
+import {postEvent,deleteEvent, likeEventService} from "./service/event.service"
 import _ from "lodash"
 
 const initialState = {
@@ -12,7 +12,8 @@ const initialState = {
 	showActiveEvents:false,
 	responseMessage: "",
 	responseStatus:"",
-	eventCreationStatus: null,
+	likeStatus:"",
+	eventCreationStatus: "",
 	deleteStatus: null,
 	deleteError: ""
   };
@@ -41,6 +42,30 @@ export const deleteEventFromDb = createAsyncThunk(
 	  }
 	}
   );
+
+  export const likeEvent = createAsyncThunk(
+	"events/likeEvent",
+	async (eventId, { rejectWithValue }) => {
+		try{
+			const likeRequest = likeEventService(url,eventId);
+			return eventId;
+		}
+		catch(error) {
+			return rejectWithValue(error.response.data.message);
+		}
+	})
+
+	export const unlikeEvent = createAsyncThunk(
+		"events/unlikeEvent",
+		async (eventId, { rejectWithValue }) => {
+			try{
+				const unlikeRequest = unlikeEventService(url,eventId);
+				return eventId;
+			}
+			catch(error) {
+				return rejectWithValue(error.response.data.message);
+			}
+		})
 
 export const eventSlice = createSlice({
 	name: "events",
@@ -103,6 +128,12 @@ export const eventSlice = createSlice({
 				deleteStatus: "",
 				deleteError: "",
 			}
+		},
+		resetLikeState(state, action) {
+			return {
+				...state,
+				likeStatus: "",
+			}
 		}
 	},
 	extraReducers: (builder) => {
@@ -145,7 +176,6 @@ export const eventSlice = createSlice({
 		builder.addCase(deleteEventFromDb.fulfilled, (state, action) => {
 			return {
 				...state,
-				events: state.events.filter((event) => event._id !== action.payload),
 				responseMessage: "Event deleted successfully",
 				deleteStatus: "success",
 				responseStatus: "success",
@@ -160,9 +190,46 @@ export const eventSlice = createSlice({
 				deleteError: action.payload,
 				}
 			});
+			builder.addCase(likeEvent.pending, (state, action) => {
+				return {
+					...state,
+					likeStatus:"pending"
+				}
+			});
+			builder.addCase(likeEvent.fulfilled, (state, action) => {
+				return {
+					...state,
+					likeStatus:"success"
+				}
+			});
+			builder.addCase(likeEvent.rejected, (state, action) => {
+				return {
+					...state,
+					likeStatus:"failed"
+				}
+			});
+			// UNLIKE
+			builder.addCase(unlikeEvent.pending, (state, action) => {
+				return {
+					...state,
+					likeStatus:"pending"
+				}
+			});
+			builder.addCase(unlikeEvent.fulfilled, (state, action) => {
+				return {
+					...state,
+					likeStatus:"success"
+				}
+			});
+			builder.addCase(unlikeEvent.rejected, (state, action) => {
+				return {
+					...state,
+					likeStatus:"failed"
+				}
+			});
 		}
 	});
 
 export const { 
-	getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus,setActiveEvents,setPendingEvents,setFinishedEvents,resetDeleteState} = eventSlice.actions;
+	getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus,setActiveEvents,setPendingEvents,setFinishedEvents,resetLikeState,resetDeleteState} = eventSlice.actions;
 export default eventSlice.reducer;

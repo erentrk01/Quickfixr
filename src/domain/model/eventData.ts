@@ -1,5 +1,6 @@
+import { Event } from './event';
 export interface EventData {
-	events: any[];
+	events: Event[];
 	currentPage: any;
 	totalPages: any;
 	conditionFilter:any;

@@ -6,4 +6,14 @@ export interface Event {
 	condition:string;
 	serviceContactPhone:string;
 	date:string;
+	likes: {
+		_id: string;
+		userId: string;
+	  }[];
+	  comments: {
+		_id: string;
+		userId: string;
+		comment: string;
+		createdAt: string;
+	  }[];
 }

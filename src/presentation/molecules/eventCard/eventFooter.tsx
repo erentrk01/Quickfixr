@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import {
 	CardFooter, 
@@ -21,8 +21,9 @@ import {FcShare} from "react-icons/fc"
 import {MdTipsAndUpdates} from "react-icons/md"
 import warning from '../../../assets/warning.png';
 
-import { deleteEventFromDb } from "../../../domain/usecases/event/eventSlice";
+import { deleteEventFromDb,likeEvent } from "../../../domain/usecases/event/eventSlice";
 import { useAppDispatch, useAppSelector } from "../../../configureStore";
+
 
 
 
@@ -31,6 +32,8 @@ const EventFooter = ({eventId}) => {
 	const dispatch = useAppDispatch()
 	const cancelRef = useRef<any>(null)
 	const { isOpen, onOpen, onClose } = useDisclosure()
+	const [isLiked, setIsLiked] = useState(false);
+
 
 
 	const handleDelete = (id) => {
@@ -40,12 +43,19 @@ const EventFooter = ({eventId}) => {
 		onClose();
 	}
 
+	const handleLike = (id) => {
+		setIsLiked(!isLiked)
+		console.log("like eventId: " + id)
+		dispatch(likeEvent(id));
+
+	}
+
 
 	
 
 
 	return (<>
-								<AlertDialog
+					<AlertDialog
         			isOpen={isOpen}
 					leastDestructiveRef={cancelRef}
 					onClose={onClose}
@@ -86,15 +96,17 @@ const EventFooter = ({eventId}) => {
 					</AlertDialog> 
 		<CardFooter >
 			<HStack borderRadius={12} padding={3}>
-				<Button onClick={onOpen } >
+				<Button  bg="black.100" onClick={onOpen } >
 					<IconContext.Provider value={{color:"#14da8f",size:"22px"}}>
 						<AiTwotoneDelete/>
 					</IconContext.Provider>
 				</Button>
+				<Button  bg="black.100" onClick={()=>handleLike(eventId)} >
 				<IconContext.Provider
 					value={{color:"#14da8f",size:"22px"}}>
 					<SlLike/>
 				</IconContext.Provider>
+				</Button>
 				<IconContext.Provider value={{color:"#14da8f",size:"22px"}}>
 			 		<MdTipsAndUpdates/>
 				</IconContext.Provider >

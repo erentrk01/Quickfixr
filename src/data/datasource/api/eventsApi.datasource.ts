@@ -26,6 +26,7 @@ export default class EventAPIDataSourceImpl implements EventsDataSource {
         let response:string =await axios.get(`${BASE_URL}/fetchEvents/${buildingId}?q=${query}&page=${currentPage}&condition=${conditionFilter}&functionalArea=${functionalAreaFilter}`,config);
 		let res =JSON.stringify(response);
 		var jsonData = JSON.parse(res);
+		
 		const data: EventData = {
 			events:jsonData.data.events,
 		   totalPages:jsonData.data.totalPages,
@@ -33,6 +34,7 @@ export default class EventAPIDataSourceImpl implements EventsDataSource {
 		   conditionFilter:jsonData.data.conditionFilter,
 			functionalAreaFilter:jsonData.data.functionalAreaFilter
 		   }
+		 console.log(data.events[0])  
 		   console.log("Events data:" + data.events.length+ JSON.stringify( data))
 		
 		return data;
