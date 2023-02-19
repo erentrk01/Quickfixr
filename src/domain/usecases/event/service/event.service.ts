@@ -14,7 +14,7 @@ export const postEvent = async(url,values) => {
 	console.log("config:" +JSON.stringify(config))
 
 	
-		const eventResponse = await axios.post(`${url}/createEvent`, {			buildingId: auth.buildingId,
+		const eventResponse = await axios.post(`https://mobile-backend-9931.vercel.app/createEvent`, {			buildingId: auth.buildingId,
 		email: auth.email,
 		title: values.title,
 		eventDate: values.eventDate,
