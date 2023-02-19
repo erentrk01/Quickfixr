@@ -9,7 +9,7 @@ export const addComment = createAsyncThunk(
   'event/addComment',
   async ({ eventId, content }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`https://mobile-backend-9931.vercel.app/events/${eventId}/comments`, { content });
+      const response = await axios.post(`https://mobile-backend-one.vercel.app/${eventId}/comments`, { content });
       return response.data.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -22,7 +22,7 @@ export const deleteComment = createAsyncThunk(
 	  'event/deleteComment',
 	  async ({ eventId, commentId }, { rejectWithValue }) => {
 	try {
-	  const response = await axios.delete(`https://mobile-backend-9931.vercel.app/events/${eventId}/comments/${commentId}`);
+	  const response = await axios.delete(`https://mobile-backend-one.vercel.app/events/${eventId}/comments/${commentId}`);
 	  return response.data;
 	}
 	catch (err) {
@@ -35,7 +35,7 @@ export const getEventComments = createAsyncThunk(
   'event/getEventComments',
   async (eventId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`https://mobile-backend-9931.vercel.app/events/${eventId}/comments`);
+      const response = await axios.get(`https://mobile-backend-one.vercel.app/events/${eventId}/comments`);
 	  console.log('comments:', response.data);
       return response.data;
     } catch (err) {

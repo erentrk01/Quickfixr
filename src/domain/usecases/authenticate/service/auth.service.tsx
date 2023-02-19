@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL='https://mobile-backend-9931.vercel.app';
+const BASE_URL='https://mobile-backend-one.vercel.app';
 
 
 
