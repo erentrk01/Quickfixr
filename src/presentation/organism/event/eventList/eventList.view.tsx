@@ -198,7 +198,7 @@ export const EventList = () => {
 				eventsData.events.map((event,k) => {
 					const eventIcon = iconLookUp[event.condition];
 					let likes = eventsData.events.map(event =>
-						event.likes.some(like => like.user === event.userId._id))
+						event.likes.some(like => like.user === event._id))
 					let liked= likes[k]
 					console.log("liked: "+likes)
 					return (

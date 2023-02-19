@@ -15,11 +15,11 @@ const PaginationView: React.FC<PaginationType> = ({ currentPage, totalPages, onP
 		exit: { opacity: 0 },
 	  };
 	
-	  const buttons = [];
+	  const buttons:any = [];
 	
 	  for (let i = 1; i <= totalPages+1; i++) {
 		buttons.push(
-		  <MotionButton
+			<motion.div
 			key={i}
 			variants={buttonVariants}
 			initial="initial"
@@ -28,13 +28,18 @@ const PaginationView: React.FC<PaginationType> = ({ currentPage, totalPages, onP
 			transition={{ duration: 0.2 }}
 			whileHover={{ scale: 1.1 }}
 			whileTap={{ scale: 0.9 }}
-			bg={i === currentPage ? "blue.500" : "gray.200"}
-			color={i === currentPage ? "white" : "gray.800"}
-			size="sm"
-			onClick={() => onPageChange(i as number)}
-		  >
+			>
+		  <Button
+		  color={i === currentPage ? "white" : "gray.800"}
+		  size="sm"
+		  bg={i === currentPage ? "blue.500" : "gray.200"}
+		  onClick={() => onPageChange(i as number)}
+		   >
 			{i as ReactNode}
-		  </MotionButton>
+
+		</Button>
+			</motion.div>
+	
 		);
 	  }
 	

@@ -81,6 +81,8 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 	}
   }, [isOpen, eventId, dispatch]);
 
+ 
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -183,13 +185,13 @@ const [isSubmitting, setIsSubmitting] = useState(false);
           <form onSubmit={handleSubmit}>
   
             <FormControl id="comment" mb="4">
-			<motion.FormLabel
-          initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          Comment
-        </motion.FormLabel>
+			<motion.div
+			 initial={{ opacity: 0, x: -100 }}
+			 animate={{ opacity: 1, x: 0 }}
+			 transition={{ duration: 0.5, delay: 0.2 }}
+			>
+			<FormLabel >Comments</FormLabel>
+		</motion.div>
               
               <motion.div
 			   initial={{ opacity: 0 }}

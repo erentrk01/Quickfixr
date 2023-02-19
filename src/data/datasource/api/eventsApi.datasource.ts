@@ -20,7 +20,7 @@ export default class EventAPIDataSourceImpl implements EventsDataSource {
 
 	const config = { headers: { Authorization: `Bearer ${auth.token}` } };
 
-	  
+	
 	
 	  
         let response:string =await axios.get(`${BASE_URL}/fetchEvents/${buildingId}?q=${query}&page=${currentPage}&condition=${conditionFilter}&functionalArea=${functionalAreaFilter}`,config);

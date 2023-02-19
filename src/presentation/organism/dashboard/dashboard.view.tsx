@@ -24,17 +24,14 @@ const DashboardView = ({buildingId}) => {
 
 	
 
-	const {getBuilding,building,getEvents,events} = DashboardViewModel();
+	const {getBuilding,building} = DashboardViewModel();
 
 
 	useEffect(()=>{
 		getBuilding(buildingId);
-		getEvents(buildingId);
 	
-
-		
 	
-	},[events.length])
+	},[])
 
 
 

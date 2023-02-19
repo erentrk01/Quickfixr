@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {postEvent,deleteEvent, likeEventService, unlikeEventService,commentEventService,getCommentsService} from "./service/event.service"
+import {postEvent,deleteEvent, likeEventService, unlikeEventService} from "./service/event.service"
 import _ from "lodash"
 
 const initialState = {
@@ -72,27 +72,7 @@ export const deleteEventFromDb = createAsyncThunk(
 			}
 		})
 
-	export const commentEvent = createAsyncThunk(
-		"events/commentEvent",
-		async (comment, { rejectWithValue }) => {
-			return commentEventService(url, comment)
-		.then(response => response.data)
-		.catch(error => {
-		  return rejectWithValue(error.response.data.message);
-		});
-		})
-
-	export const getComments = createAsyncThunk(
-		"events/getComments",
-		async (eventId, { rejectWithValue }) => {
-			try{
-				const commentRequest = getCommentsService(url,eventId);
-				return eventId;
-			}
-			catch(error) {
-				return rejectWithValue(error.response.data.message);
-			}
-		})
+	
 
 export const eventSlice = createSlice({
 	name: "events",
@@ -171,19 +151,7 @@ export const eventSlice = createSlice({
 
 			}
 		},
-		resetCommentState(state, action) {
-			return {
-				...state,
-				commentStatus: "",
-			}
-		},
-		resetCommentState(state, action) {
-			return {
-				...state,
-				commentStatus: "",
-				eventComments: []
-			}
-		}
+
 	},
 
 	extraReducers: (builder) => {
@@ -277,51 +245,9 @@ export const eventSlice = createSlice({
 					unlikeStatus:"failed"
 				}
 			});
-			builder.addCase(commentEvent.pending, (state, action) => {
-				return {
-					...state,
-					commentStatus:"pending"
-				}
-			});
-			builder.addCase(commentEvent.fulfilled, (state, action) => {
-				return {
-					...state,
-					commentStatus:"success",
-					eventComments:[state.eventComments,action.payload]
-				
-				
-				}
-			});
-			builder.addCase(commentEvent.rejected, (state, action) => {
-				return {
-					...state,
-				
-				}
-			});
-			builder.addCase(getComments.pending, (state, action) => {
-				return {
-					...state,
-					getCommentsStatus:"pending"
-				}
-			});
-			builder.addCase(getComments.fulfilled, (state, action) => {
-				return {
-					...state,
-					getCommentsStatus:"success",
-				
-					
-				}
-			});
-			builder.addCase(getComments.rejected, (state, action) => {
-				return {
-					...state,
-					getCommentsStatus:"failed",
-					
-				}
-			});
 		}
 	});
 
 export const { 
-	getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus,setActiveEvents,setPendingEvents,setFinishedEvents,resetLikeState,resetDeleteState,resetUnlikeState,resetCommentState} = eventSlice.actions;
+	getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus,setActiveEvents,setPendingEvents,setFinishedEvents,resetLikeState,resetDeleteState,resetUnlikeState} = eventSlice.actions;
 export default eventSlice.reducer;
