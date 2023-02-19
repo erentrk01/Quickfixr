@@ -9,7 +9,7 @@ export const addComment = createAsyncThunk(
   'event/addComment',
   async ({ eventId, content }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`https://mobile-backend-one.vercel.app/${eventId}/comments`, { content });
+      const response = await axios.post(`https://mobile-backend-one.vercel.app/events/${eventId}/comments`, { content });
       return response.data.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
