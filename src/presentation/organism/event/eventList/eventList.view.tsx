@@ -209,7 +209,6 @@ export const EventList = () => {
 							key={event._id}
 							event={event}
 							eventIcon={eventIcon}
-						
 						/>
 						</motion.div>
 					);

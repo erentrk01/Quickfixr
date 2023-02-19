@@ -59,7 +59,7 @@ const EventFooter: FC<EventFooterProps> = ({eventId}) => {
 		console.log("like eventId: " + id)
 		
 		// assuming the API call was successful
-	
+	//
 	}
 
 
@@ -142,6 +142,7 @@ const EventFooter: FC<EventFooterProps> = ({eventId}) => {
 			eventId={eventId}
 
 			/>
+			
 	</CardFooter>
 	</>
 	)

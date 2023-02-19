@@ -5,7 +5,7 @@ import EventFooter from "../../../molecules/eventCard/eventFooter";
 import { ReactComponent as Home} from '../../../../assets/building.svg';
 import {motion} from 'framer-motion'
 
-const EventCard = ({event,liked,eventIcon}) => {
+const EventCard = ({event,eventIcon}) => {
 	const { colorMode } = useColorMode();
 	const bgColor = colorMode === 'light' ? 'pink.200' : 'gray.700';
   
@@ -47,8 +47,6 @@ const EventCard = ({event,liked,eventIcon}) => {
 <EventBody event={event}/>
 <Text>Likes:{event.likes.length}</Text>
 <EventFooter
-liked={liked}
-
  eventId={event._id} 
  />
 </Card>
