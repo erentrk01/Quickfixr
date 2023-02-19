@@ -45,7 +45,6 @@ const EventCard = ({event,eventIcon}) => {
 		</Box>
 </CardHeader>
 <EventBody event={event}/>
-<Text>Likes:{event.likes.length}</Text>
 <EventFooter
  eventId={event._id} 
  />
