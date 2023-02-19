@@ -18,7 +18,7 @@ const EmailVerifyPage = () => {
 	useEffect(() => {
 	  const verifyEmailUrl = async () => {
 		try {
-		  const url = `https://mobile-backend-kohl.vercel.app/${param.id}/verify/${param.token}`;
+		  const url = `https://mobile-backend-bice.vercel.app/${param.id}/verify/${param.token}`;
 		  const data:any= verifyToAPI(url);
 		  //console.log(data);
 		  localStorage.setItem("verify", data.verified);
