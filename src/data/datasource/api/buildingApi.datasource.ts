@@ -3,7 +3,7 @@ import { Building } from "../../../domain/model/building";
 import BuildingDataSource from "../building.datasource";
 
 
-const BASE_URL = "https://mobile-backend-bice.vercel.app";
+const BASE_URL = "https://mobile-backend-9931.vercel.app";
 
 
 

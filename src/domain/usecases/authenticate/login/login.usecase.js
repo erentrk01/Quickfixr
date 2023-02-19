@@ -21,7 +21,7 @@ const initialState = {
 	verified: false,
   };
 
-  const url ="https://mobile-backend-bice.vercel.app"
+  const url ="https://mobile-backend-9931.vercel.app"
 
   export const registerResidentUser = createAsyncThunk(
 	"auth/registerUser",

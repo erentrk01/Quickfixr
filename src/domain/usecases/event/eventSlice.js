@@ -23,7 +23,7 @@ const initialState = {
 	
   };
 
-const url ="https://mobile-backend-bice.vercel.app"
+const url ="https://mobile-backend-9931.vercel.app"
 
 export const addPostToDB  = createAsyncThunk(
 	"events/addEventToDB",
