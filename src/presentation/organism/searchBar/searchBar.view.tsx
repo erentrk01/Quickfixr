@@ -1,4 +1,4 @@
-import { Input, InputRightElement,InputLeftElement, Popover, PopoverTrigger,Tooltip,InputGroup, IconButton } from "@chakra-ui/react";
+import { Input, InputRightElement,InputLeftElement, Popover, PopoverTrigger,Tooltip,InputGroup, IconButton,useColorMode } from "@chakra-ui/react";
 import {SearchIcon} from "@chakra-ui/icons"
 import { FcFilledFilter } from "react-icons/fc";
 import FilterBar from "../filterBar/filterBar.view";
@@ -16,8 +16,12 @@ const SearchBar:React.FC<SearchBarType> = ({onQueryChange,handleConditionFilterC
 			onQueryChange(newQuery);
 			setQuery(newQuery);
 		};
+		const { colorMode } = useColorMode();
+		const bgColor = colorMode === 'light' ? 'pink.200' : 'black.700';
+	  
+		
 	return (
-		<InputGroup>
+		<InputGroup bg={bgColor} borderRadius={12} >
 			<InputLeftElement pointerEvents="none">
 				<SearchIcon color="gray.300" />
 			</InputLeftElement>

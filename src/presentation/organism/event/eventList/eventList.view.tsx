@@ -1,32 +1,15 @@
 import { useEffect, useState,useRef } from "react";
 import { EventListViewModel } from "./eventList.viewmodel"
-import {resetLikeState,resetFetchedEvents,resetResponseStatus,resetDeleteState} from "../../../../domain/usecases/event/eventSlice"
+import {resetLikeState,resetFetchedEvents,resetResponseStatus,resetDeleteState,resetUnlikeState} from "../../../../domain/usecases/event/eventSlice"
 import {resetEventCreationState} from "../../../../domain/usecases/event/eventSlice";
-import {   Flex  } from "@chakra-ui/react";
-import {
-	List,
-	ListItem,
-	ListIcon,
-	Card,
-	CardHeader,
-	Text,
-	Box,
-	HStack,
-	SimpleGrid,
-	VStack,
-	Tooltip,
-	useToast
-  } from '@chakra-ui/react'
+import {Text,Box,HStack,SimpleGrid,VStack,useToast,Flex} from '@chakra-ui/react'
 
 import searching from "../../../../assets/searching.json"
-import { IconContext } from "react-icons";
+import {motion} from 'framer-motion'
 
 import{IoMdDoneAll} from "react-icons/io"
 import {MdOutlinePending} from "react-icons/md"
 import {GiProgression} from "react-icons/gi"
-
-import EventBody from "../../../molecules/eventCard/eventBody";
-import EventFooter from "../../../molecules/eventCard/eventFooter";
 
 import { ReactComponent as Home} from '../../../../assets/building.svg';
 import { useAppDispatch, useAppSelector } from "../../../../configureStore";
@@ -34,11 +17,13 @@ import { Player } from "@lottiefiles/react-lottie-player";
 
 import { selectCurrentAccessToken } from "../../../../domain/usecases/authenticate/login/login.usecase";
 
-import {motion} from 'framer-motion'
+
 import PaginationView from "../../pagination/paginationView";
 import React from "react";
 import AnimatedHeading from "../../../atoms/animatedHeading";
 import SearchBar from "../../searchBar/searchBar.view";
+import { lte } from "lodash";
+import EventCard from "../eventCard/eventCard";
 
 export const EventList = () => {
 	const {eventsData,getEvents}=EventListViewModel();
@@ -95,7 +80,6 @@ export const EventList = () => {
 		pending: <MdOutlinePending/>
 	  }
 
-	 
 	useEffect(() => {
 		getEvents(auth.buildingId,query,currentPage, conditionFilter, functionalAreaFilter);
 		setTotalPages(eventsData.totalPages);
@@ -103,6 +87,7 @@ export const EventList = () => {
 	  }, [query, currentPage, conditionFilter, functionalAreaFilter]);
 
 	useEffect(() => {
+		console.log( "Create and delete hook")
 		console.log("event creations statusss: "+eventState.eventCreationStatus)
 		if(eventState.deleteStatus === "success" || eventState.eventCreationStatus === "success")
 		{	 
@@ -110,18 +95,8 @@ export const EventList = () => {
 			setTotalPages(eventsData.totalPages);
 			 dispatch(resetResponseStatus(null))
 			 resetEventCreationState(null)
-
-		}
-		
+		}	
 	}, [eventState.eventCreationStatus,eventState.deleteStatus]);
-
-	useEffect(()=>{
-		
-		getEvents(auth.buildingId,query,currentPage, conditionFilter, functionalAreaFilter);
-		setTotalPages(eventsData.totalPages);
-		
-		//
-	},[])
 
 	useEffect(() => {
 		console.log("useeffect 2")
@@ -148,8 +123,10 @@ export const EventList = () => {
 	}, [eventState.deleteStatus])
 
 	useEffect(() => {
+	
 		if(eventState.likeStatus === "success")
 		{
+			getEvents(auth.buildingId,query,currentPage, conditionFilter, functionalAreaFilter);
 			toast({
 				title: "Event liked successfully",
 				status: "success",
@@ -170,21 +147,39 @@ export const EventList = () => {
 		dispatch(resetLikeState(null))
 	}, [eventState.likeStatus])
 
+	useEffect(() => {
+		if(eventState.unlikeStatus === "success")
+		{
+			getEvents(auth.buildingId,query,currentPage, conditionFilter, functionalAreaFilter);
+			toast({
+				title: "Event unliked successfully",
+				status: "success",
+				isClosable: false,
+				duration: 1000
+			})
+		}
+		else if(eventState.unlikeStatus === "rejected")
+		{
+			toast({
+				title: "Event unlike failed",
+				status: "error",
+				isClosable: false,
+				duration: 1000
+			})
+		}
+		dispatch(resetUnlikeState(null))
+	}, [eventState.unlikeStatus])
+
 	return(
 		<VStack >
 			{filterHeading}
-			<motion.div
-				initial={{ opacity: 0, y: -20}}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.3 }}
-			>
-				<Flex position="fixed" backgroundColor={"black"} zIndex={100000}  top={1} left={0}>
+		
+				<Flex borderRadius={15} position="fixed" backgroundColor={"black"} zIndex={100000}  top={1} left={0}>
 					<SearchBar
 						onQueryChange={handleQueryChange} 
 						handleConditionFilterChange={handleConditionFilterChange}
 						handleFunctionalAreaFilterChange={handleFunctionalAreaFilterChange}/>
 				</Flex>
-			</motion.div>
 	
 	{ 
 	eventsData.events.length === 0 && <>
@@ -199,42 +194,26 @@ export const EventList = () => {
 		</>
 		}
 			 <SimpleGrid columns={1}    >
-			
 			{
-				eventsData.events.map((event,i) => {
+				eventsData.events.map((event,k) => {
 					const eventIcon = iconLookUp[event.condition];
+					let likes = eventsData.events.map(event =>
+						event.likes.some(like => like.user === event.userId._id))
+					let liked= likes[k]
+					console.log("liked: "+likes)
 					return (
-						<motion.div 
-								initial={{ opacity: 0 }}
+						<motion.div
+						initial={{ opacity: 0 }}
 								whileInView={{ opacity: 1 }}
 								viewport={{ once: true }}
-								key={i}
+								
 						>
-							<Card  mt={4} borderRadius={12}>
-								<CardHeader >
-									<HStack justifyContent={"space-between"}
-									>
-										<Tooltip label={event.condition} 
-											borderRadius={10}
-											placement='auto-start' fontSize='md'>
-											<Box>
-												<IconContext.Provider value={{color:"#14da8f",size:"22px"}}>
-												{eventIcon}
-												</IconContext.Provider>
-											</Box>
-										</Tooltip>
-										<Home 
-											width="100px"
-											height="100px"/>
-										</HStack>
-										<Box width="300px" bg='orange.300' borderRadius={12} padding={2}>
-											<Text>{event.title}</Text>
-										</Box>
-								</CardHeader>
-								<EventBody event={event}/>
-								<Text>Likes:{event.likes}</Text>
-								<EventFooter eventId={event._id}/>
-							</Card>
+						<EventCard
+							key={event._id}
+							event={event}
+							eventIcon={eventIcon}
+							liked={liked}
+						/>
 						</motion.div>
 					);
 			})}

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 
 import {
 	CardFooter, 
@@ -21,20 +21,31 @@ import {FcShare} from "react-icons/fc"
 import {MdTipsAndUpdates} from "react-icons/md"
 import warning from '../../../assets/warning.png';
 
-import { deleteEventFromDb,likeEvent } from "../../../domain/usecases/event/eventSlice";
+
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import { deleteEventFromDb,likeEvent,unlikeEvent } from "../../../domain/usecases/event/eventSlice";
 import { useAppDispatch, useAppSelector } from "../../../configureStore";
+import CommentModal from "../../organism/event/comment/commentModal";
+
+import { WhatsappShareButton } from 'react-share';
+interface EventFooterProps {
+	eventId: string;
+	liked: boolean;
+
+  }
+  
 
 
 
-
-
-const EventFooter = ({eventId}) => {
+const EventFooter: FC<EventFooterProps> = ({eventId,liked}) => {
 	const dispatch = useAppDispatch()
 	const cancelRef = useRef<any>(null)
 	const { isOpen, onOpen, onClose } = useDisclosure()
+	const { isOpen: isCommentOpen , onOpen: onCommentOpen, onClose: onCommentClose } = useDisclosure()
+
 	const [isLiked, setIsLiked] = useState(false);
 
-
+	const shareUrl = `http://localhost:5173/Events/${eventId}`;
 
 	const handleDelete = (id) => {
 		console.log("delete eventId: " + id)
@@ -44,10 +55,16 @@ const EventFooter = ({eventId}) => {
 	}
 
 	const handleLike = (id) => {
-		setIsLiked(!isLiked)
+		
 		console.log("like eventId: " + id)
-		dispatch(likeEvent(id));
-
+		console.log(liked)
+		if(liked) 
+		{	console.log("unlike dispatch triggered!")
+			dispatch(unlikeEvent(id));}
+		else {console.log("like dispatch triggered!")
+			dispatch(likeEvent(id));}
+		setIsLiked(!liked); // assuming the API call was successful
+	
 	}
 
 
@@ -104,17 +121,32 @@ const EventFooter = ({eventId}) => {
 				<Button  bg="black.100" onClick={()=>handleLike(eventId)} >
 				<IconContext.Provider
 					value={{color:"#14da8f",size:"22px"}}>
-					<SlLike/>
+					{isLiked ? "Unlike" : "Like"}
+					{isLiked ? <AiFillHeart/> : <AiOutlineHeart/>}
+				
 				</IconContext.Provider>
 				</Button>
+				<Button  bg="black.100" onClick={onCommentOpen} >
 				<IconContext.Provider value={{color:"#14da8f",size:"22px"}}>
 			 		<MdTipsAndUpdates/>
 				</IconContext.Provider >
+				</Button>
+				
+				< WhatsappShareButton url={shareUrl}>
 				<IconContext.Provider 						
 					value={{color:"#14da8f",size:"22px"}}>
 					 <FcShare/>
 				</IconContext.Provider>
+
+				</ WhatsappShareButton>
+				
 			</HStack>
+			<CommentModal
+			isOpen={isCommentOpen}
+			onClose={onCommentClose}
+			eventId={eventId}
+
+			/>
 	</CardFooter>
 	</>
 	)

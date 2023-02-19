@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {postEvent,deleteEvent, likeEventService} from "./service/event.service"
+import {postEvent,deleteEvent, likeEventService, unlikeEventService,commentEventService,getCommentsService} from "./service/event.service"
 import _ from "lodash"
 
 const initialState = {
@@ -13,9 +13,14 @@ const initialState = {
 	responseMessage: "",
 	responseStatus:"",
 	likeStatus:"",
+	unlikeStatus:"",
 	eventCreationStatus: "",
 	deleteStatus: null,
-	deleteError: ""
+	deleteError: "",
+	commentStatus: "",
+	getCommentsStatus: "",
+	eventComments: [],
+	
   };
 
 const url ="http://localhost:3000"
@@ -60,6 +65,28 @@ export const deleteEventFromDb = createAsyncThunk(
 		async (eventId, { rejectWithValue }) => {
 			try{
 				const unlikeRequest = unlikeEventService(url,eventId);
+				return eventId;
+			}
+			catch(error) {
+				return rejectWithValue(error.response.data.message);
+			}
+		})
+
+	export const commentEvent = createAsyncThunk(
+		"events/commentEvent",
+		async (comment, { rejectWithValue }) => {
+			return commentEventService(url, comment)
+		.then(response => response.data)
+		.catch(error => {
+		  return rejectWithValue(error.response.data.message);
+		});
+		})
+
+	export const getComments = createAsyncThunk(
+		"events/getComments",
+		async (eventId, { rejectWithValue }) => {
+			try{
+				const commentRequest = getCommentsService(url,eventId);
 				return eventId;
 			}
 			catch(error) {
@@ -133,9 +160,32 @@ export const eventSlice = createSlice({
 			return {
 				...state,
 				likeStatus: "",
+				unlikeStatus: ""
+			}
+		},
+		resetUnlikeState(state, action) {
+			return {
+				...state,
+				unlikeStatus: "",
+				likeStatus: "",
+
+			}
+		},
+		resetCommentState(state, action) {
+			return {
+				...state,
+				commentStatus: "",
+			}
+		},
+		resetCommentState(state, action) {
+			return {
+				...state,
+				commentStatus: "",
+				eventComments: []
 			}
 		}
 	},
+
 	extraReducers: (builder) => {
 		 /* addPostToDB */
 		 //pending
@@ -212,24 +262,66 @@ export const eventSlice = createSlice({
 			builder.addCase(unlikeEvent.pending, (state, action) => {
 				return {
 					...state,
-					likeStatus:"pending"
+					unlikeStatus:"pending"
 				}
 			});
 			builder.addCase(unlikeEvent.fulfilled, (state, action) => {
 				return {
 					...state,
-					likeStatus:"success"
+					unlikeStatus:"success"
 				}
 			});
 			builder.addCase(unlikeEvent.rejected, (state, action) => {
 				return {
 					...state,
-					likeStatus:"failed"
+					unlikeStatus:"failed"
+				}
+			});
+			builder.addCase(commentEvent.pending, (state, action) => {
+				return {
+					...state,
+					commentStatus:"pending"
+				}
+			});
+			builder.addCase(commentEvent.fulfilled, (state, action) => {
+				return {
+					...state,
+					commentStatus:"success",
+					eventComments:[state.eventComments,action.payload]
+				
+				
+				}
+			});
+			builder.addCase(commentEvent.rejected, (state, action) => {
+				return {
+					...state,
+				
+				}
+			});
+			builder.addCase(getComments.pending, (state, action) => {
+				return {
+					...state,
+					getCommentsStatus:"pending"
+				}
+			});
+			builder.addCase(getComments.fulfilled, (state, action) => {
+				return {
+					...state,
+					getCommentsStatus:"success",
+				
+					
+				}
+			});
+			builder.addCase(getComments.rejected, (state, action) => {
+				return {
+					...state,
+					getCommentsStatus:"failed",
+					
 				}
 			});
 		}
 	});
 
 export const { 
-	getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus,setActiveEvents,setPendingEvents,setFinishedEvents,resetLikeState,resetDeleteState} = eventSlice.actions;
+	getEventsState,finishEvent,resetEventCreationState,resetFetchedEvents,resetResponseStatus,setActiveEvents,setPendingEvents,setFinishedEvents,resetLikeState,resetDeleteState,resetUnlikeState,resetCommentState} = eventSlice.actions;
 export default eventSlice.reducer;

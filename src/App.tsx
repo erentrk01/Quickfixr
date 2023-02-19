@@ -14,6 +14,7 @@ import NotFound from './presentation/pages/notFound';
 import EmailVerifyPage from './presentation/pages/emailverifypage';
 import { useAppDispatch, useAppSelector } from './configureStore';
 import { useNavigate} from 'react-router-dom';
+import EventCard from './presentation/organism/event/eventCard/eventCard';
 
 const App  =()=> {
 	const location = useLocation();
@@ -56,6 +57,7 @@ const App  =()=> {
 				<Route path="/:id/verify/:token" element={<EmailVerifyPage/>} />
 				<Route path="/Dashboard" element={<Dashboard/>}></Route>
 				<Route path="/Events" element={<Events/>}></Route>
+				
 				<Route path="/Logout" element={<Login/>}></Route>
 			</Routes>
 		</>

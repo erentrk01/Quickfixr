@@ -1,6 +1,7 @@
 import { CardBody,Box,Button,Collapse,Text, Tooltip} from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { useClipboard } from '@chakra-ui/react'
+import moment from "moment";
 
 
 const EventBody  =({event})=>{
@@ -36,7 +37,7 @@ const EventBody  =({event})=>{
 				</Tooltip>
 
 			</Box>
-			<Text>{event.date}</Text>
+			<Text>{moment(event.date).fromNow()}</Text>
 	</CardBody>
 	)
 }

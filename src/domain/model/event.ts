@@ -1,4 +1,6 @@
+import {User} from './user';
 export interface Event {
+	userId: User;
 	_id: any;
 	title: string;
     description: string;
@@ -6,10 +8,7 @@ export interface Event {
 	condition:string;
 	serviceContactPhone:string;
 	date:string;
-	likes: {
-		_id: string;
-		userId: string;
-	  }[];
+	likes:any[];
 	  comments: {
 		_id: string;
 		userId: string;

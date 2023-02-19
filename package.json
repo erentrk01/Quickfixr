@@ -19,6 +19,8 @@
     "framer-motion": "^8.4.3",
     "jotform-react": "^1.0.4",
     "jwt-decode": "^3.1.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-day-and-night-toggle": "^1.0.18",
     "react-dom": "^18.2.0",
@@ -26,6 +28,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.2",
     "react-scroll": "^1.8.9",
+    "react-share": "^4.4.1",
     "redux-persist": "^6.0.0",
     "vite-plugin-svgr": "^2.4.0"
   },

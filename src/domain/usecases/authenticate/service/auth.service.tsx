@@ -17,10 +17,13 @@ export const signupToBuildingAPI = async(url,values) => {
 }
 
 export const signupToResidentAPI = async(url,values) => {
+	
+
 	const token = await axios.post(`${url}/registerUser`, {
         name: values.name,
         email: values.email,
         password: values.password,
+		buildingId:values.buildingId
       });
 	return token;
 }

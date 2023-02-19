@@ -34,7 +34,8 @@ export default class EventAPIDataSourceImpl implements EventsDataSource {
 		   conditionFilter:jsonData.data.conditionFilter,
 			functionalAreaFilter:jsonData.data.functionalAreaFilter
 		   }
-		 console.log(data.events[0])  
+		 
+		  
 		   console.log("Events data:" + data.events.length+ JSON.stringify( data))
 		
 		return data;
