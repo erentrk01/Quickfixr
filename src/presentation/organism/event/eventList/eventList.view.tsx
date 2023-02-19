@@ -197,10 +197,7 @@ export const EventList = () => {
 			{
 				eventsData.events.map((event,k) => {
 					const eventIcon = iconLookUp[event.condition];
-					let likes = eventsData.events.map(event =>
-						event.likes.some(like => like.user === event._id))
-					let liked= likes[k]
-					console.log("liked: "+likes)
+					
 					return (
 						<motion.div
 						initial={{ opacity: 0 }}
@@ -212,7 +209,7 @@ export const EventList = () => {
 							key={event._id}
 							event={event}
 							eventIcon={eventIcon}
-							liked={liked}
+						
 						/>
 						</motion.div>
 					);

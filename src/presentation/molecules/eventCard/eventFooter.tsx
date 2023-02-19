@@ -30,14 +30,14 @@ import CommentModal from "../../organism/event/comment/commentModal";
 import { WhatsappShareButton } from 'react-share';
 interface EventFooterProps {
 	eventId: string;
-	liked: boolean;
+
 
   }
   
 
 
 
-const EventFooter: FC<EventFooterProps> = ({eventId,liked}) => {
+const EventFooter: FC<EventFooterProps> = ({eventId}) => {
 	const dispatch = useAppDispatch()
 	const cancelRef = useRef<any>(null)
 	const { isOpen, onOpen, onClose } = useDisclosure()
@@ -57,13 +57,8 @@ const EventFooter: FC<EventFooterProps> = ({eventId,liked}) => {
 	const handleLike = (id) => {
 		
 		console.log("like eventId: " + id)
-		console.log(liked)
-		if(liked) 
-		{	console.log("unlike dispatch triggered!")
-			dispatch(unlikeEvent(id));}
-		else {console.log("like dispatch triggered!")
-			dispatch(likeEvent(id));}
-		setIsLiked(!liked); // assuming the API call was successful
+		
+		// assuming the API call was successful
 	
 	}
 
