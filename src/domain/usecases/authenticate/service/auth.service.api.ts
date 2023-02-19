@@ -2,21 +2,11 @@ import  store from "../../../../configureStore";
 import {setAccessToken,reset} from "../login/login.usecase";
 import axios from "axios";
 
-import { RootState as DefaultRootState } from 'react-redux';
+
 
 interface AuthState {
-  accessToken: string;
-  refreshToken: string;
+  refreshToken: any
 }
-
-interface AppState {
-  auth: AuthState;
-  // ...
-}
-
-type RootState = DefaultRootState & {
-  app: AppState;
-};
 
 const BASE_URL='http://localhost:3000';
 const instance = axios.create({
@@ -43,7 +33,7 @@ instance.interceptors.response.use(
             originalConfig.headers = JSON.parse(JSON.stringify(originalConfig.headers));
             try {
                 const response = await axios.post(`${URL}/token`, {
-                    refreshToken: (store.getState() as RootState).auth.refreshToken
+                    refreshToken: (store.getState() as AuthState).auth.refreshToken
                 });
               store.dispatch(setAccessToken(response.data.accessToken));
                 return instance(originalConfig);
