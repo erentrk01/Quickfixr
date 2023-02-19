@@ -28,12 +28,13 @@ instance.interceptors.response.use(
     },
     async (error) => {
         const originalConfig = error.config;
+		const storeState:any = store.getState();
         if (error.response?.status === 401 && !originalConfig._retry) {
             originalConfig._retry = true;
             originalConfig.headers = JSON.parse(JSON.stringify(originalConfig.headers));
             try {
                 const response = await axios.post(`${URL}/token`, {
-                    refreshToken: (store.getState() as AuthState).auth.refreshToken
+                    refreshToken: storeState.auth.refreshToken
                 });
               store.dispatch(setAccessToken(response.data.accessToken));
                 return instance(originalConfig);
