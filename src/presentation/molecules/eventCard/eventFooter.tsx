@@ -45,7 +45,7 @@ const EventFooter: FC<EventFooterProps> = ({eventId,liked}) => {
 
 	const [isLiked, setIsLiked] = useState(false);
 
-	const shareUrl = `http://localhost:5173/Events/${eventId}`;
+	const shareUrl = `https://quickfixr-erentrk01.vercel.app/Events/${eventId}`;
 
 	const handleDelete = (id) => {
 		console.log("delete eventId: " + id)
