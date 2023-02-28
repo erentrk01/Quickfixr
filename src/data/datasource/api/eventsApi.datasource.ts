@@ -3,7 +3,7 @@ import { Event } from "../../../domain/model/event";
 import EventsDataSource from "../events.datasource";
 
 
-const BASE_URL = "https://mobile-backend-one.vercel.app";
+const BASE_URL = "https://mobile-backend-jz8h.vercel.app";
 import  store  from "../../../configureStore";
 import axiosAuth from "../../../domain/usecases/authenticate/service/auth.service.api"
 

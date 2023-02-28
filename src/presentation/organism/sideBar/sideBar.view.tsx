@@ -1,4 +1,4 @@
-import { Avatar, Divider, Flex, Heading ,VStack,Text, IconButton, Button, useDisclosure, Tooltip} from "@chakra-ui/react";
+import { Avatar, Divider, Flex, Heading ,VStack,Text, IconButton, Button, useDisclosure, Tooltip, Box} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 
@@ -7,7 +7,10 @@ import{SlLogout} from 'react-icons/sl';
 import {SiAuth0} from 'react-icons/si';
 import {IoAddCircleOutline} from 'react-icons/io5';
 import {FcTodoList} from 'react-icons/fc';
+import {BiPoll} from "react-icons/bi"
+import {GiVote} from "react-icons/gi"
 import NavItem from "../../molecules/sideBarBlock/navItem";
+
 
 import {resetEventCreationState} from "../../../domain/usecases/event/eventSlice";
 
@@ -16,19 +19,33 @@ import { useAppDispatch, useAppSelector } from "../../../configureStore";
 import { IconBase, IconContext } from "react-icons";
 import EventCreateView from "../event/creation/eventCreate.view";
 import DaynightToggleImpl from "../../atoms/daynightToggle";
+import CreatePoll from "../poll/createPoll";
+import {addPoll} from "../../../domain/usecases/poll/pollSlice";
+import {RiEarthquakeFill} from "react-icons/ri"
+
+import { Poll as PollType } from "../../../domain/model/poll";
 
 const SideBar = () => {
+	
 	const [navSize, setNavSize] = useState('small');
 	const dispatch = useAppDispatch()
 	const auth:any = useAppSelector(state => state.auth)
 	const eventState:any= useAppSelector(state => state.event)
 	//console.log(auth)
 	const { isOpen, onOpen, onClose } = useDisclosure()
+	const {isOpen:isPollOpen, onOpen: onPollOpen, onClose: onPollClose} = useDisclosure()
 
 	const handleCloseEventCreation = () => {
 		console.log("closing")
 		onClose()
 	}
+
+	const handleCreatePoll = async (poll:PollType) => {
+		console.log("poll create")
+		dispatch(addPoll(poll))
+
+		onPollClose()
+	  };
 	
 
 	return (
@@ -69,12 +86,28 @@ const SideBar = () => {
 				/>
 				<NavItem navSize={navSize} icon={IoMdHome} title="Dashboard"/>
 				<NavItem navSize={navSize} icon={FcTodoList} title="Events"/>
-				
+				<NavItem navSize={navSize} icon={GiVote} title="Polls"/>	
+			
 				<Tooltip label="Create Event" display={navSize =="small" ? "flex":"none"}  placement='auto-start' aria-label="A tooltip">
 					<Button mt={3}
+					size="sm"
+					
+					backgroundColor="black"
 					onClick={onOpen}>
 						<IconContext.Provider  value={{color:"yellow",size:"22px"}}>
 							<IoAddCircleOutline/>
+						</IconContext.Provider>
+					</Button>
+				</Tooltip>
+
+				<Tooltip label="Create Poll" display={navSize =="small" ? "flex":"none"}  placement='auto-start' aria-label="A tooltip">
+					<Button mt={3}
+					size="sm"
+					
+					backgroundColor="black"
+					onClick={onPollOpen}>
+						<IconContext.Provider  value={{color:"yellow",size:"22px"}}>
+							<BiPoll/>
 						</IconContext.Provider>
 					</Button>
 				</Tooltip>
@@ -82,6 +115,12 @@ const SideBar = () => {
 					isOpen={isOpen}
 					onClose={ handleCloseEventCreation}
 				 />
+				<CreatePoll
+					isOpen={isPollOpen}
+					onClose={onPollClose}
+					onSubmit={handleCreatePoll}
+				/>
+				<NavItem navSize={navSize} icon={RiEarthquakeFill} title="	Earthquake"/>
 				<NavItem  navSize={navSize} icon={SlLogout} title="Logout"/>
 			</Flex>
 			<Flex

@@ -15,6 +15,8 @@ import EmailVerifyPage from './presentation/pages/emailverifypage';
 import { useAppDispatch, useAppSelector } from './configureStore';
 import { useNavigate} from 'react-router-dom';
 import EventCard from './presentation/organism/event/eventCard/eventCard';
+import PollsPage from './presentation/pages/polls';
+import Earthquake from './presentation/organism/earthquake/earthquake';
 
 const App  =()=> {
 	const location = useLocation();
@@ -24,16 +26,15 @@ const App  =()=> {
 	// In Dashboard mode, header will not be visible
 	const[dashboardMode,setDashboardMode]=useState(false)
 	const navigate = useNavigate();
+	const pathnameMap = {
+		"/Dashboard": true,
+		"/Events": true,
+		"/Polls": true,
+	  };
 
 	useEffect(() => {
-		if(location.pathname === "/Dashboard"){
-			setDashboardMode(true)
-		} else if(location.pathname === "/Events"){
-			setDashboardMode(true)
-		}
-		else{
-			setDashboardMode(false)
-		}
+		const dashboardMode = pathnameMap[location.pathname] || false;
+		setDashboardMode(dashboardMode);
 	}, [location.pathname])
 
 	useEffect(() => {
@@ -57,7 +58,8 @@ const App  =()=> {
 				<Route path="/:id/verify/:token" element={<EmailVerifyPage/>} />
 				<Route path="/Dashboard" element={<Dashboard/>}></Route>
 				<Route path="/Events" element={<Events/>}></Route>
-				
+				<Route path="/Polls" element={<PollsPage/>}></Route>
+				<Route path="/Earthquake" element={<Earthquake/>}></Route>
 				<Route path="/Logout" element={<Login/>}></Route>
 			</Routes>
 		</>

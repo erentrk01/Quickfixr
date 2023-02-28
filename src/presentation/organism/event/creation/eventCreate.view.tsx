@@ -1,4 +1,4 @@
-import {Textarea, Modal,ModalBody,ModalContent,ModalCloseButton,ModalFooter,ModalHeader,Button,ModalOverlay,Text,Stack,Box, FormControl, FormLabel, Input, Select, Spinner, Toast, useToast, resolveStyleConfig} from "@chakra-ui/react";
+import {Textarea, Modal,ModalBody,ModalContent,ModalCloseButton,ModalFooter,ModalHeader,Button,ModalOverlay,Text,Stack,Box, FormControl, FormLabel, Input, Select, Spinner, Toast, useToast, resolveStyleConfig,useMediaQuery,} from "@chakra-ui/react";
 import {motion} from "framer-motion"
 import { useEffect, useState } from "react";
 
@@ -7,6 +7,7 @@ import { addPostToDB } from "../../../../domain/usecases/event/eventSlice";
 
 import { useNavigate} from 'react-router-dom';
 import {resetEventCreationState} from "../../../../domain/usecases/event/eventSlice";
+import Dropzone from "../dropzone/dropzone";
 
 const EventCreateView = ({isOpen,onClose}) => {
 
@@ -17,6 +18,7 @@ const EventCreateView = ({isOpen,onClose}) => {
 	const config = { headers: { Authorization: `Bearer ${auth.accessToken}` } };
 	const toast = useToast();
 	const navigate = useNavigate();
+	
 
 	const VARIANT_COLOR = 'teal'
 	let easing =[0.6, -0.05, 0.01, 0.99]
@@ -69,10 +71,10 @@ const EventCreateView = ({isOpen,onClose}) => {
 
 	return (
 		<>
-			<Modal 
+			<Modal
 				isCentered  
 				motionPreset='slideInBottom' 
-				blockScrollOnMount={false}
+				blockScrollOnMount={true}
 				isOpen={isOpen} 
 				onClose={onClose}>
 					<ModalOverlay />

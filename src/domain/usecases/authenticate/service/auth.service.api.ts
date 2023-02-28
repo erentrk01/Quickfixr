@@ -8,7 +8,7 @@ interface AuthState {
   refreshToken: any
 }
 
-const BASE_URL='https://mobile-backend-one.vercel.app';
+const BASE_URL='https://mobile-backend-jz8h.vercel.app';
 const instance = axios.create({
     baseURL: BASE_URL,
 });
