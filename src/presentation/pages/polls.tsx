@@ -19,7 +19,7 @@ const PollsPage = () => {
 
   const fetchPolls = async () => {
 	
-	const response = await fetch(`http://localhost:3000/polls/${auth.buildingId}`);
+	const response = await fetch(`https://mobile-backend-jz8h.vercel.app/polls/${auth.buildingId}`);
 	const data = await response.json();
 	setPolls(data);
   };
