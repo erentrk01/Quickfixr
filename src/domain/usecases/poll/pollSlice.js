@@ -9,7 +9,7 @@ export const addPoll = createAsyncThunk(
 		const auth = reduxStore.auth;
 		try {
 			const response = await axios.post(
-				`http://localhost:3000/poll/${auth.buildingId}/create`,
+				`https://mobile-backend-jz8h.vercel.app/poll/${auth.buildingId}/create`,
 				{question, userId:auth._id,options,days:durationDays,hours:durationHours}
 			);
 			return response.data.data;
@@ -25,7 +25,7 @@ export const deletePoll = createAsyncThunk(
 		const auth = reduxStore.auth;
 		try {
 			const response = await axios.delete(
-				`http://localhost:3000/poll/${pollId}/delete/${auth._id}`
+				`https://mobile-backend-jz8h.vercel.app/poll/${pollId}/delete/${auth._id}`
 			);
 			return response.data.data;
 		} catch (err) {
@@ -40,7 +40,7 @@ export const votePoll = createAsyncThunk(
 			const auth = reduxStore.auth;
 			try {
 				const response = await axios.post(
-					`http://localhost:3000/poll/${pollId}/vote/${optionId}`, {userId:auth._id}
+					`https://mobile-backend-jz8h.vercel.app/poll/${pollId}/vote/${optionId}`, {userId:auth._id}
 				);
 				return response.data.data;
 			} catch (err) {
@@ -54,7 +54,7 @@ export const votePoll = createAsyncThunk(
 				const reduxStore = store.getState();
 			const auth = reduxStore.auth;
 			  try {
-				const response = await axios.post(`http://localhost:3000/poll/${pollId}/createOption`, {option,userId:auth._id,buildingId:auth.buildingId});
+				const response = await axios.post(`https://mobile-backend-jz8h.vercel.app/poll/${pollId}/createOption`, {option,userId:auth._id,buildingId:auth.buildingId});
 				return response.data.data;
 			  } catch (error) {
 				return rejectWithValue(error.response.data);
@@ -68,7 +68,7 @@ export const votePoll = createAsyncThunk(
 				const reduxStore = store.getState();
 				const auth = reduxStore.auth;
 			  try {
-				const response = await axios.delete(`/api/poll/${pollId}/option/${optionId}/delete`, {
+				const response = await axios.delete(`https://mobile-backend-jz8h.vercel.app/poll/${pollId}/option/${optionId}/delete`, {
 				  userId: auth._id,
 				});
 		  
