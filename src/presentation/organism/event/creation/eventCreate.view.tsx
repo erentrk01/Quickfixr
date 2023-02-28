@@ -7,7 +7,7 @@ import { addPostToDB } from "../../../../domain/usecases/event/eventSlice";
 
 import { useNavigate} from 'react-router-dom';
 import {resetEventCreationState} from "../../../../domain/usecases/event/eventSlice";
-import Dropzone from "../dropzone/dropzone";
+
 
 const EventCreateView = ({isOpen,onClose}) => {
 
